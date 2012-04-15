@@ -1,7 +1,7 @@
 ExtJS-Code-Generator
 ====================
 
-ExtJS 4.2 ORM Code Generator , make complete projects for Sencha Architect 2.2 Only with a database model
+ExtJS 4.2.x ORM Code Generator , make complete projects for Sencha Architect 2.2.1 Only with a database model
 
 
 Require
