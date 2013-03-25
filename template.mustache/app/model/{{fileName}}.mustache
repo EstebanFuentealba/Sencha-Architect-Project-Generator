@@ -1,0 +1,10 @@
+Ext.define('{{package}}.model.{{tableName}}', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {{#columns}}
+		{
+			name: '{{columnName}}'
+		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/columns}}
+    ]
+});

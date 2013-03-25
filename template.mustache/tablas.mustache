@@ -1,0 +1,13 @@
+<strong>{{tableName}}</strong>: <br />
+<ul>
+{{#columns}}
+	<li>
+		 <strong>{{columnName}}</strong> <i>({{type}})</i>
+		<ul>
+		{{#columnValues}}
+			<li><p>{{.}}</p></li>
+		{{/columnValues}}
+		</ul>
+	</li>
+{{/columns}}
+</ul>

@@ -1,0 +1,17 @@
+Ext.define('{{package}}.store.store{{tableName}}', {
+	extend: 'Ext.data.Store',
+	constructor: function(cfg) {
+		var me = this;
+		cfg = cfg || {};
+		me.callParent([Ext.apply({
+			storeId: 'store{{tableName}}',
+			fields: [
+				{{#columns}}
+				{
+					name: '{{columnName}}'
+				}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
+				{{/columns}}
+			]
+		}, cfg)]);
+	}
+});

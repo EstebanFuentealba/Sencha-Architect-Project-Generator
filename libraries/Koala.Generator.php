@@ -1,0 +1,38 @@
+<?PHP
+class KoalaGenerator {
+	
+	public  $tables;
+	public  $raw = array();
+	public  $templates = array();
+	
+	function __construct(){
+		Mustache_Autoloader::register();
+		$this->tables = KoalaMapping::getTables();
+		foreach($this->tables as $tableName){
+			/* obtengo la información (estructura) de cada tabla*/
+			$this->raw[] = KoalaMapping::getTable($tableName);
+		}
+		$this->templates = $this->loadTemplates(dirname(__FILE__)."/../".TEMPLATES);
+	}
+	public function loadTemplates($directory,$exempt = array('.','..','.ds_store','.svn'),&$files = array()) { 
+        
+		$handle = opendir($directory); 
+        while(false !== ($resource = readdir($handle))) { 
+            if(!in_array(strtolower($resource),$exempt)) {
+                if(is_dir($directory.$resource)) {
+                    array_merge($files, self::loadTemplates($directory.$resource.'/',$exempt,$files)); 
+                } else {
+					$info = pathinfo( $directory.$resource);
+					if($info['extension'] == "mustache") {
+						$files[] = $directory.$resource; 
+					}
+				}
+            }
+			
+        } 
+        closedir($handle); 
+        return $files; 
+    }
+}
+
+?>
