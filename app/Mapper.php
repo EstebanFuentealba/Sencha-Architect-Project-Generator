@@ -4,6 +4,8 @@ class Mapper extends KoalaGenerator {
 		"package" => "MyApp",
 		"extension"	=> "js"
 	);
+	public $extColumns = array();
+	
 	function __construct() {
 		parent::__construct();
 		$tableIndex = 0;
@@ -14,6 +16,7 @@ class Mapper extends KoalaGenerator {
 				$this->raw[$tableIndex]["columns"][$columnIndex]["columnIdx"] 		= $columnIndex+1;
 				$this->raw[$tableIndex]["columns"][$columnIndex]["isLessThanTotal"]	= ($table["columnsTotal"] > $columnIndex+1);
 				$this->raw[$tableIndex] = array_merge($this->_defaultsColumns, $this->raw[$tableIndex]);
+				$this->raw[$tableIndex]["columns"][$columnIndex] = new ExtJSColumn($this->raw[$tableIndex]["columns"][$columnIndex]);
 				$columnIndex++;
 			}
 			$tableIndex++;

@@ -3,7 +3,9 @@ Ext.define('{{package}}.model.{{tableName}}', {
     fields: [
         {{#columns}}
 		{
-			name: '{{columnName}}'
+			name: '{{columnName}}' {{#isInt}},
+			type: 'int'
+			{{/isInt}}
 		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
 		{{/columns}}
     ]
