@@ -1,5 +1,8 @@
 <?PHP
 class Mapper extends KoalaGenerator {
+	public $_defaultConfig = array(
+		'defaultView' => 'KoalaView'
+	);
 	private $_defaultsColumns = array(
 		"package" => "MyApp",
 		"extension"	=> "js"
@@ -30,7 +33,17 @@ class Mapper extends KoalaGenerator {
 			"fileName"	=> $fileName
 		));
 		$info = pathinfo($path);
-		return str_replace($info['extension'],$this->_defaultsColumns["extension"], $path);
+		$meta = substr($info["basename"], 0,3);
+		
+		if(in_array($meta ,$this->typeMapping)) {
+			return array(
+				"typeMapping" => str_replace(array("[","]") , array("",""), $meta),
+				"fileNamePath" => str_replace($meta, '',str_replace($info['extension'],$this->_defaultsColumns["extension"], $path))
+			);
+		} else {
+			return str_replace($info['extension'],$this->_defaultsColumns["extension"], $path);
+		}
+
 	}
 }
 ?>

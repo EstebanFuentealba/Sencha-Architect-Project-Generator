@@ -1,9 +1,13 @@
 <?PHP
 class KoalaGenerator {
 	
-	public  $tables;
-	public  $raw = array();
-	public  $templates = array();
+	public $tables;
+	public $raw = array();
+	public $templates = array();
+	public $typeMapping = array(
+		"[m]" /* Multi File */ ,
+		"[s]" /* Single File */
+	);
 	
 	function __construct(){
 		Mustache_Autoloader::register();
