@@ -23,6 +23,7 @@ class Mapper extends KoalaGenerator {
 			foreach($table["columns"] as $column) {
 				/* Add column Info */
 				$this->raw[$tableIndex]["columns"][$columnIndex]["columnIdx"] 		= $columnIndex+1;
+				$this->raw[$tableIndex]["columns"][$columnIndex]["designerId"] 		= KoalaGenerator::newGUID();
 				$this->raw[$tableIndex]["columns"][$columnIndex]["isLessThanTotal"]	= ($table["columnsTotal"] > $columnIndex+1);
 				//$this->raw[$tableIndex]["columns"][$columnIndex]["designerId"] 		= KoalaGenerator::newGUID();
 				

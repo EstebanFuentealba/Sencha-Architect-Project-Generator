@@ -1,0 +1,30 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "{{table.className}}"
+    },
+    "designerId": "{{designerId}}",
+    "cn": [
+		{{#table.columns}}
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "{{columnName}}",
+                "designer|userClassName": "{{columnName}}"
+            },
+            "designerId": "{{designerId}}"
+        }{{#isLessThanTotal}} ,
+		{{/isLessThanTotal}}
+		{{/table.columns}}
+    ]
+}

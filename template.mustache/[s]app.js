@@ -4,6 +4,11 @@ Ext.Loader.setConfig({
 });
 
 Ext.application({
+	models: [
+        {{#ext.model}}
+		'{{className}}'{{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/ext.model}}
+    ],
 	views: [
 		{{#ext.view}}
 		'{{className}}'{{#isLessThanTotal}} ,{{/isLessThanTotal}}

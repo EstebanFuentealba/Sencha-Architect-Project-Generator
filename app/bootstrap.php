@@ -113,6 +113,7 @@ foreach($dataExtJS as $key => $values) {
 			'designerId'		=> $mutacheValue['designerId'],
 			'table' 			=> $mutacheValue['table'],
 			'ext'				=> $dataExtJS,
+			'className'			=> $mutacheValue['className'],
 			'isLessThanTotal'	=> $mutacheValue['isLessThanTotal']
 		));
 		$zip->addFile($renderJS , $mutacheValue['path']);

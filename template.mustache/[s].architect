@@ -12,7 +12,20 @@
 		"{{designerId}}" : { /* {{className}}*/
 			"id": "{{designerId}}"
 		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
-		{{/ext.view}}
+		{{/ext.view}},
+		{{#ext.model}}
+		"{{designerId}}" : { /* {{className}}*/
+			"id": "{{designerId}}",
+			"cn": [
+				{{#table.columns}}
+					{
+						"id": "{{designerId}}"
+					} {{#isLessThanTotal}} ,
+					{{/isLessThanTotal}}
+				{{/table.columns}}
+			]
+		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/ext.model}}
     },
     "tabState": {
         "openTabs": []

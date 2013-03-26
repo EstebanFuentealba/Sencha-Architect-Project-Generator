@@ -22,7 +22,17 @@
 			],
 			"className": "{{className}}"
 		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
-		{{/ext.view}}
+		{{/ext.view}},
+		{{#ext.model}}
+		"{{designerId}}": {
+			"paths": [
+				"metadata/model/{{className}}",
+                "app/model/override/{{className}}.js",
+                "app/model/{{className}}.js"
+			],
+			"className": "{{className}}"
+		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/ext.model}}
     },
     "viewOrderMap": {
         "view": [
@@ -35,7 +45,9 @@
 		],
         "controller": [],
         "model": [
-			
+			{{#ext.model}}
+			"{{designerId}}" /*{{className}}*/ {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+			{{/ext.model}}
 		],
         "resource": [
             "{{defaultConfig.libraryGUID}}"
