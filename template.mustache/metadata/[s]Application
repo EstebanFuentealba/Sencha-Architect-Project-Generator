@@ -6,6 +6,16 @@
     },
     "codeClass": null,
     "userConfig": {
+        "models": [
+            {{#ext.model}}
+			"{{className}}" {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+			{{/ext.model}}
+        ],
+        "stores": [
+        ],
+        "views": [
+        ],
+        "autoCreateViewport": true,
         "name": "{{defaultConfig.package}}"
     },
     "designerId": "application"

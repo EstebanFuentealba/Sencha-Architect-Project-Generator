@@ -17,14 +17,15 @@ class Mapper extends KoalaGenerator {
 		foreach($this->raw as $tableName => $table){
 			$columnIndex = 0;
 			$this->raw[$tableIndex]["tableIdx"] 		= $tableIndex+1;
-			$this->raw[$tableIndex]["isLessThanTotal"]	= ($table["columnsTotal"] > $tableIndex+1);
-			$this->raw[$tableIndex]["designerId"] = KoalaGenerator::newGUID();
+			$this->raw[$tableIndex]["isLessThanTotal"]	= (count($this->raw) > $tableIndex+1);
+			//$this->raw[$tableIndex]["designerId"] = KoalaGenerator::newGUID();
 			$this->raw[$tableIndex]["className"] = Utils::getUnionName($table['tableName'],false);
 			foreach($table["columns"] as $column) {
 				/* Add column Info */
 				$this->raw[$tableIndex]["columns"][$columnIndex]["columnIdx"] 		= $columnIndex+1;
 				$this->raw[$tableIndex]["columns"][$columnIndex]["isLessThanTotal"]	= ($table["columnsTotal"] > $columnIndex+1);
-
+				//$this->raw[$tableIndex]["columns"][$columnIndex]["designerId"] 		= KoalaGenerator::newGUID();
+				
 				$this->raw[$tableIndex]["columns"][$columnIndex] = new ExtJSColumn($this->raw[$tableIndex]["columns"][$columnIndex]);
 				$columnIndex++;
 			}

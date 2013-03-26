@@ -12,13 +12,31 @@
                 "metadata/resource/Library"
             ],
             "className": "Library"
-        }
+        },
+		{{#ext.view}}
+		"{{designerId}}": {
+			"paths": [
+				"metadata/view/{{className}}",
+                "app/view/override/{{className}}.js",
+                "app/view/{{className}}.js"
+			],
+			"className": "{{className}}"
+		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/ext.view}}
     },
     "viewOrderMap": {
-        "view": [],
-        "store": [],
+        "view": [
+			{{#ext.view}}
+			"{{designerId}}" /*{{className}}*/ {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+			{{/ext.view}}
+		],
+        "store": [
+			
+		],
         "controller": [],
-        "model": [],
+        "model": [
+			
+		],
         "resource": [
             "{{defaultConfig.libraryGUID}}"
         ],

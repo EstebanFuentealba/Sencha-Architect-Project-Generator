@@ -5,9 +5,9 @@ Ext.Loader.setConfig({
 
 Ext.application({
 	views: [
-		{{#items}}
+		{{#ext.view}}
 		'{{className}}'{{#isLessThanTotal}} ,{{/isLessThanTotal}}
-		{{/items}}
+		{{/ext.view}}
 	],
     autoCreateViewport: true,
     name: '{{defaultConfig.package}}'

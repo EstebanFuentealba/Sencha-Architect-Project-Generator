@@ -8,11 +8,11 @@
         "{{defaultConfig.guid}}": {
             "id": "{{defaultConfig.guid}}"
         },
-		{{#items}}
+		{{#ext.view}}
 		"{{designerId}}" : { /* {{className}}*/
 			"id": "{{designerId}}"
 		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
-		{{/items}}
+		{{/ext.view}}
     },
     "tabState": {
         "openTabs": []

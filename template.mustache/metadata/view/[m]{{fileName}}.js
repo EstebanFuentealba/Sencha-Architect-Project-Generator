@@ -1,12 +1,15 @@
-Ext.define('{{defaultConfig.package}}.model.{{table.tableName}}', {
-    extend: 'Ext.data.Model',
-    fields: [
-        {{#table.columns}}
-		{
-			name: '{{columnName}}' {{#isInt}},
-			type: 'int'
-			{{/isInt}}
-		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
-		{{/table.columns}}
-    ]
-});
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "height": 250,
+        "width": 400,
+        "designer|userClassName": "{{className}}",
+        "title": "My Panel {{table.tableName}}"
+    },
+    "designerId": "{{designerId}}"
+}
