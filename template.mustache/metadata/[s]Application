@@ -1,0 +1,12 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "name": "{{defaultConfig.package}}"
+    },
+    "designerId": "application"
+}

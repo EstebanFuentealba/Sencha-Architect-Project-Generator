@@ -1,0 +1,29 @@
+{
+    "name": "{{defaultConfig.projectName}}",
+    "settings": {},
+    "xdsVersion": "2.2.0",
+    "xdsBuild": 908,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000499,
+    "framework": "ext42",
+    "topInstanceFileMap": {
+        "{{defaultConfig.libraryGUID}}": {
+            "paths": [
+                "metadata/resource/Library"
+            ],
+            "className": "Library"
+        }
+    },
+    "viewOrderMap": {
+        "view": [],
+        "store": [],
+        "controller": [],
+        "model": [],
+        "resource": [
+            "{{defaultConfig.libraryGUID}}"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

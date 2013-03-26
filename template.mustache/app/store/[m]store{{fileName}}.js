@@ -1,16 +1,16 @@
-Ext.define('{{package}}.store.store{{tableName}}', {
+Ext.define('{{defaultConfig.package}}.store.store{{table.tableName}}', {
 	extend: 'Ext.data.Store',
 	constructor: function(cfg) {
 		var me = this;
 		cfg = cfg || {};
 		me.callParent([Ext.apply({
-			storeId: 'store{{tableName}}',
+			storeId: 'store{{table.tableName}}',
 			fields: [
-				{{#columns}}
+				{{#table.columns}}
 				{
 					name: '{{columnName}}'
 				}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
-				{{/columns}}
+				{{/table.columns}}
 			]
 		}, cfg)]);
 	}

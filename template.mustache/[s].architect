@@ -1,0 +1,31 @@
+{
+    "expandedState": {
+        "data": true,
+        "model": true,
+        "component": true,
+        "controller": true,
+        "resource": true,
+        "{{defaultConfig.guid}}": {
+            "id": "{{defaultConfig.guid}}"
+        },
+		{{#items}}
+		"{{designerId}}" : { /* {{className}}*/
+			"id": "{{designerId}}"
+		}{{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/items}}
+    },
+    "tabState": {
+        "openTabs": []
+    },
+    "canvasState": {
+        "topInstance": null
+    },
+    "inspectorState": {
+        "topInstance": null,
+        "selectedInstance": null
+    },
+    "codeState": {
+        "topInstance": null
+    },
+    "editMode": "design"
+}

@@ -18,7 +18,7 @@ class KoalaGenerator {
 		}
 		$this->templates = $this->loadTemplates(dirname(__FILE__)."/../".TEMPLATES);
 	}
-	public function loadTemplates($directory,$exempt = array('.','..','.ds_store','.svn'),&$files = array()) { 
+	public function loadTemplates($directory,$exempt = array('.','..'),&$files = array()) { 
         
 		$handle = opendir($directory); 
         while(false !== ($resource = readdir($handle))) { 
@@ -27,9 +27,9 @@ class KoalaGenerator {
                     array_merge($files, self::loadTemplates($directory.$resource.'/',$exempt,$files)); 
                 } else {
 					$info = pathinfo( $directory.$resource);
-					if($info['extension'] == "mustache") {
+					//if($info['extension'] == "mustache") {
 						$files[] = $directory.$resource; 
-					}
+					//}
 				}
             }
 			
@@ -37,6 +37,9 @@ class KoalaGenerator {
         closedir($handle); 
         return $files; 
     }
+	public static function newGUID(){
+		return str_replace(array('{','}'),'',com_create_guid());
+	}
 }
 
 ?>
