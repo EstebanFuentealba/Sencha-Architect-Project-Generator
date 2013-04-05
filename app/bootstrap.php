@@ -10,7 +10,6 @@ require_once(dirname(__FILE__).'/../libraries/Mustache/src/Mustache/Autoloader.p
 require_once(dirname(__FILE__).'/../libraries/PHPZip/Zip.php');
 
 require_once(dirname(__FILE__).'/Mapper.php');
-require_once(dirname(__FILE__).'/ExtJSColumn.php');
 
 $mapper = new Mapper();
 $zip = new Zip();
@@ -40,7 +39,7 @@ foreach($mapper->templates as $template){
 		}
 		
 		
-		$fileTemplates[$fileInfo['typeMapping']][(($type == 'model') ? 'model' :(( $type == 'store') ? 'store' :  (($type == 'view') ? 'view' :  'other')))][] = array(
+		$fileTemplates[$fileInfo['typeMapping']][(($type == 'model') ? 'model' :(( $type == 'store') ? 'store' :  (($type == 'view') ? 'view' :  'other')))][$className] = array(
 			'template'			=> $template,
 			'path' 				=> $filePath["fileNamePath"],
 			'designerId'		=> KoalaGenerator::newGUID(),
@@ -68,7 +67,7 @@ foreach($mapper->templates as $template){
 				$className = str_replace('.'.$info['extension'],'',$info['basename']);
 			}
 			
-			$fileTemplates[$fileInfo['typeMapping']][(($type == 'model') ? 'model' :(( $type == 'store') ? 'store' :  (($type == 'view') ? 'view' :  'other')))][] = array(
+			$fileTemplates[$fileInfo['typeMapping']][(($type == 'model') ? 'model' :(( $type == 'store') ? 'store' :  (($type == 'view') ? 'view' :  'other')))][$className] = array(
 				'template'			=> $template,
 				'path' 				=> $filePath["fileNamePath"],
 				'designerId'		=> KoalaGenerator::newGUID(),
@@ -80,6 +79,7 @@ foreach($mapper->templates as $template){
 		}
 	}
 }
+
 
 $dataExtJS = array(
 	'model' => array_merge(
@@ -99,7 +99,13 @@ $dataExtJS = array(
 		((is_array($fileTemplates['m']) && array_key_exists('other', $fileTemplates['m'])) ? $fileTemplates['m']['other'] : array())
 	)
 );
-
+foreach($dataExtJS["store"] as $key => $value) {
+	$modelKey = str_replace('store','',$key);
+	$dataExtJS["store"][$key]["model"] = array(
+		"designerId"	=> $dataExtJS["model"][$modelKey]["designerId"],
+		"modelName"		=> $modelKey
+	);
+}
 /*
 echo "<pre>";
 print_r($dataExtJS);

@@ -23,6 +23,16 @@
 			"className": "{{className}}"
 		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
 		{{/ext.view}},
+		{{#ext.store}}
+		"{{designerId}}": {
+			"paths": [
+				"metadata/store/{{className}}",
+                "app/store/override/{{className}}.js",
+                "app/store/{{className}}.js"
+			],
+			"className": "{{className}}"
+		} {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+		{{/ext.store}},
 		{{#ext.model}}
 		"{{designerId}}": {
 			"paths": [
@@ -41,7 +51,9 @@
 			{{/ext.view}}
 		],
         "store": [
-			
+			{{#ext.store}}
+			"{{designerId}}" /*{{className}}*/ {{#isLessThanTotal}} ,{{/isLessThanTotal}}
+			{{/ext.store}}
 		],
         "controller": [],
         "model": [

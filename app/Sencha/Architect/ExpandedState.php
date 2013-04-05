@@ -1,0 +1,1 @@
+<?PHPnamespace Sencha\Architect;class ExpandedState {	/* Config */	public $data 			= 	true;	public $model			=	true;	public $component		= 	true;	public $controller		=	true;	public $resource		=	true;		public function __construct(){	}	}?>

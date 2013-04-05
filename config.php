@@ -11,4 +11,6 @@ define('DB_PASS', "");
 define('DB_DATABASE', "bbcl_futbol");
 
 define('TEMPLATES', "template.mustache/");
+
+define('PROJECT_PATH', "project");
 ?>
