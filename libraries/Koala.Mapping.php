@@ -90,7 +90,7 @@ class KoalaMapping extends KoalaMappingMySQL  {
 		$db->connect(); 
 			$results = $db->fetch_all_array(self::$queryShowTables);
 		$db->close();
-		return parent::getTables($results,DB_DATABASE);
+		return parent::getAllTables($results,DB_DATABASE);
     }
 }
 ?>

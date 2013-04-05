@@ -16,9 +16,10 @@ class Base {
 		$this->__object->__type	= str_replace('\\','.',get_class($this->__object));
 	}
 	public function toArray(){
-		return (array)$this->__object;
+		#return (array)$this->__object;
+		return (array)$this;
 	}
-	
+
 }
 
 ?>

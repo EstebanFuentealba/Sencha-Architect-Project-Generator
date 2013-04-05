@@ -26,7 +26,7 @@ EOT;
     AND	RC.constraint_schema='%2\$s';
 EOT;
 
-	public static function getTables($results,$database) {
+	public static function getAllTables($results,$database) {
 		$r=array();
 		$s="Tables_in_".$database;
 		foreach($results as $row) {

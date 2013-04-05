@@ -38,6 +38,7 @@ class Base extends BaseArchitect {
 	public function toJSON() {
 		return json_encode($this->toArray(), JSON_PRETTY_PRINT);
 	}
+	
 	public  static function newGUID(){
 		return str_replace(array('{','}'),'',com_create_guid());
 	}

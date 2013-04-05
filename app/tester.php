@@ -58,6 +58,7 @@ foreach($tables as $tableName){
 	$store = new JsonStore();
 	$store->storeId 		= 'store'.$tableName;
 	$store->userClassName	= 'store'.$tableName;
+	$store->className		= 'store'.$tableName;
 	$store->__fileName		= 'store'.$tableName;
 		$proxy = new Ajax();
 		$proxy->url 	= './mantenedor/test.php';
@@ -69,6 +70,7 @@ foreach($tables as $tableName){
 	/* MODEL */
 	$model = new Model();
 	$model->userClassName	= $tableName;
+	$model->className		= $tableName;
 	$model->__fileName		= $tableName;
 	foreach($table["columns"] as $column){
 		$field = new Field();
