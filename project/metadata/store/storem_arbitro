@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_arbitro",
+        "storeId": "storem_arbitro",
+        "className": "storem_arbitro",
+        "designer|userClassName": "storem_arbitro",
+        "userClassName": "storem_arbitro"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "0CB11EC3-E7C7-42FB-BBC3-C0EE1DC18788",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "E53DAFC0-76CC-4CA3-B150-F9B04AEA9C6B",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "A2B753E1-7646-4745-9D84-F474A2A8ECD3",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

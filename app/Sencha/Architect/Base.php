@@ -5,8 +5,11 @@ namespace Sencha\Architect;
 class Base {
 	
 	private $__fileName			= NULL;
+	public $__functions			= array();
+	public $__events			= array();
 	public $userClassName		= NULL;
 	public $userAlias			= NULL;
+	
 	
 	public $__object	= 	NULL;
 	
@@ -19,7 +22,20 @@ class Base {
 		#return (array)$this->__object;
 		return (array)$this;
 	}
-
+	public function toArchitect(){
+		$temp = array(
+			'id'	=> $this->__designerId
+		);
+		if(count($this->__functions)>0){
+			/*TODO*/
+			foreach($this->__functions as $fn){
+				$temp["cn"]	= array(
+					'id'	=> $fn->__designerId
+				);
+			}
+		}
+		return $temp;
+	}
 }
 
 ?>

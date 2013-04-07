@@ -1,0 +1,91 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "92EB9BC2-E1EE-425C-BE84-47527497C366",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fase_anterior_campeonato_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "B08B76DC-9E12-4F61-897F-1D4B4E3BC6E1",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_nombre"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "06D0FA96-B8B6-4802-B31B-1239A9A9B8AE",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_periodo"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "F8A1E807-7932-4E5A-A43D-C9DBE520F980",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_activo"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "D399A58B-63A2-47FF-BA0E-8E1B676182BD",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_campeonato",
+        "designer|userClassName": "m_campeonato",
+        "userClassName": "m_campeonato"
+    },
+    "designerId": "9A1B0052-96BE-4E1E-A74F-1513CFDCE015",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

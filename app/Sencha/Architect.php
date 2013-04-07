@@ -5,12 +5,17 @@ require_once(dirname(__FILE__).'/Architect/Parser.php');
 require_once(dirname(__FILE__).'/XDS.php');
 require_once(dirname(__FILE__).'/Architect/FileMap.php');
 require_once(dirname(__FILE__).'/Architect/OrderMap.php');
+require_once(dirname(__FILE__).'/Architect/State.php');
+require_once(dirname(__FILE__).'/Architect/TabState.php');
 require_once(dirname(__FILE__).'/Architect/ExpandedState.php');
 
 use Sencha\Architect\Parser as Parser;
 use Sencha\XDS as XDS;
 use Sencha\Architect\FileMap as FileMap;
 use Sencha\Architect\OrderMap as OrderMap;
+
+use Sencha\Architect\State as State;
+use Sencha\Architect\TabState as TabState;
 use Sencha\Architect\ExpandedState as ExpandedState;
 
 class Architect {
@@ -29,6 +34,10 @@ class Architect {
 	public function setApp($app) {
 		$this->application = $app;
 		$this->expandedState	= new ExpandedState();
+		$this->tabState 		= new TabState();
+		$this->canvasState		= new State();
+		$this->inspectorState	= new State();
+		$this->codeState		= new State();
 	}	
 	public function save($path){
 		$senchaParser = new Parser();
@@ -56,14 +65,8 @@ class Architect {
 			
 			$xds->topInstanceFileMap[$model->__designerId] = $fileMap;
 			
-			
-			
-			$cnModel = $senchaParser->toSenchaArchitectJSON($model->toArray());
 			$key = $model->__designerId;
-			$this->expandedState->$key = array(
-				'id' 	=> $model->__designerId,
-				'cn'	=> $cnModel["cn"]
-			);
+			$this->expandedState->$key = $model->toArchitect();
 			
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/model/'.$model->__fileName, 
@@ -87,6 +90,8 @@ class Architect {
 			$orderMap->store[] = $store->__designerId;
 			$xds->topInstanceFileMap[$store->__designerId] = $fileMap;
 			
+			$key = $store->__designerId;
+			$this->expandedState->$key = $store->toArchitect();
 			
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/store/'.$store->__fileName,
@@ -107,6 +112,9 @@ class Architect {
 			$orderMap->resource[] = $resource->__designerId;
 			$xds->topInstanceFileMap[$resource->__designerId] = $fileMap;
 			
+			$key = $resource->__designerId;
+			$this->expandedState->$key = $resource->toArchitect();
+			
 			
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/resource/'.$resource->__fileName, 
@@ -115,11 +123,27 @@ class Architect {
 		}
 		/* TODO: save all controllers and views */
 		
+		$orderMap->app[] = 'application';
 		$xds->viewOrderMap	= $orderMap;
 		
 		
 		/* */
-		$parseArray = $senchaParser->toSenchaArchitectJSON($this->application->toArray());
+		$appArray = $this->application->toArray();
+		$parseArray = $senchaParser->toSenchaArchitectJSON($appArray);
+		unset($parseArray['cn']);
+		if(array_key_exists('models',  $appArray)){
+			$parseArray["userConfig"]["models"] 		= $appArray["models"];
+		}
+		if(array_key_exists('stores',  $appArray)){
+			$parseArray["userConfig"]["stores"] 		= $appArray["stores"];
+		}
+		if(array_key_exists('views',  $appArray)){
+			$parseArray["userConfig"]["views"] 			= $appArray["views"];
+		}
+		if(array_key_exists('controllers',  $appArray)){
+			$parseArray["userConfig"]["controllers"] 	= $appArray["controllers"];
+		}
+		
 		file_put_contents(
 			$path.PROJECT_PATH.'/metadata/'.$this->application->__fileName, 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
@@ -132,18 +156,29 @@ class Architect {
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
 		
-		/*
-		$parseArray = $senchaParser->toSenchaArchitectJSON((array)$this, true);
+		$parseArray = $this->toArray();
+		
 		file_put_contents(
 			$path.PROJECT_PATH.'/.architect', 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
-		*/
-		print_r($this->toArray());
+		
+		
 	}
 	
 	public function toArray() {
-		return $this->expandedState;
+		return array(
+			'expandedState' 	=> $this->expandedState,
+			'editMode'			=> $this->editMode,
+			'codeState'			=> $this->codeState,
+			'inspectorState'	=> $this->inspectorState,
+			'canvasState'		=> $this->canvasState,
+			'tabState'			=> $this->tabState
+		);
+	}
+	
+	public function toJSON() {
+	
 	}
 }
 

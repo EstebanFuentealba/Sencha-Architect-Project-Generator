@@ -6,19 +6,22 @@ class Parser {
 	public function __construct(){
 
 	}
-	
 	public function toSenchaArchitectJSON($array = array(), $onlyArray = false, $onlyIdsAndCn = false){
 		if(count($array) == 0) {
 			/*$array = self::toArray();*/
 		}
 		$arrayReturn = array();
+		
+		
+		
+		
 		if($onlyArray) {
-			
 			$hiddenField = array(
 				'__reference',
-				'__fileName'
+				'__fileName',
+				'__functions',
+				'__events'
 			);
-			
 			foreach($array as $key => $value) {
 				#print_r($value).'<br />';
 				if(in_array($key, $hiddenField)) { break; }
@@ -40,6 +43,8 @@ class Parser {
 			return $arrayReturn;
 		} else {
 			foreach($array as $key => $value){
+			
+				
 				if(is_array($value)){
 					if($key === '__reference'){
 						$arrayReturn['reference'] = $value;

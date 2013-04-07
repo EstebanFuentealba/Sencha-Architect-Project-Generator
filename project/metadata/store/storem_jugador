@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_jugador",
+        "storeId": "storem_jugador",
+        "className": "storem_jugador",
+        "designer|userClassName": "storem_jugador",
+        "userClassName": "storem_jugador"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "ABA94C83-B4FF-45CA-8BB8-2427604672BF",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "FB1C7C0D-19B7-4CAB-B01D-43DAE5DAA11D",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "2E229583-8519-4ED8-ABC7-622037B37700",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

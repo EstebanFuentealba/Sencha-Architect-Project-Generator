@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_relato",
+        "storeId": "storem_relato",
+        "className": "storem_relato",
+        "designer|userClassName": "storem_relato",
+        "userClassName": "storem_relato"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "E08CA350-9D74-48E0-B0AF-36AC345D26FC",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "D53EB864-8DC4-42F9-95F6-85D0CC3C5336",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "2AC4BA86-5C4C-455F-B6C0-FDDEE9623CEB",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

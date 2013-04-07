@@ -30,7 +30,22 @@ abstract class AbstractStore extends Base implements Observable, Sortable {
 		parent::__construct();
 	}
 	
-	
+	public function toArchitect(){
+		$temp = parent::toArchitect();
+		if(is_array($this->fields)){
+			foreach($this->fields as $field) {
+				$temp["cn"][] = $field->toArchitect();
+			}
+		}
+		/*
+		if(!is_null($this->model)){
+			$temp["cn"][] = $this->model->toArchitect();
+		}*/
+		if(!is_null($this->proxy)){
+			$temp["cn"][] = $this->proxy->toArchitect();
+		}
+		return $temp;
+	}
 }
 
 ?>

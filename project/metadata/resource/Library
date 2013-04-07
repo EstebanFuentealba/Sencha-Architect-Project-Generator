@@ -1,0 +1,15 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "className": "Library"
+    },
+    "type": "libraryresource",
+    "designerId": "639572F8-408D-4972-828E-147C8DDC8FC4",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "cn": [
+
+    ]
+}

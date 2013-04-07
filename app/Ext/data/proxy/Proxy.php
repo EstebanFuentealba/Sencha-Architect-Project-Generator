@@ -22,6 +22,21 @@ class Proxy extends Base implements Observable {
 			"type"	=> "object"
 		);
 	}
+	
+	public function toArchitect(){
+		$temp = parent::toArchitect();
+		if(!is_null($this->reader)){
+			$temp["cn"][] = $this->reader->toArchitect();
+		}
+		if(!is_null($this->writer)){
+			$temp["cn"][] = $this->writer->toArchitect();
+		}
+		if(!is_null($this->model)){
+			$temp["cn"][] = $this->model->toArchitect();
+		}
+		return $temp;
+	}
+	
 }
 
 ?>

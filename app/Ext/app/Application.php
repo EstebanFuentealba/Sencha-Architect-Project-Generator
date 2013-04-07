@@ -54,7 +54,6 @@ class Application extends Controller {
 				$temp['views'][] = $view->userClassName;
 			}
 		}
-		
 		return $temp;
 	}
 }

@@ -1,0 +1,46 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "arbitro_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "C6363F75-824E-45D2-9C7E-142647C52772",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "arbitro_nombre"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "5FBEFCCF-2308-4E70-93B8-D762042C7474",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_arbitro",
+        "designer|userClassName": "m_arbitro",
+        "userClassName": "m_arbitro"
+    },
+    "designerId": "8B2766BE-2475-4D2C-A9E4-58778C366CA0",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

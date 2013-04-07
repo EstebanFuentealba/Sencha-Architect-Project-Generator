@@ -1,0 +1,181 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "E4212231-586C-4B1B-9F87-DFFEBD67B6E3",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "arbitro_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "9E945309-F688-41C5-8CBB-7A7E3C61C662",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "m_config_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "05CE855F-31CD-4A03-B332-1506293C5C75",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "equipo_local_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "7F8F2C82-6276-4140-9592-D1DEB54D7AB8",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "equipo_visita_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "9B8BF321-9B02-47E9-8F3B-62729E82C5C7",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_estado"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "33B3F2B9-AE05-4055-8722-E8F16863D5F9",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "created_at"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "E1678697-4E11-421B-9564-DAD57BB27C4F",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_realizacion"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "DE6D5A37-7B9A-4BAD-91AD-A6A7578E2F5A",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_goles_visita"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "955D0E62-0B12-4E98-9ED8-5026A5231222",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_goles_local"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "F1BFA626-8392-4056-A6BC-E50E526F8039",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "fecha_n"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "417587E9-BC5A-4857-AD24-7F32C0B18969",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_fecha",
+        "designer|userClassName": "m_fecha",
+        "userClassName": "m_fecha"
+    },
+    "designerId": "5A4A1339-F97A-40A3-836F-4E78B0A83084",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

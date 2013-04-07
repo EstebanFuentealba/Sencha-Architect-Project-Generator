@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_estadio",
+        "storeId": "storem_estadio",
+        "className": "storem_estadio",
+        "designer|userClassName": "storem_estadio",
+        "userClassName": "storem_estadio"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "C7F79B30-4DAD-475E-A83A-1751AE1E0802",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "59D571C6-08EC-4423-8354-6EF8E26BE95B",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "149678DE-270B-4E93-931A-524F576A3552",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

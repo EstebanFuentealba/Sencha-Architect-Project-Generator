@@ -1,0 +1,136 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "6775B353-690A-46A2-B8BB-CA61654567DB",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_nombres"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "3D7081B5-B867-460E-A653-637F22C031BD",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_posicion"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "3E0D3C9B-8547-40C9-A017-9AD6F6B7E358",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_estado"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "6866D7F0-B066-45F2-A1E1-503F8B6D9AF4",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_n"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "6BCC015D-9AF5-44A4-AAB3-BF88C2FC7AB3",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_image_path"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "0805C530-6E9A-462A-B468-1405FFBE2E10",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_apellido"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "D15A8916-2E64-451B-89EC-82D10645DA02",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "jugador_nacionalidad"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "68C0B624-2E27-4236-A3AA-2696A724185A",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_jugador",
+        "designer|userClassName": "m_jugador",
+        "userClassName": "m_jugador"
+    },
+    "designerId": "A9B33465-B0A8-42EE-B297-C2E44A9ACC2D",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

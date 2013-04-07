@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_campeonato_equipo",
+        "storeId": "storem_campeonato_equipo",
+        "className": "storem_campeonato_equipo",
+        "designer|userClassName": "storem_campeonato_equipo",
+        "userClassName": "storem_campeonato_equipo"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "BD232C79-93D0-4552-9415-4D2AF93AE458",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "D0135B51-039E-411E-8E2C-3C7A754AA3C9",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "2902DBC3-B928-49C0-8FA6-69B2093AD600",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

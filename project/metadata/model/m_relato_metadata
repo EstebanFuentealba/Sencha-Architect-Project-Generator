@@ -1,0 +1,76 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "relato_metadata_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "FCD50006-D4F3-4671-8F2D-6D01BE5FB5A1",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "relato_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "9BC15F21-CDEA-4DEF-BB4F-4B0600BF3B5F",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "relato_metadata_key"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "568C4AEB-EB1B-4731-979F-B628D7756C92",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "relato_metadata_value"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "763F06CA-8619-4383-947D-9407268B73C8",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_relato_metadata",
+        "designer|userClassName": "m_relato_metadata",
+        "userClassName": "m_relato_metadata"
+    },
+    "designerId": "534D7DA8-52FD-4BD2-A7C2-17984107585C",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

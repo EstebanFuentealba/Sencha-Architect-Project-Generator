@@ -27,6 +27,13 @@ class Model extends Base implements Observable {
 		$this->fields[] = $field;
 	}
 	
+	public function toArchitect(){
+		$temp = parent::toArchitect();
+		foreach($this->fields as $field) {
+			$temp["cn"][] = $field->toArchitect();
+		}
+		return $temp;
+	}
 }
 
 ?>

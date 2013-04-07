@@ -1,0 +1,151 @@
+{
+    "cn": [
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "867D2498-9E0E-4C9E-8AB0-5507ED5CAEB9",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "campeonato_equipo_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "C7533E26-2EA7-4008-8479-77E15B9BD3D4",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "equipo_id"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "E922C9EB-BC8B-4D23-B784-9680539DB228",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "n_partidos_jugados"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "C4833DA2-1CDD-4C61-AED3-ACBE3A21357D",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "n_partidos_ganados"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "EEE13DC2-9A0B-4F4C-B374-7FCE13AD04D6",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "n_partidos_empatados"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "E2FEF183-3616-4FB9-A49E-9844FFA072EB",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "n_diferencia_goles"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "9D383FFD-0574-4CED-AA6F-3F8AEEEDD5E4",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "n_puntos"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "B1D0CC45-5BB0-4D2A-BFC0-B26C36F38FAD",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        },
+        {
+            "codeClass": "null",
+            "userConfig": {
+                "name": "grupo"
+            },
+            "type": "Ext.data.Field",
+            "designerId": "A8859CB6-6B9E-43E4-8AB3-EF9B3977F0CE",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "cn": [
+
+            ]
+        }
+    ],
+    "codeClass": "null",
+    "userConfig": {
+        "idProperty": "id",
+        "className": "m_campeonato_equipo",
+        "designer|userClassName": "m_campeonato_equipo",
+        "userClassName": "m_campeonato_equipo"
+    },
+    "designerId": "9C572574-7F7A-469D-8711-F28F26FCD957",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

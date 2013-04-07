@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_campeonato",
+        "storeId": "storem_campeonato",
+        "className": "storem_campeonato",
+        "designer|userClassName": "storem_campeonato",
+        "userClassName": "storem_campeonato"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "79561C9C-A8F0-47FE-87CD-6E296C49F010",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "780B67EF-E3B3-457B-A7BF-13901ADBEC3D",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "89C95499-8366-4855-B916-E0D7FC7086EB",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}

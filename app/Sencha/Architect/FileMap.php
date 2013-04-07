@@ -15,6 +15,8 @@ class FileMap extends Base {
 		unset($this->__type);
 		unset($this->__designerId);
 		unset($this->__object);
+		unset($this->__functions);
+		unset($this->__events);
 		unset($this->userClassName);
 		unset($this->userAlias);
 	}

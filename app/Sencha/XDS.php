@@ -21,8 +21,8 @@ class XDS extends Base {
 		$this->__fileName = 'project_xds.xds';
 		unset($this->__designerId);
 		unset($this->__object);
-		#unset($this->userClassName);
-		#unset($this->userAlias);
+		unset($this->__functions);
+		unset($this->__events);
 	}
 	
 }

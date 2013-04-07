@@ -27,7 +27,10 @@ class Field extends Base {
 			"type"	=> "array"
 		);
 	}
-	
+	public function toArchitect(){
+		$temp = parent::toArchitect();
+		return $temp;
+	}
 	
 }
 

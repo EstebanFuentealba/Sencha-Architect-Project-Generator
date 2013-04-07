@@ -1,0 +1,47 @@
+{
+    "codeClass": "null",
+    "userConfig": {
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_plantel",
+        "storeId": "storem_plantel",
+        "className": "storem_plantel",
+        "designer|userClassName": "storem_plantel",
+        "userClassName": "storem_plantel"
+    },
+    "type": "jsonstore",
+    "cn": {
+        "codeClass": "null",
+        "userConfig": {
+            "url": ".\/mantenedor\/test.php"
+        },
+        "type": "Ext.data.proxy.Ajax",
+        "cn": {
+            "codeClass": "null",
+            "userConfig": {
+                "root": "records",
+                "successProperty": "success",
+                "totalProperty": "total"
+            },
+            "type": "Ext.data.reader.Json",
+            "designerId": "6B4E72D4-EAAB-4525-94A3-AA6000EA6DCD",
+            "reference": {
+                "name": "reader",
+                "type": "object"
+            },
+            "cn": [
+
+            ]
+        },
+        "designerId": "1E46245E-075A-4879-A813-F21D19D3E2B5",
+        "reference": {
+            "name": "proxy",
+            "type": "object"
+        }
+    },
+    "designerId": "3AF4AD5F-62E2-4F86-BC6D-6A4507712E12",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    }
+}
