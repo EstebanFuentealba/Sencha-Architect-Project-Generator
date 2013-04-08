@@ -76,7 +76,10 @@ foreach($tables as $tableName){
 		$field = new Field();
 			$field->name = $column["columnName"];
 		$model->addField($field);
+		
 	}
+	#print_r("Ext.define('".$app->name.".model.".$model->className."',".json_encode($model->toArrayDefinition()).");");
+	#exit(0);
 	$store->model = $model->userClassName;
 
 	/* VIEW */

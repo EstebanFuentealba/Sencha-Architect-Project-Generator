@@ -12,5 +12,5 @@ define('DB_DATABASE', "bbcl_futbol");
 
 define('TEMPLATES', "template.mustache/");
 
-define('PROJECT_PATH', "project");
+define('PROJECT_PATH', "build");
 ?>

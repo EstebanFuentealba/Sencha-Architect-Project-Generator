@@ -31,6 +31,11 @@ class Field extends Base {
 		$temp = parent::toArchitect();
 		return $temp;
 	}
+	public function toArrayDefinition() {
+		$definition = parent::toArrayDefinition();
+		
+		return $definition;
+	}
 	
 }
 

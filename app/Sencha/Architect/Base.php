@@ -36,6 +36,22 @@ class Base {
 		}
 		return $temp;
 	}
+	
+	public function toArrayDefinition(){
+		$definition = array();
+		foreach($this as $key => $value) {
+			if(!is_null($value)){
+				if(!is_object($value) && !is_array($value)) {
+					if(!preg_match("/^__(.*)$/", $key)){
+						/* NO private attributes */
+						$definition[$key] = $value;
+					}
+				}
+			}
+		}
+		return $definition;
+	}
+	
 }
 
 ?>

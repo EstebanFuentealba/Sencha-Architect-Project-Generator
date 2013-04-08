@@ -34,6 +34,15 @@ class Model extends Base implements Observable {
 		}
 		return $temp;
 	}
+
+	public function toArrayDefinition() {
+		$definition = parent::toArrayDefinition();
+		$definition["extend"] = str_replace('\\','.',get_class($this));
+		foreach($this->fields as $field) {
+			$definition["fields"] = $field->toArrayDefinition();
+		}
+		return $definition;
+	}
 }
 
 ?>
