@@ -46,6 +46,13 @@ abstract class AbstractStore extends Base implements Observable, Sortable {
 		}
 		return $temp;
 	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		if(!is_null($this->proxy)){
+			$meta["cn"][] = $this->proxy->toMetaDataArray();
+		}
+		return $meta;
+	}
 }
 
 ?>

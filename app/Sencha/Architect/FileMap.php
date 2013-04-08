@@ -8,7 +8,6 @@ use Sencha\Architect\Base as Base;
 class FileMap extends Base {
 	
 	public $paths			= array();
-	public $className		= NULL;
 
 	public function __construct(){
 		parent::__construct();
@@ -20,7 +19,12 @@ class FileMap extends Base {
 		unset($this->userClassName);
 		unset($this->userAlias);
 	}
-
+	public function toMap() {
+		return array(
+			'paths'	=> $this->paths,
+			'className'	=> $this->__className
+		);
+	}
 }
 
 ?>

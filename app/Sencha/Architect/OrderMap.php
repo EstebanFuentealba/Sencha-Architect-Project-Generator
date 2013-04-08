@@ -22,7 +22,16 @@ class OrderMap extends Base {
 		unset($this->userClassName);
 		unset($this->userAlias);
 	}
-
+	public function toArray() {
+		return array(
+			'view'			=> $this->view,
+			'store'			=> $this->store,
+			'controller'	=> $this->controller,
+			'model'			=> $this->model,
+			'resource'		=> $this->resource,
+			'app'			=> $this->app
+		);
+	}
 }
 
 ?>

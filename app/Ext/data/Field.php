@@ -33,8 +33,12 @@ class Field extends Base {
 	}
 	public function toArrayDefinition() {
 		$definition = parent::toArrayDefinition();
-		
 		return $definition;
+	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		$meta["reference"]["name"] = 'fields';
+		return $meta;
 	}
 	
 }

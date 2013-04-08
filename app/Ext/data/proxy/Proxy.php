@@ -36,6 +36,21 @@ class Proxy extends Base implements Observable {
 		}
 		return $temp;
 	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		$meta["reference"]["name"] = 'proxy';
+		$meta["reference"]["type"] = 'object';
+		if(!is_null($this->reader)){
+			$meta["cn"][] = $this->reader->toMetaDataArray();
+		}
+		if(!is_null($this->writer)){
+			$meta["cn"][] = $this->writer->toMetaDataArray();
+		}
+		if(!is_null($this->model)){
+			$meta["cn"][] = $this->model->toMetaDataArray();
+		}
+		return $meta;
+	}
 	
 }
 

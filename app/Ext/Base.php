@@ -10,7 +10,6 @@ class Base extends BaseArchitect {
 
 	public $class 			= NULL;
 	public $className		= NULL;
-	public $__type			= NULL;
 	public $__designerId	= NULL;
 	
 	public $__reference		= array(
@@ -20,6 +19,7 @@ class Base extends BaseArchitect {
 	
 	
 	public function __construct(){
+		parent::__construct();
 		$this->__designerId = self::newGUID();
 	}
 	

@@ -24,7 +24,28 @@ class XDS extends Base {
 		unset($this->__functions);
 		unset($this->__events);
 	}
-	
+	public function toMetaDataArray() {
+		$meta = array();
+		foreach($this as $key => $value) {
+			if(!is_null($value)){
+				/* NO private attributes */
+				if(!preg_match("/^__(.*)$/", $key)){
+					if(is_object($value)) {
+						$meta[$key] = $value->toArray();
+					} else { 
+						$meta[$key] = $value;
+					}
+				}
+			}
+		}
+		return $meta;
+	}
+	public function toArray() {
+		return array(
+			'paths'	=> $this->paths,
+			'className'	=> $this->__className
+		);
+	}
 }
 
 ?>

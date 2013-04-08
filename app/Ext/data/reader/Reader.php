@@ -18,10 +18,16 @@ class Reader extends Base implements Observable {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->__reference = array(
+		/*$this->__reference = array(
 			"name"	=> "reader",
 			"type"	=> "object"
-		);
+		);*/
+	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		$meta["reference"]["name"] = 'reader';
+		$meta["reference"]["type"] = 'object';
+		return $meta;
 	}
 }
 

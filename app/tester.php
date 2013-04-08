@@ -57,8 +57,8 @@ foreach($tables as $tableName){
 	/* STORE */
 	$store = new JsonStore();
 	$store->storeId 		= 'store'.$tableName;
-	$store->userClassName	= 'store'.$tableName;
-	$store->className		= 'store'.$tableName;
+	$store->__userClassName	= 'store'.$tableName;
+	$store->__className		= 'store'.$tableName;
 	$store->__fileName		= 'store'.$tableName;
 		$proxy = new Ajax();
 		$proxy->url 	= './mantenedor/test.php';
@@ -69,18 +69,21 @@ foreach($tables as $tableName){
 	
 	/* MODEL */
 	$model = new Model();
-	$model->userClassName	= $tableName;
-	$model->className		= $tableName;
+	$model->__userClassName	= $tableName;
+	$model->__className		= $tableName;
 	$model->__fileName		= $tableName;
 	foreach($table["columns"] as $column){
 		$field = new Field();
 			$field->name = $column["columnName"];
+			if($column['isPrimaryKey'] && $column['extra'] == 'auto_increment') {
+				$field->useNull = true;
+			}
 		$model->addField($field);
 		
 	}
-	#print_r("Ext.define('".$app->name.".model.".$model->className."',".json_encode($model->toArrayDefinition()).");");
-	#exit(0);
-	$store->model = $model->userClassName;
+	
+	
+	$store->model = $model->__className;
 
 	/* VIEW */
 	
@@ -88,6 +91,15 @@ foreach($tables as $tableName){
 	/* Append store, Model and View to Applicaton */
 	$app->models[] = $model;
 	$app->stores[] = $store;
+	
+	/*
+	echo '<pre>';
+	print_r($store->toMetaDataArray());
+	#print_r("Ext.define('".$app->name.".model.".$model->__className."',".json_encode($model->toArrayDefinition() , JSON_PRETTY_PRINT).");");
+	echo '</pre>';
+	exit(0);
+	*/
+	
 }
 
 $architect = new Architect();

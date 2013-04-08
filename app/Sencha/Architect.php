@@ -3,7 +3,6 @@ namespace Sencha;
 
 require_once(dirname(__FILE__).'/../../libraries/Utils.php');
 require_once(dirname(__FILE__).'/../../libraries/Debug.php');
-require_once(dirname(__FILE__).'/Architect/Parser.php');
 require_once(dirname(__FILE__).'/XDS.php');
 require_once(dirname(__FILE__).'/Architect/FileMap.php');
 require_once(dirname(__FILE__).'/Architect/OrderMap.php');
@@ -11,7 +10,6 @@ require_once(dirname(__FILE__).'/Architect/State.php');
 require_once(dirname(__FILE__).'/Architect/TabState.php');
 require_once(dirname(__FILE__).'/Architect/ExpandedState.php');
 
-use Sencha\Architect\Parser as Parser;
 use Sencha\XDS as XDS;
 use Sencha\Architect\FileMap as FileMap;
 use Sencha\Architect\OrderMap as OrderMap;
@@ -49,7 +47,6 @@ class Architect {
 		Debug::dump('[delete] Delete dir project');
 		Utils::rrmdir($path.PROJECT_PATH);
 		sleep(1);
-		$senchaParser = new Parser();
 		
 		##
 		##	Save as Sencha Architect Project (ExtJS 4.2)
@@ -60,11 +57,11 @@ class Architect {
 		Debug::dump('[save] Save all models');
 		foreach($this->application->models as $model) {
 			@mkdir($path.PROJECT_PATH.'/metadata/model/', 0777, true);
-			$parseArray = $senchaParser->toSenchaArchitectJSON($model->toArray());
+			$parseArray = $model->toMetaDataArray();
 			
 			/* add to xds */
 			$fileMap = new FileMap();
-				$fileMap->className	= $model->className;
+				$fileMap->__className	= $model->__className;
 				$fileMap->paths	= array(
 					"metadata/model/".$model->__fileName,
 					"app/model/override/".$model->__fileName.".js",
@@ -73,7 +70,7 @@ class Architect {
 			
 			$orderMap->model[] = $model->__designerId;
 			
-			$xds->topInstanceFileMap[$model->__designerId] = $fileMap;
+			$xds->topInstanceFileMap[$model->__designerId] = $fileMap->toMap();
 			
 			$key = $model->__designerId;
 			$this->expandedState->$key = $model->toArchitect();
@@ -88,11 +85,11 @@ class Architect {
 		Debug::dump('[save] Save all stores');
 		foreach($this->application->stores as $store) {
 			@mkdir($path.PROJECT_PATH.'/metadata/store/', 0777, true);
-			$parseArray = $senchaParser->toSenchaArchitectJSON($store->toArray());
+			$parseArray = $store->toMetaDataArray();
 			
 			/* add to xds */
 			$fileMap = new FileMap();
-				$fileMap->className	= $store->className;
+				$fileMap->__className	= $store->__className;
 				$fileMap->paths	= array(
 					"metadata/store/".$store->__fileName,
 					"app/store/override/".$store->__fileName.".js",
@@ -100,7 +97,7 @@ class Architect {
 				);
 			
 			$orderMap->store[] = $store->__designerId;
-			$xds->topInstanceFileMap[$store->__designerId] = $fileMap;
+			$xds->topInstanceFileMap[$store->__designerId] = $fileMap->toMap();
 			
 			$key = $store->__designerId;
 			$this->expandedState->$key = $store->toArchitect();
@@ -114,16 +111,15 @@ class Architect {
 		Debug::dump('[save] Save all resources');
 		foreach($this->resources as $resource) {
 			@mkdir($path.PROJECT_PATH.'/metadata/resource/', 0777, true);
-			$parseArray = $senchaParser->toSenchaArchitectJSON($resource->toArray());
-			
+			$parseArray = $resource->toMetaDataArray();
 			/* add to xds */
 			$fileMap = new FileMap();
-				$fileMap->className	= $resource->className;
+				$fileMap->__className	= $resource->__className;
 				$fileMap->paths	= array(
 					"metadata/resource/".$resource->__fileName
 				);
 			$orderMap->resource[] = $resource->__designerId;
-			$xds->topInstanceFileMap[$resource->__designerId] = $fileMap;
+			$xds->topInstanceFileMap[$resource->__designerId] = $fileMap->toMap();
 			
 			$key = $resource->__designerId;
 			$this->expandedState->$key = $resource->toArchitect();
@@ -140,22 +136,7 @@ class Architect {
 		$xds->viewOrderMap	= $orderMap;
 		
 		
-		/* */
-		$appArray = $this->application->toArray();
-		$parseArray = $senchaParser->toSenchaArchitectJSON($appArray);
-		unset($parseArray['cn']);
-		if(array_key_exists('models',  $appArray)){
-			$parseArray["userConfig"]["models"] 		= $appArray["models"];
-		}
-		if(array_key_exists('stores',  $appArray)){
-			$parseArray["userConfig"]["stores"] 		= $appArray["stores"];
-		}
-		if(array_key_exists('views',  $appArray)){
-			$parseArray["userConfig"]["views"] 			= $appArray["views"];
-		}
-		if(array_key_exists('controllers',  $appArray)){
-			$parseArray["userConfig"]["controllers"] 	= $appArray["controllers"];
-		}
+		$parseArray = $this->application->toMetaDataArray();
 		Debug::dump('[save] Save Application');
 		file_put_contents(
 			$path.PROJECT_PATH.'/metadata/'.$this->application->__fileName, 
@@ -164,7 +145,8 @@ class Architect {
 				
 		/* TODO: edit Parser for this file */
 		Debug::dump('[save] Save XDS File');
-		$parseArray = $senchaParser->toSenchaArchitectJSON($xds->toArray(), true);
+
+		$parseArray = $xds->toMetaDataArray();
 		file_put_contents(
 			$path.PROJECT_PATH.'/'.$xds->__fileName, 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
