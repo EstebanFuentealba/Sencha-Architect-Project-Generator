@@ -24,13 +24,20 @@ abstract class AbstractContainer
 	public $defaultType	= NULL;
 	public $defaults 	= NULL;
 	public $detachOnRemove	= NULL;
-	public $items 	= NULL;
+	public $items 	= array();
 	public $layout 	= NULL;
 	public $renderTpl	= NULL;
 	public $suspendLayout 	= NULL;
 	
 	public function __construct(){
 		parent::__construct();
+	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		foreach($this->items as $item) {
+			$meta["cn"][] = $item->toMetaDataArray();
+		}
+		return $meta;
 	}
 
 }

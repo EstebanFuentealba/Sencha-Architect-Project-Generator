@@ -26,7 +26,9 @@ require_once(dirname(__FILE__).'/ext/data/proxy/Ajax.php');
 require_once(dirname(__FILE__).'/ext/data/JsonStore.php');
 require_once(dirname(__FILE__).'/ext/data/reader/Json.php');
 require_once(dirname(__FILE__).'/ext/panel/Panel.php');
-
+require_once(dirname(__FILE__).'/ext/form/Panel.php');
+require_once(dirname(__FILE__).'/ext/grid/Panel.php');
+require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
@@ -38,6 +40,11 @@ use Sencha\Architect as Architect;
 use Ext\app\Application as Application;
 use Ext\resource\LibraryResource as LibraryResource;
 use Ext\panel\Panel as Panel;
+use Ext\grid\Panel as GridPanel;
+use Ext\form\Panel as FormPanel;
+use Ext\grid\column\Column as Column;
+use Ext\grid\column\Number as NumberColumn;
+
 
 /*
 	First: Mapping Tables of database
@@ -73,18 +80,8 @@ foreach($tables as $tableName){
 	$model->__userClassName	= $tableName;
 	$model->__className		= $tableName;
 	$model->__fileName		= $tableName;
-	foreach($table["columns"] as $column){
-		$field = new Field();
-			$field->name = $column["columnName"];
-			if($column['isPrimaryKey'] && $column['extra'] == 'auto_increment') {
-				$field->useNull = true;
-			}
-		$model->addField($field);
-		
-	}
 	
 	
-	$store->model = $model->__className;
 	
 	/* VIEW */
 	$panel = new Panel();
@@ -93,19 +90,57 @@ foreach($tables as $tableName){
 	$panel->__className		= $tableName.'View';
 	$panel->__fileName		= $tableName.'View';
 	
+	$panel->layout			= "column";
+	$panel->bodyPadding		= 5;
+	if(is_null($panel->items) || !is_array($panel->items)){
+		$panel->items = array();
+	}
+		$grid = new GridPanel();
+		$grid->__columnWidth	= 0.6;
+		$grid->store			= $store->__className;
+		
+		$form = new FormPanel();
+		$form->title = 'Formulario ';
+		$form->__columnWidth	= 0.4;
+		$form->margin	= '0 0 0 5';
+		
+	foreach($table["columns"] as $col){
+		$field = new Field();
+			$field->name = $col["columnName"];
+			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
+				$field->useNull = true;
+			}
+		$model->addField($field);
+		
+		
+		if($col['type'] == 'int') {
+			$column = new NumberColumn();
+		} else {
+			$column = new Column();
+		}
+		$column->text 		= $col["columnName"];
+		$column->dataIndex 	= $col["columnName"];
+		
+		$grid->columns[] = $column;
+	}
+	
+	
+	$panel->items[] = $grid;
+	$panel->items[] = $form;
+	
+	
+	$store->model 	= $model->__className;
+	
+	
+	
+	
 	
 
 	/* Append store, Model and View to Applicaton */
 	$app->models[] 	= $model;
 	$app->stores[] 	= $store;
 	$app->views[] 	= $panel;
-	/*
-	echo '<pre>';
-	print_r($store->toMetaDataArray());
-	#print_r("Ext.define('".$app->name.".model.".$model->__className."',".json_encode($model->toArrayDefinition() , JSON_PRETTY_PRINT).");");
-	echo '</pre>';
-	exit(0);
-	*/
+
 	
 }
 

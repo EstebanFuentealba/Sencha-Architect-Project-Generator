@@ -37,7 +37,7 @@ abstract class AbstractComponent
 	public $draggable= NULL;
 	public $floating= NULL;
 	public $frame = NULL;
-	public $height = 250;
+	public $height = NULL;
 	public $hidden = NULL;
 	public $hideMode = NULL;
 	public $html = NULL;
@@ -62,7 +62,7 @@ abstract class AbstractComponent
 	public $tpl = NULL;
 	public $tplWriteMode = NULL;
 	public $ui = NULL;
-	public $width = 400;
+	public $width = NULL;
 	public $xtype= NULL;
 	
 	public function __construct(){

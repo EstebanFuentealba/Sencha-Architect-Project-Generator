@@ -49,7 +49,10 @@ class Panel extends AbstractPanel {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->height = 450;
 	}
+	
+	
 }
 
 

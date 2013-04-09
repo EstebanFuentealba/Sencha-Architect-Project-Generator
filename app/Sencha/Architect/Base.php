@@ -13,7 +13,7 @@ class Base {
 	public $__createAlias		= NULL;
 	public $__type				= NULL;
 	public $__className			= NULL;
-	
+	public $__columnWidth		= NULL;
 	public $__object	= 	NULL;
 	
 	public function __construct(){
@@ -77,7 +77,9 @@ class Base {
 		if(!is_null($this->__createAlias)) {
 			$meta["userConfig"]["designer|createAlias"] = $this->__createAlias;
 		}
-		
+		if(!is_null($this->__columnWidth)){
+			$meta["userConfig"]["layout|columnWidth"] = $this->__columnWidth;
+		}
 		foreach($this as $key => $value) {
 			if(!is_null($value)){
 				if(!is_object($value) && !is_array($value)) {
