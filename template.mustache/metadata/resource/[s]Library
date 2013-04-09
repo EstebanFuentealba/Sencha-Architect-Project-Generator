@@ -1,9 +1,0 @@
-{
-    "type": "libraryresource",
-    "reference": {
-        "name": "items",
-        "type": "array"
-    },
-    "codeClass": null,
-    "designerId": "{{defaultConfig.libraryGUID}}"
-}
