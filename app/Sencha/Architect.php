@@ -130,7 +130,30 @@ class Architect {
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
 		}
-		/* TODO: save all controllers and views */
+		/* Save all views */
+		Debug::dump('[save] Save all views');
+		foreach($this->application->views as $view) {
+			@mkdir($path.PROJECT_PATH.'/metadata/view/', 0777, true);
+			$parseArray = $view->toMetaDataArray();
+			/* add to xds */
+			$fileMap = new FileMap();
+				$fileMap->__className	= $view->__className;
+				$fileMap->paths	= array(
+					"metadata/view/".$view->__fileName
+				);
+			$orderMap->view[] = $view->__designerId;
+			$xds->topInstanceFileMap[$view->__designerId] = $fileMap->toMap();
+			
+			$key = $view->__designerId;
+			$this->expandedState->$key = $view->toArchitect();
+			
+			
+			file_put_contents(
+				$path.PROJECT_PATH.'/metadata/view/'.$view->__fileName, 
+				json_encode($parseArray , JSON_PRETTY_PRINT )
+			);
+		}
+		/* TODO: save all controllers */
 		
 		$orderMap->app[] = 'application';
 		$xds->viewOrderMap	= $orderMap;
@@ -158,8 +181,6 @@ class Architect {
 			$path.PROJECT_PATH.'/.architect', 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
-		
-		
 	}
 	
 	public function toArray() {

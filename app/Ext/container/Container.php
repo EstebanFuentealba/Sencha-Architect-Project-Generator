@@ -1,0 +1,14 @@
+<?PHP
+namespace Ext\container;
+
+require_once(dirname(__FILE__).'/AbstractContainer.php');
+
+use Ext\container\AbstractContainer as AbstractContainer;
+
+class Container extends AbstractContainer {
+	public function __construct(){
+		parent::__construct();
+	}
+}
+
+?>

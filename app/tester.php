@@ -25,6 +25,8 @@ require_once(dirname(__FILE__).'/ext/data/Model.php');
 require_once(dirname(__FILE__).'/ext/data/proxy/Ajax.php');
 require_once(dirname(__FILE__).'/ext/data/JsonStore.php');
 require_once(dirname(__FILE__).'/ext/data/reader/Json.php');
+require_once(dirname(__FILE__).'/ext/panel/Panel.php');
+
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
@@ -35,8 +37,7 @@ use Sencha\Architect\Base as Base;
 use Sencha\Architect as Architect;
 use Ext\app\Application as Application;
 use Ext\resource\LibraryResource as LibraryResource;
-
-echo "<pre>";
+use Ext\panel\Panel as Panel;
 
 /*
 	First: Mapping Tables of database
@@ -84,14 +85,20 @@ foreach($tables as $tableName){
 	
 	
 	$store->model = $model->__className;
-
+	
 	/* VIEW */
+	$panel = new Panel();
+	$panel->title = 'Panel '. $model->__className;
+	$panel->__userClassName	= $tableName.'View';
+	$panel->__className		= $tableName.'View';
+	$panel->__fileName		= $tableName.'View';
+	
 	
 
 	/* Append store, Model and View to Applicaton */
-	$app->models[] = $model;
-	$app->stores[] = $store;
-	
+	$app->models[] 	= $model;
+	$app->stores[] 	= $store;
+	$app->views[] 	= $panel;
 	/*
 	echo '<pre>';
 	print_r($store->toMetaDataArray());
@@ -108,10 +115,5 @@ $architect->setApp($app);
 $architect->resources[] = $resource;
 $architect->save(dirname(__FILE__).'/../');
 
-
-
-
-
-echo '</pre>';
 
 ?>
