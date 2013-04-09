@@ -13,6 +13,7 @@ class Panel extends Pnl {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->bodyPadding = 10;
 	}
 	
 	

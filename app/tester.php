@@ -29,6 +29,10 @@ require_once(dirname(__FILE__).'/ext/panel/Panel.php');
 require_once(dirname(__FILE__).'/ext/form/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
+require_once(dirname(__FILE__).'/ext/form/field/Text.php');
+require_once(dirname(__FILE__).'/ext/form/field/Number.php');
+require_once(dirname(__FILE__).'/ext/form/field/HtmlEditor.php');
+
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
@@ -44,6 +48,9 @@ use Ext\grid\Panel as GridPanel;
 use Ext\form\Panel as FormPanel;
 use Ext\grid\column\Column as Column;
 use Ext\grid\column\Number as NumberColumn;
+use Ext\form\field\Text as TextField;
+use Ext\form\field\Number as NumberField;
+use Ext\form\field\HtmlEditor as HtmlEditor;
 
 
 /*
@@ -105,6 +112,11 @@ foreach($tables as $tableName){
 		$form->margin	= '0 0 0 5';
 		
 	foreach($table["columns"] as $col){
+	
+		##
+		##	Fields of Model
+		##
+		
 		$field = new Field();
 			$field->name = $col["columnName"];
 			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
@@ -112,16 +124,33 @@ foreach($tables as $tableName){
 			}
 		$model->addField($field);
 		
+		##
+		##	Columns of Grid,  Fields of Form
+		##
 		
 		if($col['type'] == 'int') {
 			$column = new NumberColumn();
+			$formField = new NumberField();
+		} else if($col['type'] == 'text') {
+			$formField = new HtmlEditor();
+			$formField->labelAlign = 'top';
 		} else {
 			$column = new Column();
+			$formField = new TextField();
 		}
+		##	Configure Column 
 		$column->text 		= $col["columnName"];
 		$column->dataIndex 	= $col["columnName"];
 		
+		##	Configure Form Field
+		$formField->fieldLabel	= $col["columnName"];
+		$formField->name		= $col["columnName"];
+		$formField->anchor		= '100%';
+		
+		$form->items[] = $formField;
 		$grid->columns[] = $column;
+		
+		
 	}
 	
 	
