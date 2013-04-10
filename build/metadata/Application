@@ -1,0 +1,58 @@
+{
+    "type": "Ext.app.Application",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "appFolder": "app",
+        "appProperty": "app",
+        "autoCreateViewport": true,
+        "enableQuickTips": true,
+        "name": "MyAppTest",
+        "stores": [
+            "storem_arbitro",
+            "storem_campeonato",
+            "storem_campeonato_equipo",
+            "storem_country",
+            "storem_equipo",
+            "storem_estadio",
+            "storem_fecha",
+            "storem_jugador",
+            "storem_marcador_config",
+            "storem_plantel",
+            "storem_relato",
+            "storem_relato_metadata"
+        ],
+        "models": [
+            "m_arbitro",
+            "m_campeonato",
+            "m_campeonato_equipo",
+            "m_country",
+            "m_equipo",
+            "m_estadio",
+            "m_fecha",
+            "m_jugador",
+            "m_marcador_config",
+            "m_plantel",
+            "m_relato",
+            "m_relato_metadata"
+        ],
+        "views": [
+            "m_arbitroView",
+            "m_campeonatoView",
+            "m_campeonato_equipoView",
+            "m_countryView",
+            "m_equipoView",
+            "m_estadioView",
+            "m_fechaView",
+            "m_jugadorView",
+            "m_marcador_configView",
+            "m_plantelView",
+            "m_relatoView",
+            "m_relato_metadataView"
+        ]
+    },
+    "designerId": "application"
+}

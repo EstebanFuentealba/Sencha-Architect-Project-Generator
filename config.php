@@ -8,9 +8,7 @@ define('DB_USER', "root");
 define('DB_PASS', "");
 
 //database name
-define('DB_DATABASE', "bbcl_futbol");
-
-define('TEMPLATES', "template.mustache/");
+define('DB_DATABASE', "bbcl_futbol_orm");
 
 define('PROJECT_PATH', "build");
 ?>

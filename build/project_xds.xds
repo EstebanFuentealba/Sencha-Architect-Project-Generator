@@ -1,0 +1,333 @@
+{
+    "name": "project_xds",
+    "xdsVersion": "2.2.0",
+    "xdsBuild": 908,
+    "schemaVersion": 1,
+    "upgradeVersion": 210000000499,
+    "framework": "ext42",
+    "topInstanceFileMap": {
+        "9147C1F8-C785-4E31-8340-068EFCE6481A": {
+            "paths": [
+                "metadata\/model\/m_arbitro",
+                "app\/model\/override\/m_arbitro.js",
+                "app\/model\/m_arbitro.js"
+            ],
+            "className": "m_arbitro"
+        },
+        "B6053943-2D1B-489C-827A-F1DE3992BDFF": {
+            "paths": [
+                "metadata\/model\/m_campeonato",
+                "app\/model\/override\/m_campeonato.js",
+                "app\/model\/m_campeonato.js"
+            ],
+            "className": "m_campeonato"
+        },
+        "ADBDB7AD-E05D-4C0B-9A69-BF5BD8DD8403": {
+            "paths": [
+                "metadata\/model\/m_campeonato_equipo",
+                "app\/model\/override\/m_campeonato_equipo.js",
+                "app\/model\/m_campeonato_equipo.js"
+            ],
+            "className": "m_campeonato_equipo"
+        },
+        "7153FB10-5056-46EB-81AA-850022827659": {
+            "paths": [
+                "metadata\/model\/m_country",
+                "app\/model\/override\/m_country.js",
+                "app\/model\/m_country.js"
+            ],
+            "className": "m_country"
+        },
+        "060BCAE0-055F-40A4-8FD0-D2B035CC2B80": {
+            "paths": [
+                "metadata\/model\/m_equipo",
+                "app\/model\/override\/m_equipo.js",
+                "app\/model\/m_equipo.js"
+            ],
+            "className": "m_equipo"
+        },
+        "4C0727A5-5A5E-4A77-8D96-A6540EEBABEB": {
+            "paths": [
+                "metadata\/model\/m_estadio",
+                "app\/model\/override\/m_estadio.js",
+                "app\/model\/m_estadio.js"
+            ],
+            "className": "m_estadio"
+        },
+        "2591C93A-E843-4EDE-9B86-B85DDF928609": {
+            "paths": [
+                "metadata\/model\/m_fecha",
+                "app\/model\/override\/m_fecha.js",
+                "app\/model\/m_fecha.js"
+            ],
+            "className": "m_fecha"
+        },
+        "0BB38B7D-6CE8-43BC-8DC1-D68C334DB4EC": {
+            "paths": [
+                "metadata\/model\/m_jugador",
+                "app\/model\/override\/m_jugador.js",
+                "app\/model\/m_jugador.js"
+            ],
+            "className": "m_jugador"
+        },
+        "0ADC853F-30F7-4B90-AF24-B3439A2ED2DB": {
+            "paths": [
+                "metadata\/model\/m_marcador_config",
+                "app\/model\/override\/m_marcador_config.js",
+                "app\/model\/m_marcador_config.js"
+            ],
+            "className": "m_marcador_config"
+        },
+        "077C61B2-B159-4FFA-945C-F0F98F5FB240": {
+            "paths": [
+                "metadata\/model\/m_plantel",
+                "app\/model\/override\/m_plantel.js",
+                "app\/model\/m_plantel.js"
+            ],
+            "className": "m_plantel"
+        },
+        "7DC21412-DE52-4E61-AED5-A3546A579CAF": {
+            "paths": [
+                "metadata\/model\/m_relato",
+                "app\/model\/override\/m_relato.js",
+                "app\/model\/m_relato.js"
+            ],
+            "className": "m_relato"
+        },
+        "796CD282-4875-4E03-968E-BD07162C1359": {
+            "paths": [
+                "metadata\/model\/m_relato_metadata",
+                "app\/model\/override\/m_relato_metadata.js",
+                "app\/model\/m_relato_metadata.js"
+            ],
+            "className": "m_relato_metadata"
+        },
+        "801A4049-2B54-446E-B226-1FDEA59C6944": {
+            "paths": [
+                "metadata\/store\/storem_arbitro",
+                "app\/store\/override\/storem_arbitro.js",
+                "app\/store\/storem_arbitro.js"
+            ],
+            "className": "storem_arbitro"
+        },
+        "9029A66E-469F-44DA-A4AC-048C8CEC07EA": {
+            "paths": [
+                "metadata\/store\/storem_campeonato",
+                "app\/store\/override\/storem_campeonato.js",
+                "app\/store\/storem_campeonato.js"
+            ],
+            "className": "storem_campeonato"
+        },
+        "B091717F-0E66-4226-B66D-17675411E7AA": {
+            "paths": [
+                "metadata\/store\/storem_campeonato_equipo",
+                "app\/store\/override\/storem_campeonato_equipo.js",
+                "app\/store\/storem_campeonato_equipo.js"
+            ],
+            "className": "storem_campeonato_equipo"
+        },
+        "7A37E1E4-3F3D-4037-AC4D-87BC6DA5DB0F": {
+            "paths": [
+                "metadata\/store\/storem_country",
+                "app\/store\/override\/storem_country.js",
+                "app\/store\/storem_country.js"
+            ],
+            "className": "storem_country"
+        },
+        "4CE7226B-DC97-47C0-81C3-845D2423E151": {
+            "paths": [
+                "metadata\/store\/storem_equipo",
+                "app\/store\/override\/storem_equipo.js",
+                "app\/store\/storem_equipo.js"
+            ],
+            "className": "storem_equipo"
+        },
+        "EC95EDED-1912-41D5-81E4-08DD0AAA1C15": {
+            "paths": [
+                "metadata\/store\/storem_estadio",
+                "app\/store\/override\/storem_estadio.js",
+                "app\/store\/storem_estadio.js"
+            ],
+            "className": "storem_estadio"
+        },
+        "3161F030-5443-4A8D-A7C9-0E6E0933543E": {
+            "paths": [
+                "metadata\/store\/storem_fecha",
+                "app\/store\/override\/storem_fecha.js",
+                "app\/store\/storem_fecha.js"
+            ],
+            "className": "storem_fecha"
+        },
+        "8B871565-4D92-48C7-961F-855443959DE7": {
+            "paths": [
+                "metadata\/store\/storem_jugador",
+                "app\/store\/override\/storem_jugador.js",
+                "app\/store\/storem_jugador.js"
+            ],
+            "className": "storem_jugador"
+        },
+        "16D24EB7-5B72-499A-BE0D-FF2E2DB69926": {
+            "paths": [
+                "metadata\/store\/storem_marcador_config",
+                "app\/store\/override\/storem_marcador_config.js",
+                "app\/store\/storem_marcador_config.js"
+            ],
+            "className": "storem_marcador_config"
+        },
+        "DDC6AA0D-9F6E-48D6-88C6-571AB4E762FB": {
+            "paths": [
+                "metadata\/store\/storem_plantel",
+                "app\/store\/override\/storem_plantel.js",
+                "app\/store\/storem_plantel.js"
+            ],
+            "className": "storem_plantel"
+        },
+        "32D4B36B-AED4-456F-9BF7-09594E019973": {
+            "paths": [
+                "metadata\/store\/storem_relato",
+                "app\/store\/override\/storem_relato.js",
+                "app\/store\/storem_relato.js"
+            ],
+            "className": "storem_relato"
+        },
+        "55E7918A-5AD8-47BB-890B-0FADC69C9FD0": {
+            "paths": [
+                "metadata\/store\/storem_relato_metadata",
+                "app\/store\/override\/storem_relato_metadata.js",
+                "app\/store\/storem_relato_metadata.js"
+            ],
+            "className": "storem_relato_metadata"
+        },
+        "AFBC1316-5C78-4CA0-AB4E-3275F143EE94": {
+            "paths": [
+                "metadata\/resource\/Library"
+            ],
+            "className": null
+        },
+        "F6E99C95-8AD7-4E10-BC1E-92CBE9101FE4": {
+            "paths": [
+                "metadata\/view\/m_arbitroView"
+            ],
+            "className": "m_arbitroView"
+        },
+        "FD001FFB-EEB0-4C85-A7D2-54ACD8BB9F25": {
+            "paths": [
+                "metadata\/view\/m_campeonatoView"
+            ],
+            "className": "m_campeonatoView"
+        },
+        "B5902A84-C4BD-419B-A55D-42185E9BD266": {
+            "paths": [
+                "metadata\/view\/m_campeonato_equipoView"
+            ],
+            "className": "m_campeonato_equipoView"
+        },
+        "99546932-167D-459A-9E11-5975135A8A68": {
+            "paths": [
+                "metadata\/view\/m_countryView"
+            ],
+            "className": "m_countryView"
+        },
+        "A7A47960-2A84-4E8D-8537-9E6E06AFCB62": {
+            "paths": [
+                "metadata\/view\/m_equipoView"
+            ],
+            "className": "m_equipoView"
+        },
+        "9B96E489-3162-47AA-A422-81344848A430": {
+            "paths": [
+                "metadata\/view\/m_estadioView"
+            ],
+            "className": "m_estadioView"
+        },
+        "A970F88D-D562-422C-94E9-9AD9897EB436": {
+            "paths": [
+                "metadata\/view\/m_fechaView"
+            ],
+            "className": "m_fechaView"
+        },
+        "FAE38DD1-A7D5-4FBC-85E8-2B193688633A": {
+            "paths": [
+                "metadata\/view\/m_jugadorView"
+            ],
+            "className": "m_jugadorView"
+        },
+        "C82675FF-C6B2-4118-ABA8-51824A304BC6": {
+            "paths": [
+                "metadata\/view\/m_marcador_configView"
+            ],
+            "className": "m_marcador_configView"
+        },
+        "C89B88C6-FEDD-44FE-A837-8F048D8EC80E": {
+            "paths": [
+                "metadata\/view\/m_plantelView"
+            ],
+            "className": "m_plantelView"
+        },
+        "0336CACB-F6D8-48CB-9349-F4D52F30DFA5": {
+            "paths": [
+                "metadata\/view\/m_relatoView"
+            ],
+            "className": "m_relatoView"
+        },
+        "76EF5195-D8C9-4912-A24D-5F2CFCAED28A": {
+            "paths": [
+                "metadata\/view\/m_relato_metadataView"
+            ],
+            "className": "m_relato_metadataView"
+        }
+    },
+    "viewOrderMap": {
+        "view": [
+            "F6E99C95-8AD7-4E10-BC1E-92CBE9101FE4",
+            "FD001FFB-EEB0-4C85-A7D2-54ACD8BB9F25",
+            "B5902A84-C4BD-419B-A55D-42185E9BD266",
+            "99546932-167D-459A-9E11-5975135A8A68",
+            "A7A47960-2A84-4E8D-8537-9E6E06AFCB62",
+            "9B96E489-3162-47AA-A422-81344848A430",
+            "A970F88D-D562-422C-94E9-9AD9897EB436",
+            "FAE38DD1-A7D5-4FBC-85E8-2B193688633A",
+            "C82675FF-C6B2-4118-ABA8-51824A304BC6",
+            "C89B88C6-FEDD-44FE-A837-8F048D8EC80E",
+            "0336CACB-F6D8-48CB-9349-F4D52F30DFA5",
+            "76EF5195-D8C9-4912-A24D-5F2CFCAED28A"
+        ],
+        "store": [
+            "801A4049-2B54-446E-B226-1FDEA59C6944",
+            "9029A66E-469F-44DA-A4AC-048C8CEC07EA",
+            "B091717F-0E66-4226-B66D-17675411E7AA",
+            "7A37E1E4-3F3D-4037-AC4D-87BC6DA5DB0F",
+            "4CE7226B-DC97-47C0-81C3-845D2423E151",
+            "EC95EDED-1912-41D5-81E4-08DD0AAA1C15",
+            "3161F030-5443-4A8D-A7C9-0E6E0933543E",
+            "8B871565-4D92-48C7-961F-855443959DE7",
+            "16D24EB7-5B72-499A-BE0D-FF2E2DB69926",
+            "DDC6AA0D-9F6E-48D6-88C6-571AB4E762FB",
+            "32D4B36B-AED4-456F-9BF7-09594E019973",
+            "55E7918A-5AD8-47BB-890B-0FADC69C9FD0"
+        ],
+        "controller": [
+
+        ],
+        "model": [
+            "9147C1F8-C785-4E31-8340-068EFCE6481A",
+            "B6053943-2D1B-489C-827A-F1DE3992BDFF",
+            "ADBDB7AD-E05D-4C0B-9A69-BF5BD8DD8403",
+            "7153FB10-5056-46EB-81AA-850022827659",
+            "060BCAE0-055F-40A4-8FD0-D2B035CC2B80",
+            "4C0727A5-5A5E-4A77-8D96-A6540EEBABEB",
+            "2591C93A-E843-4EDE-9B86-B85DDF928609",
+            "0BB38B7D-6CE8-43BC-8DC1-D68C334DB4EC",
+            "0ADC853F-30F7-4B90-AF24-B3439A2ED2DB",
+            "077C61B2-B159-4FFA-945C-F0F98F5FB240",
+            "7DC21412-DE52-4E61-AED5-A3546A579CAF",
+            "796CD282-4875-4E03-968E-BD07162C1359"
+        ],
+        "resource": [
+            "AFBC1316-5C78-4CA0-AB4E-3275F143EE94"
+        ],
+        "app": [
+            "application"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "storem_country",
+        "designer|className": "storem_country",
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_country",
+        "storeId": "storem_country"
+    },
+    "designerId": "7A37E1E4-3F3D-4037-AC4D-87BC6DA5DB0F",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": ".\/mantenedor\/test.php"
+            },
+            "designerId": "5EAB2465-21E9-4CCE-9464-82EE4A89756C",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "records",
+                        "successProperty": "success",
+                        "totalProperty": "total"
+                    },
+                    "designerId": "090A4D48-DF82-4BB6-B6F1-7A9E8E7971E4"
+                }
+            ]
+        }
+    ]
+}

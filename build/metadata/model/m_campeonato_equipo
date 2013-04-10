@@ -1,0 +1,124 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "m_campeonato_equipo",
+        "designer|className": "m_campeonato_equipo"
+    },
+    "designerId": "ADBDB7AD-E05D-4C0B-9A69-BF5BD8DD8403",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "CAMPEONATO_ID"
+            },
+            "designerId": "80386AFF-4532-4D18-8714-C558114431FD"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "CAMPEONATO_EQUIPO_ID",
+                "useNull": true
+            },
+            "designerId": "670435F4-E687-4F43-B080-847188C97A3A"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "EQUIPO_ID"
+            },
+            "designerId": "F6546DD9-4281-4A21-9078-E8086E623AD5"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "N_PARTIDOS_JUGADOS"
+            },
+            "designerId": "94C13838-0B00-42A0-BC03-3B0DD570208D"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "N_PARTIDOS_GANADOS"
+            },
+            "designerId": "2C2D3FFF-7E82-4989-96F2-6F6E92A48142"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "N_PARTIDOS_EMPATADOS"
+            },
+            "designerId": "09BAC2A8-4E3E-4F2C-8294-E59E0E49F731"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "N_DIFERENCIA_GOLES"
+            },
+            "designerId": "6E6B90F7-8841-40A3-8BC5-21D743543D7C"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "N_PUNTOS"
+            },
+            "designerId": "35DEB5BD-AE0C-48B6-94C8-1BCD6F43AAA5"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "GRUPO"
+            },
+            "designerId": "7640340A-9F13-446E-AA50-17FC478F7D55"
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "m_arbitro",
+        "designer|className": "m_arbitro"
+    },
+    "designerId": "9147C1F8-C785-4E31-8340-068EFCE6481A",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ARBITRO_ID",
+                "useNull": true
+            },
+            "designerId": "90C590F9-E9AE-43F2-B106-9995F2AA7AD9"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "ARBITRO_NOMBRE"
+            },
+            "designerId": "212D4D5D-881E-4AD9-9C0F-91F4DE8B77D4"
+        }
+    ]
+}

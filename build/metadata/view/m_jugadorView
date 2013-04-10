@@ -1,0 +1,271 @@
+{
+    "type": "Ext.panel.Panel",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "m_jugadorView",
+        "designer|className": "m_jugadorView",
+        "title": "Panel m_jugador",
+        "bodyPadding": 5,
+        "layout": "column",
+        "height": 450
+    },
+    "designerId": "FAE38DD1-A7D5-4FBC-85E8-2B193688633A",
+    "cn": [
+        {
+            "type": "Ext.grid.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|columnWidth": 0.6,
+                "store": "storem_jugador",
+                "title": "My Grid Panel",
+                "height": 450
+            },
+            "designerId": "0B947435-AA93-49E7-9CAC-C4609E6C60A2",
+            "cn": [
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_ID",
+                        "text": "JUGADOR_ID"
+                    },
+                    "designerId": "0DBAD21A-BB57-4E4B-BEAD-1122112B3BC7"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_NOMBRES",
+                        "text": "JUGADOR_NOMBRES"
+                    },
+                    "designerId": "1584F5B1-DADA-404E-8F37-B6457D23079D"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_POSICION",
+                        "text": "JUGADOR_POSICION"
+                    },
+                    "designerId": "82050790-EF08-4A45-8968-E881AE4A316B"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_ESTADO",
+                        "text": "JUGADOR_ESTADO"
+                    },
+                    "designerId": "9C8DD47C-4A72-4F44-AF7A-DEAD29D09F29"
+                },
+                {
+                    "type": "Ext.grid.column.Number",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_N",
+                        "text": "JUGADOR_N"
+                    },
+                    "designerId": "5DB7127B-DBCC-4CE5-84DD-542A5D343247"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_IMAGE_PATH",
+                        "text": "JUGADOR_IMAGE_PATH"
+                    },
+                    "designerId": "C762F585-5B32-4AB7-82E2-C80E1B075B68"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_APELLIDO",
+                        "text": "JUGADOR_APELLIDO"
+                    },
+                    "designerId": "75B49CB5-42BB-4DC1-9FC4-ABE5DD2D0DAC"
+                },
+                {
+                    "type": "Ext.grid.column.Column",
+                    "reference": {
+                        "name": "columns",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "dataIndex": "JUGADOR_NACIONALIDAD",
+                        "text": "JUGADOR_NACIONALIDAD"
+                    },
+                    "designerId": "CE5B789F-158C-4FD3-A602-2593F9EE3BB4"
+                }
+            ]
+        },
+        {
+            "type": "Ext.form.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "layout|columnWidth": 0.4,
+                "title": "Formulario ",
+                "bodyPadding": 10,
+                "height": 450,
+                "margin": "0 0 0 5"
+            },
+            "designerId": "58B12CF9-AB3F-4C8A-8CAC-5D52E226EA12",
+            "cn": [
+                {
+                    "type": "Ext.form.field.Number",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "allowBlank": false,
+                        "name": "JUGADOR_ID",
+                        "fieldLabel": "JUGADOR_ID",
+                        "anchor": "100%"
+                    },
+                    "designerId": "651AFC54-5FAA-4E6A-8FFF-38135BFD3A70"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_NOMBRES",
+                        "fieldLabel": "JUGADOR_NOMBRES",
+                        "anchor": "100%"
+                    },
+                    "designerId": "E94AA341-B5F0-47BA-B2FD-26D61203E17F"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_POSICION",
+                        "fieldLabel": "JUGADOR_POSICION",
+                        "anchor": "100%"
+                    },
+                    "designerId": "7260BC34-3C6C-408A-AC12-6D4468EF5ECF"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_ESTADO",
+                        "fieldLabel": "JUGADOR_ESTADO",
+                        "anchor": "100%"
+                    },
+                    "designerId": "2CBFADB9-EFBF-4E31-97D6-1AB4731E3642"
+                },
+                {
+                    "type": "Ext.form.field.Number",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_N",
+                        "fieldLabel": "JUGADOR_N",
+                        "anchor": "100%"
+                    },
+                    "designerId": "B5618BCB-1BEA-4724-B8FB-FCE9E0FB8E8D"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_IMAGE_PATH",
+                        "fieldLabel": "JUGADOR_IMAGE_PATH",
+                        "anchor": "100%"
+                    },
+                    "designerId": "6AC30BFE-DB72-436D-93D4-D5F4788D0243"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_APELLIDO",
+                        "fieldLabel": "JUGADOR_APELLIDO",
+                        "anchor": "100%"
+                    },
+                    "designerId": "FA43B536-5FCE-4A7B-A276-CF98D610EC76"
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "name": "JUGADOR_NACIONALIDAD",
+                        "fieldLabel": "JUGADOR_NACIONALIDAD",
+                        "anchor": "100%"
+                    },
+                    "designerId": "4BD0F88D-FDB1-41D2-B07A-CC72E0743DD2"
+                }
+            ]
+        }
+    ]
+}

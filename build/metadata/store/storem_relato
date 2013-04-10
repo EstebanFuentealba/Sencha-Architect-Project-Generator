@@ -1,0 +1,47 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "storem_relato",
+        "designer|className": "storem_relato",
+        "autoLoad": false,
+        "autoSync": false,
+        "model": "m_relato",
+        "storeId": "storem_relato"
+    },
+    "designerId": "32D4B36B-AED4-456F-9BF7-09594E019973",
+    "cn": [
+        {
+            "type": "Ext.data.proxy.Ajax",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "url": ".\/mantenedor\/test.php"
+            },
+            "designerId": "781E34BA-96DD-4E92-A5F7-9784D02DC263",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "root": "records",
+                        "successProperty": "success",
+                        "totalProperty": "total"
+                    },
+                    "designerId": "0A6B5B1F-845A-4C70-BC71-544272332703"
+                }
+            ]
+        }
+    ]
+}

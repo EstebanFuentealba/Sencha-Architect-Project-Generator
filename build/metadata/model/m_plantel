@@ -1,0 +1,63 @@
+{
+    "type": "Ext.data.Model",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "designer|userClassName": "m_plantel",
+        "designer|className": "m_plantel"
+    },
+    "designerId": "077C61B2-B159-4FFA-945C-F0F98F5FB240",
+    "cn": [
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "JUGADOR_ID"
+            },
+            "designerId": "FB50AA36-2B0D-4B01-B906-B14784B0EBD0"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "EQUIPO_ID"
+            },
+            "designerId": "0464C299-9D59-4D35-8FE9-A5385F56417F"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "CREATED_AT"
+            },
+            "designerId": "8501F742-8A43-4BB4-A936-809207B42970"
+        },
+        {
+            "type": "Ext.data.Field",
+            "reference": {
+                "name": "fields",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "name": "JUGADOR_N"
+            },
+            "designerId": "F9DE6A9E-DB40-4326-95B2-BB8AA1939320"
+        }
+    ]
+}
