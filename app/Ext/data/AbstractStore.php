@@ -11,8 +11,8 @@ use Ext\util\Sortable as Sortable;
 
 abstract class AbstractStore extends Base implements Observable, Sortable {
 
-	public 	$autoLoad 				= false;
-	public	$autoSync				= false;
+	public 	$autoLoad 				= NULL;
+	public	$autoSync				= NULL;
 	public 	$batchUpdateMode		= NULL;
 	public 	$defaultSortDirection	= NULL;
 	public 	$fields					= NULL;
@@ -50,6 +50,11 @@ abstract class AbstractStore extends Base implements Observable, Sortable {
 		$meta = parent::toMetaDataArray();
 		if(!is_null($this->proxy)){
 			$meta["cn"][] = $this->proxy->toMetaDataArray();
+		}
+		if(is_array($this->fields)){
+			foreach($this->fields as $field) {
+				$meta["cn"][] = $field->toMetaDataArray();
+			}
 		}
 		return $meta;
 	}

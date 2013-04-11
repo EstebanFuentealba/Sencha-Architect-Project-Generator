@@ -44,7 +44,7 @@ class Architect {
 	}	
 	public function save($path){
 	
-		Debug::dump('[delete] Delete dir project');
+		Debug::dump('[delete] clear dir project');
 		Utils::rrmdir($path.PROJECT_PATH);
 		sleep(1);
 		

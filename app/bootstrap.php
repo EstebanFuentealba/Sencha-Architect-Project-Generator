@@ -31,10 +31,13 @@ require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
 require_once(dirname(__FILE__).'/ext/form/field/Text.php');
 require_once(dirname(__FILE__).'/ext/form/field/Number.php');
 require_once(dirname(__FILE__).'/ext/form/field/HtmlEditor.php');
+require_once(dirname(__FILE__).'/ext/form/field/ComboBox.php');
+require_once(dirname(__FILE__).'/ext/form/field/Hidden.php');
 
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
+use Ext\data\Store as Store;
 use Ext\data\reader\Json as Json;
 use Ext\data\Model as Model;
 use Ext\data\Field as Field;
@@ -50,7 +53,8 @@ use Ext\grid\column\Number as NumberColumn;
 use Ext\form\field\Text as TextField;
 use Ext\form\field\Number as NumberField;
 use Ext\form\field\HtmlEditor as HtmlEditor;
-
+use Ext\form\field\ComboBox as ComboBox;
+use Ext\form\field\Hidden as Hidden;
 
 /*
 	First: Mapping Tables of database
@@ -64,11 +68,8 @@ $app->name					=	'MyAppTest';
 $app->autoCreateViewport 	= true;
 
 Debug::dump("[mapping] obtaining all tables name");
-foreach($tables as $tableName){
-	Debug::dump("[mapping] obtaining info of single table");
-	/* obtengo la información (estructura) de cada tabla*/
-	$table = KoalaMapping::getTable($tableName);
-	
+foreach($tables as $tableName => $table){
+	Debug::dump("[mapping] obtaining info the {".$tableName."}");
 	/* STORE */
 	$store = new JsonStore();
 	$store->storeId 		= 'store'.$tableName;
@@ -107,12 +108,12 @@ foreach($tables as $tableName){
 		$grid->store			= $store->__className;
 		
 		$form = new FormPanel();
-		$form->title = 'Formulario ';
+		$form->title = 'Form ';
 		$form->__columnWidth	= 0.4;
 		$form->margin	= '0 0 0 5';
 	
-	foreach($table["columns"] as $col){
-	
+	foreach($table["columns"] as $columnName => $col){
+
 		##
 		##	Fields of Model
 		##
@@ -125,25 +126,75 @@ foreach($tables as $tableName){
 		$model->addField($field);
 		
 		##
-		##	Columns of Grid,  Fields of Form
+		##	Columns of Grid
+		##
+			
+		if($col['type'] == 'int') {
+			$column = new NumberColumn();
+		} else if($col['type'] == 'text') {
+			$column = new Column();
+		} else {
+			$column = new Column();
+		}
+		
+		##
+		##	Fields of Form
 		##
 		
-		if($col['type'] == 'int') {
-		
-			$column = new NumberColumn();
-			$formField = new NumberField();
-			
-		} else if($col['type'] == 'text') {
-		
-			$column = new Column();
-			$formField = new HtmlEditor();
-			$formField->labelAlign = 'top';
-			
+		if(array_key_exists($columnName, $table['constraints'])){
+			##	Foreign Key to Combobox
+			$formField = new ComboBox();
+			$formField->store = 'store'.$table['constraints'][$columnName]['foreignTable'];
+			##	TODO: Add variable to configure pageSize
+			$formField->pageSize	= 25;
+			$formField->valueField	= $table['constraints'][$columnName]['foreignColumn'];
 		} else {
-		
-			$column = new Column();
-			$formField = new TextField();
-			
+			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
+				$formField = new Hidden();
+			} else {
+				if($col['type'] == 'int') {
+					$formField = new NumberField();
+				} else if($col['type'] == 'text') {
+					$formField = new HtmlEditor();
+					$formField->labelAlign = 'top';
+				} else if($col['type'] == 'enum') {
+					
+					$storeENUM = new Store();
+					$storeENUM->storeId 		= $columnName;
+					$storeENUM->__userClassName	= $columnName;
+					$storeENUM->__className		= $columnName;
+					$storeENUM->__fileName		= $columnName;
+					if(is_null($storeENUM->fields) || !is_array($storeENUM->fields)){
+						$storeENUM->fields = array();
+					}
+						$fieldKey = new Field();
+						$fieldKey->name = "key";
+					$storeENUM->fields[] = $fieldKey;
+						$fieldValue = new Field();
+						$fieldValue->name = "value";
+					$storeENUM->fields[] = $fieldValue;
+					$enumArray = array();
+					foreach($col['columnValues'] as $enumValue) {
+						$enumArray[] = array(
+							'key'	=> $enumValue,
+							'value'	=> $enumValue
+						);
+					}
+					$storeENUM->data = json_encode($enumArray);
+					
+					$formField 					= new ComboBox();
+					$formField->mode			= 'local';
+					$formField->store 			= $storeENUM->__className;
+					##	TODO: Add variable to configure pageSize
+					$formField->pageSize		= 25;
+					$formField->displayField	= 'value';
+					$formField->valueField		= 'key';
+					$app->stores[$storeENUM->__className] 	= $storeENUM;
+					
+				} else {
+					$formField = new TextField();
+				}
+			}
 		}
 		
 		##	Not NULL values
@@ -161,6 +212,7 @@ foreach($tables as $tableName){
 		$formField->anchor		= '100%';
 		
 		
+		
 		## Append Form Field to Form Items 
 		$form->items[] = $formField;
 		## Append Column to Grid Columns
@@ -168,8 +220,18 @@ foreach($tables as $tableName){
 		
 		
 	}
-	
-	
+	/*
+	if(count($table['constraints'])>0){
+		Debug::dump($table);
+		foreach($table['constraints'] as $constraint) {
+			Debug::dump($tables[$constraint['foreignTable']]["columns"][$constraint['foreignColumn']]);
+		}
+		exit(0);
+	} else {
+		#Not contains foreign keys
+	}
+	*/
+
 	$panel->items[] = $grid;
 	$panel->items[] = $form;
 	
@@ -182,9 +244,9 @@ foreach($tables as $tableName){
 	
 
 	/* Append store, Model and View to Applicaton */
-	$app->models[] 	= $model;
-	$app->stores[] 	= $store;
-	$app->views[] 	= $panel;
+	$app->models[$model->__className] 	= $model;
+	$app->stores[$store->__className] 	= $store;
+	$app->views[$panel->__className] 	= $panel;
 
 	
 }

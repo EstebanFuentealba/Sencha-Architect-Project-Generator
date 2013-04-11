@@ -62,25 +62,25 @@ class Application extends Controller {
 		
 		if(count($this->controllers)>0){
 			$meta['userConfig']['controllers'] = array();
-			foreach($this->controllers as $controller) {
+			foreach($this->controllers as $key => $controller) {
 				$meta['userConfig']['controllers'][] = $controller->__userClassName;
 			}
 		}
 		if(count($this->stores)>0){
 			$meta['userConfig']['stores'] = array();
-			foreach($this->stores as $store) {
+			foreach($this->stores as $key => $store) {
 				$meta['userConfig']['stores'][] = $store->__userClassName;
 			}
 		}
 		if(count($this->models)>0){
 			$meta['userConfig']['models'] = array();
-			foreach($this->models as $model) {
+			foreach($this->models as $key => $model) {
 				$meta['userConfig']['models'][] = $model->__userClassName;
 			}
 		}
 		if(count($this->views)>0){
 			$meta['userConfig']['views'] = array();
-			foreach($this->views as $view) {
+			foreach($this->views as $key => $view) {
 				$meta['userConfig']['views'][] = $view->__userClassName;
 			}
 		}

@@ -44,7 +44,7 @@ class KoalaMapping extends KoalaMappingMySQL  {
 					$columnType["columnValues"] = $options;
 				}
 			}
-			$table["columns"][] = array(
+			$table["columns"][$column["Field"]] = array(
 				"columnName" => $column["Field"],
 				"type" => $columnType["columnType"],
 				"maxSize" => $columnType["columnMaxSize"],
@@ -87,10 +87,16 @@ class KoalaMapping extends KoalaMappingMySQL  {
 	*/
 	public static function getTables() {
 		$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
-		$db->connect(); 
+		$db->connect();
+		
 			$results = $db->fetch_all_array(self::$queryShowTables);
 		$db->close();
-		return parent::getAllTables($results,DB_DATABASE);
+		$tablesRet = array();
+		$tables =  parent::getAllTables($results,DB_DATABASE);
+		foreach($tables as $tableName){
+			$tablesRet[$tableName] = self::getTable($tableName);
+		}
+		return $tablesRet;
     }
 }
 ?>

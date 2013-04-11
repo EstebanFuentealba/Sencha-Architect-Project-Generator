@@ -42,13 +42,13 @@ EOT;
 	public static function getConstraints($results) {
 		$r = array();
 		foreach($results as $row) {
-			$r[] = array(
-				"constraintName"=> $row["constraint_name"],
-				"localColumn" => $row["local_column"],
-				"foreignColumn" => $row["foreign_column"],
-				"foreignTable" => $row["foreign_table"],
-				"onDeleteCascade" => $row["update_rule"],
-				"onUpdateCascade" => $row["delete_rule"]
+			$r[$row["local_column"]] = array(
+				"constraintName"	=> $row["constraint_name"],
+				"localColumn" 		=> $row["local_column"],
+				"foreignColumn" 	=> $row["foreign_column"],
+				"foreignTable" 		=> $row["foreign_table"],
+				"onDeleteCascade" 	=> $row["update_rule"],
+				"onUpdateCascade" 	=> $row["delete_rule"]
 			);
 		}
 		return $r;
