@@ -9,7 +9,8 @@ Require
 - **PHP 5.4.3** for json_encode JSON_PRETTY_PRINT
 - **MySQL 5.5.24** for mapping database
 
-	**Windows users**: 
+	**Windows users**
+	--------------------------------------
 		- [Wampserver (32 bits & PHP 5.4) 2.2E](http://sourceforge.net/projects/wampserver/files/WampServer%202/WampServer%202.2/wampserver2.2e/wampserver2.2e-php5.4.3-httpd2.2.22-mysql5.5.24-32b.exe/download)
 		- [Wampserver (64 bits & PHP 5.4) 2.2E](http://sourceforge.net/projects/wampserver/files/WampServer%202/WampServer%202.2/wampserver2.2e/wampserver2.2e-php5.4.3-httpd2.2.22-mysql5.5.24-x64.exe/download)
 	
