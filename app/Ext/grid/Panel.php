@@ -24,6 +24,9 @@ class Panel extends Table {
 				$meta['cn'][] = $item->toMetaDataArray();
 			}
 		}
+		if(!is_null($this->selModel)) {
+			$meta['cn'][] = $this->selModel->toMetaDataArray();
+		}
 		return $meta;
 	}
 }

@@ -29,6 +29,7 @@ require_once(dirname(__FILE__).'/ext/form/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
 require_once(dirname(__FILE__).'/ext/toolbar/Paging.php');
+require_once(dirname(__FILE__).'/ext/selection/CheckboxModel.php');
 
 require_once(dirname(__FILE__).'/ext/form/field/Text.php');
 require_once(dirname(__FILE__).'/ext/form/field/Number.php');
@@ -53,6 +54,7 @@ use Ext\form\Panel as FormPanel;
 use Ext\grid\column\Column as Column;
 use Ext\grid\column\Number as NumberColumn;
 use Ext\toolbar\Paging as Paging;
+use Ext\selection\CheckboxModel as CheckboxModel;
 
 use Ext\form\field\Text as TextField;
 use Ext\form\field\Number as NumberField;
@@ -112,7 +114,12 @@ foreach($tables as $tableName => $table){
 		$grid->store			= $store->__className;
 			$paging	= new Paging();
 			$paging->store	= $grid->store;
-		$grid->dockedItems[] = $paging;
+		$grid->dockedItems[] = $paging;	
+		
+			$selModel	= new CheckboxModel();
+			$selModel->__userClassName	= 'MyCheckboxSelectionModel';
+		$grid->selModel = $selModel;	
+		
 		
 		$form = new FormPanel();
 		$form->title = 'Form ';
