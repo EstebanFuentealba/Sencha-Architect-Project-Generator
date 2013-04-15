@@ -28,6 +28,8 @@ require_once(dirname(__FILE__).'/ext/panel/Panel.php');
 require_once(dirname(__FILE__).'/ext/form/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
+require_once(dirname(__FILE__).'/ext/toolbar/Paging.php');
+
 require_once(dirname(__FILE__).'/ext/form/field/Text.php');
 require_once(dirname(__FILE__).'/ext/form/field/Number.php');
 require_once(dirname(__FILE__).'/ext/form/field/HtmlEditor.php');
@@ -50,6 +52,8 @@ use Ext\grid\Panel as GridPanel;
 use Ext\form\Panel as FormPanel;
 use Ext\grid\column\Column as Column;
 use Ext\grid\column\Number as NumberColumn;
+use Ext\toolbar\Paging as Paging;
+
 use Ext\form\field\Text as TextField;
 use Ext\form\field\Number as NumberField;
 use Ext\form\field\HtmlEditor as HtmlEditor;
@@ -106,6 +110,9 @@ foreach($tables as $tableName => $table){
 		$grid = new GridPanel();
 		$grid->__columnWidth	= 0.6;
 		$grid->store			= $store->__className;
+			$paging	= new Paging();
+			$paging->store	= $grid->store;
+		$grid->dockedItems[] = $paging;
 		
 		$form = new FormPanel();
 		$form->title = 'Form ';

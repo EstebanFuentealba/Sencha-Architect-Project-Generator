@@ -63,7 +63,6 @@ class Base {
 			"name" => "items",
 			"type" => "array"
         );
-		
 		$meta["codeClass"] = null;
 		if(!is_null($this->__userClassName)) {
 			$meta["userConfig"]["designer|userClassName"] = $this->__userClassName;
