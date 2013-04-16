@@ -76,12 +76,19 @@ $app->autoCreateViewport 	= true;
 Debug::dump("[mapping] obtaining all tables name");
 foreach($tables as $tableName => $table){
 	Debug::dump("[mapping] obtaining info the {".$tableName."}");
+	
+	$tableConfig	= array(
+		'prefix'	=> 'm_',
+		'suffix'	=> ''
+	);
+	$PHPClassName = Utils::getUnionName($tableName, $tableConfig);
+	
 	/* STORE */
 	$store = new JsonStore();
-	$store->storeId 		= 'store'.$tableName;
-	$store->__userClassName	= 'store'.$tableName;
-	$store->__className		= 'store'.$tableName;
-	$store->__fileName		= 'store'.$tableName;
+	$store->storeId 		= 'store'.$PHPClassName;
+	$store->__userClassName	= 'store'.$PHPClassName;
+	$store->__className		= 'store'.$PHPClassName;
+	$store->__fileName		= 'store'.$PHPClassName;
 		$proxy = new Ajax();
 		$proxy->url 	= './mantenedor/test.php';
 			$reader = new Json();
@@ -91,18 +98,18 @@ foreach($tables as $tableName => $table){
 	
 	/* MODEL */
 	$model = new Model();
-	$model->__userClassName	= $tableName;
-	$model->__className		= $tableName;
-	$model->__fileName		= $tableName;
+	$model->__userClassName	= $PHPClassName;
+	$model->__className		= $PHPClassName;
+	$model->__fileName		= $PHPClassName;
 	
 	
 	
 	/* VIEW */
 	$panel = new Panel();
 	$panel->title = 'Panel '. $model->__className;
-	$panel->__userClassName	= $tableName.'View';
-	$panel->__className		= $tableName.'View';
-	$panel->__fileName		= $tableName.'View';
+	$panel->__userClassName	= $PHPClassName.'View';
+	$panel->__className		= $PHPClassName.'View';
+	$panel->__fileName		= $PHPClassName.'View';
 	
 	$panel->layout			= "column";
 	$panel->bodyPadding		= 5;
@@ -173,11 +180,14 @@ foreach($tables as $tableName => $table){
 					$formField->labelAlign = 'top';
 				} else if($col['type'] == 'enum') {
 					
+					$PHPClassName = Utils::getUnionName($columnName);
+					
+					
 					$storeENUM = new Store();
-					$storeENUM->storeId 		= $columnName;
-					$storeENUM->__userClassName	= $columnName;
-					$storeENUM->__className		= $columnName;
-					$storeENUM->__fileName		= $columnName;
+					$storeENUM->storeId 		= $PHPClassName;
+					$storeENUM->__userClassName	= $PHPClassName;
+					$storeENUM->__className		= $PHPClassName;
+					$storeENUM->__fileName		= $PHPClassName;
 					if(is_null($storeENUM->fields) || !is_array($storeENUM->fields)){
 						$storeENUM->fields = array();
 					}

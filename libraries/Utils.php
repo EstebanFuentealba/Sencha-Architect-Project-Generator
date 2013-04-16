@@ -22,12 +22,22 @@ class Utils {
         return strtolower($name);
     }
 
-    public function getPluralName($name) {
+    public static function getPluralName($name) {
         return self::getUnionName($name, true);
     }
 
-    public function getUnionName($name, $plural=false) {
-        $ex = @explode("_", self::getLowerName($name));
+    public static function getUnionName($name,$tableConfig	= array(
+		'prefix'	=> '',
+		'suffix'	=> ''
+	), $plural=false) {
+		$text = self::getLowerName($name);
+		if(self::startsWith($text, $tableConfig['prefix'])){
+			$text = substr($text , strlen($tableConfig['prefix']) );
+		}
+		if(self::endsWith($text, $tableConfig['suffix'])){
+			$text = substr($text ,0, strlen($text) - strlen($tableConfig['suffix']) );
+		}
+        $ex = @explode("_", $text );
         if (count($ex) > 0) {
             $d = "";
             $x = 0;
@@ -45,9 +55,22 @@ class Utils {
                 }
                 $x++;
             }
-            return $d;
+            return ucwords($d);
         }
+		
         return self::GetLowerName($name) . "s";
     }
+	public static function startsWith($haystack, $needle) {
+		return !strncmp($haystack, $needle, strlen($needle));
+	}
+
+	public static function endsWith($haystack, $needle) {
+		$length = strlen($needle);
+		if ($length == 0) {
+			return true;
+		}
+
+		return (substr($haystack, -$length) === $needle);
+	}
 }
 ?>
