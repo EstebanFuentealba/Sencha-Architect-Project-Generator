@@ -21,7 +21,7 @@ class Panel extends AbstractPanel {
 	public $collapsible= NULL;
 	public $constrain = NULL;
 	public $constrainHeader= NULL;
-	public $dockedItems= NULL;
+	public $dockedItems = array();
 	public $fbar= NULL;
 	public $floatable= NULL;
 	public $frame= NULL;
@@ -49,9 +49,17 @@ class Panel extends AbstractPanel {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->height = 450;
+		/*$this->height = 450;*/
 	}
-	
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		if(count($this->dockedItems)>0){
+			foreach($this->dockedItems as $key => $item) {
+				$meta['cn'][] = $item->toMetaDataArray();
+			}
+		}
+		return $meta;
+	}
 	
 }
 

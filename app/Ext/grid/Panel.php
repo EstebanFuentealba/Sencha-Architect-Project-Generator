@@ -17,18 +17,6 @@ class Panel extends Table {
 		$this->height 		= 450;
 		$this->dockedItems	= array();
 	}
-	public function toMetaDataArray() {
-		$meta = parent::toMetaDataArray();
-		if(count($this->dockedItems)>0){
-			foreach($this->dockedItems as $key => $item) {
-				$meta['cn'][] = $item->toMetaDataArray();
-			}
-		}
-		if(!is_null($this->selModel)) {
-			$meta['cn'][] = $this->selModel->toMetaDataArray();
-		}
-		return $meta;
-	}
 }
 
 

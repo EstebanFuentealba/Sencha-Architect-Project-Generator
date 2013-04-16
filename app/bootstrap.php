@@ -36,6 +36,7 @@ require_once(dirname(__FILE__).'/ext/form/field/Number.php');
 require_once(dirname(__FILE__).'/ext/form/field/HtmlEditor.php');
 require_once(dirname(__FILE__).'/ext/form/field/ComboBox.php');
 require_once(dirname(__FILE__).'/ext/form/field/Hidden.php');
+require_once(dirname(__FILE__).'/ext/button/Button.php');
 
 
 use Ext\data\proxy\Ajax as Ajax;
@@ -54,6 +55,7 @@ use Ext\form\Panel as FormPanel;
 use Ext\grid\column\Column as Column;
 use Ext\grid\column\Number as NumberColumn;
 use Ext\toolbar\Paging as Paging;
+use Ext\toolbar\Toolbar as Toolbar;
 use Ext\selection\CheckboxModel as CheckboxModel;
 
 use Ext\form\field\Text as TextField;
@@ -61,6 +63,7 @@ use Ext\form\field\Number as NumberField;
 use Ext\form\field\HtmlEditor as HtmlEditor;
 use Ext\form\field\ComboBox as ComboBox;
 use Ext\form\field\Hidden as Hidden;
+use Ext\button\Button as Button;
 
 /*
 	First: Mapping Tables of database
@@ -90,7 +93,7 @@ foreach($tables as $tableName => $table){
 	$store->__className		= 'store'.$PHPClassName;
 	$store->__fileName		= 'store'.$PHPClassName;
 		$proxy = new Ajax();
-		$proxy->url 	= './mantenedor/test.php';
+		$proxy->url 	= './mantenedor/'.$PHPClassName.'/read.php';
 			$reader = new Json();
 			$reader->root = 'records';
 		$proxy->reader	= $reader;
@@ -122,7 +125,14 @@ foreach($tables as $tableName => $table){
 			$paging	= new Paging();
 			$paging->store	= $grid->store;
 		$grid->dockedItems[] = $paging;	
-		
+			$gridToolbar = new Toolbar();
+				$removeSelectedButton = new Button();
+				$removeSelectedButton->text	= 'Remove Selected';
+				$removeSelectedButton->iconCls	= 'icon-delete';
+				$removeSelectedButton->disabled = true;
+				$gridToolbar->items[] = $removeSelectedButton;
+			$gridToolbar->dock = 'top';
+		$grid->dockedItems[] = $gridToolbar;	
 			$selModel	= new CheckboxModel();
 			$selModel->__userClassName	= 'MyCheckboxSelectionModel';
 		$grid->selModel = $selModel;	
@@ -132,6 +142,17 @@ foreach($tables as $tableName => $table){
 		$form->title = 'Form ';
 		$form->__columnWidth	= 0.4;
 		$form->margin	= '0 0 0 5';
+			$formToolbar = new Toolbar();
+				$clearButton = new Button();
+				$clearButton->text	= 'Clear';
+				$clearButton->iconCls	= 'icon-clear';
+			$formToolbar->items[] = $clearButton;
+				$createButton = new Button();
+				$createButton->text	= 'Create';
+				$createButton->iconCls	= 'icon-create';
+			$formToolbar->items[] = $createButton;
+			$formToolbar->dock = 'bottom';
+		$form->dockedItems[] = $formToolbar;
 	
 	foreach($table["columns"] as $columnName => $col){
 
@@ -188,6 +209,7 @@ foreach($tables as $tableName => $table){
 					$storeENUM->__userClassName	= $PHPClassName;
 					$storeENUM->__className		= $PHPClassName;
 					$storeENUM->__fileName		= $PHPClassName;
+					
 					if(is_null($storeENUM->fields) || !is_array($storeENUM->fields)){
 						$storeENUM->fields = array();
 					}
@@ -278,6 +300,7 @@ foreach($tables as $tableName => $table){
 $architect = new Architect();
 $architect->setApp($app);
 	$resource = new LibraryResource();
+	$resource->theme = 'gray';
 $architect->resources[] = $resource;
 $architect->save(dirname(__FILE__).'/../');
 
