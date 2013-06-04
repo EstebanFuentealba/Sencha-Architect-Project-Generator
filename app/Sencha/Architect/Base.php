@@ -14,7 +14,9 @@ class Base {
 	public $__type				= NULL;
 	public $__className			= NULL;
 	public $__columnWidth		= NULL;
-	public $__object	= 	NULL;
+	public $__object			= NULL;
+	public $__params			= NULL;
+	public $__controlQuery		= NULL;
 	
 	public function __construct(){
 		$this->__object	= $this;
@@ -70,6 +72,12 @@ class Base {
 		if(!is_null($this->__className)) {
 			$meta["userConfig"]["designer|className"] = $this->__className;
 		}
+		if(!is_null($this->__params)) {
+			$meta["userConfig"]["designer|params"] = $this->__params;
+		}
+		if(!is_null($this->__controlQuery)) {
+			$meta["userConfig"]["designer|controlQuery"] = $this->__controlQuery;
+		}
 		if(!is_null($this->__displayName)) {
 			$meta["userConfig"]["designer|displayName"] = $this->__displayName;
 		}
@@ -85,7 +93,7 @@ class Base {
 					if(!preg_match("/^__(.*)$/", $key)){
 						/* NO private attributes */
 						$meta["userConfig"][$key] = $value;
-					}
+					} 
 				}
 			}
 		}

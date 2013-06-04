@@ -16,8 +16,11 @@ require_once(dirname(__FILE__).'/../libraries/PHPZip/Zip.php');
 require_once(dirname(__FILE__).'/ext/app/Application.php');
 require_once(dirname(__FILE__).'/Sencha/Architect.php');
 require_once(dirname(__FILE__).'/Sencha/Architect/Base.php');
+require_once(dirname(__FILE__).'/Sencha/Architect/app/controller/Ref.php');
+require_once(dirname(__FILE__).'/Sencha/Architect/app/controller/Action.php');
 
 /* ExtJS 4.2 Files */
+require_once(dirname(__FILE__).'/ext/app/Controller.php');
 require_once(dirname(__FILE__).'/ext/resource/LibraryResource.php');
 require_once(dirname(__FILE__).'/ext/data/Field.php');
 require_once(dirname(__FILE__).'/ext/data/Model.php');
@@ -38,6 +41,10 @@ require_once(dirname(__FILE__).'/ext/form/field/ComboBox.php');
 require_once(dirname(__FILE__).'/ext/form/field/Hidden.php');
 require_once(dirname(__FILE__).'/ext/button/Button.php');
 
+
+use Ext\app\Controller as Controller;
+use Sencha\Architect\app\controller\Action as Action;
+use Sencha\Architect\app\controller\Ref as Ref;
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
@@ -76,15 +83,19 @@ $app = new Application();
 $app->name					=	'MyAppTest';
 $app->autoCreateViewport 	= true;
 
+
+$tableConfig	= array(
+	'prefix'	=> 'm_',
+	'suffix'	=> ''
+);
+
+
 Debug::dump("[mapping] obtaining all tables name");
 foreach($tables as $tableName => $table){
 	Debug::dump("[mapping] obtaining info the {".$tableName."}");
 	
-	$tableConfig	= array(
-		'prefix'	=> 'm_',
-		'suffix'	=> ''
-	);
 	$PHPClassName = Utils::getUnionName($tableName, $tableConfig);
+	
 	
 	/* STORE */
 	$store = new JsonStore();
@@ -139,17 +150,20 @@ foreach($tables as $tableName => $table){
 		
 		
 		$form = new FormPanel();
-		$form->title = 'Form ';
+		$form->itemId 			= 'form'.ucwords($PHPClassName);
+		$form->title			= 'Form ';
 		$form->__columnWidth	= 0.4;
-		$form->margin	= '0 0 0 5';
+		$form->margin			= '0 0 0 5';
 			$formToolbar = new Toolbar();
 				$clearButton = new Button();
 				$clearButton->text	= 'Clear';
 				$clearButton->iconCls	= 'icon-clear';
+				$clearButton->itemId	= 'btnClear';
 			$formToolbar->items[] = $clearButton;
 				$createButton = new Button();
 				$createButton->text	= 'Create';
 				$createButton->iconCls	= 'icon-create';
+				$createButton->itemId	= 'btnCreate';
 			$formToolbar->items[] = $createButton;
 			$formToolbar->dock = 'bottom';
 		$form->dockedItems[] = $formToolbar;
@@ -186,7 +200,7 @@ foreach($tables as $tableName => $table){
 		if(array_key_exists($columnName, $table['constraints'])){
 			##	Foreign Key to Combobox
 			$formField = new ComboBox();
-			$formField->store = 'store'.$table['constraints'][$columnName]['foreignTable'];
+			$formField->store = 'store'.Utils::getUnionName($table['constraints'][$columnName]['foreignTable'], $tableConfig);
 			##	TODO: Add variable to configure pageSize
 			$formField->pageSize	= 25;
 			$formField->valueField	= $table['constraints'][$columnName]['foreignColumn'];
@@ -201,7 +215,7 @@ foreach($tables as $tableName => $table){
 					$formField->labelAlign = 'top';
 				} else if($col['type'] == 'enum') {
 					
-					$PHPClassName = Utils::getUnionName($columnName);
+					$PHPClassName = Utils::getUnionName($columnName, $tableConfig);
 					
 					
 					$storeENUM = new Store();
@@ -277,7 +291,8 @@ foreach($tables as $tableName => $table){
 		#Not contains foreign keys
 	}
 	*/
-
+	
+	
 	$panel->items[] = $grid;
 	$panel->items[] = $form;
 	
@@ -286,17 +301,54 @@ foreach($tables as $tableName => $table){
 	
 	
 	
+	/* CONTROLLER */
+	$controller = new Controller();
+	$controller->__userClassName = $PHPClassName.'Controller';
+	$controller->__className 	= $PHPClassName.'Controller';
+	$controller->__fileName		= $PHPClassName.'Controller';
+	$controller->views[] = $panel->__className;
+	$ref = new Ref();
+	$ref->ref = "form".ucwords($PHPClassName); /* obtain form */
+	$ref->selector = '#form'.ucwords($PHPClassName); /* itemid selector of form */
+	$controller->refs[] = $ref;
+	
+	
+	/* append to generic controller */
+	$controllerUtils->views[] = $panel->__className;
+	
 	
 	
 
-	/* Append store, Model and View to Applicaton */
-	$app->models[$model->__className] 	= $model;
-	$app->stores[$store->__className] 	= $store;
-	$app->views[$panel->__className] 	= $panel;
-
+	/* Append store, Model, View and Controller to Applicaton */
+	$app->models[$model->__className] 				= $model;
+	$app->stores[$store->__className] 				= $store;
+	$app->views[$panel->__className] 				= $panel;
+	$app->controllers[$controller->__className] 	= $controller;
 	
 }
 
+# Generic Controller (basic functions)
+$controllerUtils = new Controller();
+$controllerUtils->__userClassName 	= 'UtilsController';
+$controllerUtils->__className 		= 'UtilsController';
+$controllerUtils->__fileName		= 'UtilsController';
+	$action = new Action();
+	$action->fn 			= 'clearForm';
+	$action->implHandler[] 	= "console.log(\"CLEAR FORM\");\r";
+	$action->implHandler[] 	= "console.log(this.getCreateForm().getItemId( ));\r";
+	$action->implHandler[] 	= "this.getCreateForm().getForm().reset();\r"; /*Reset forms*/
+	$action->name			= "click";
+	$action->__controlQuery	= "#btnClear";
+$controllerUtils->actions[] = $action;
+	$ref = new Ref();
+	$ref->ref = "createForm"; /* obtain form */
+	$ref->selector = 'form'; /* itemid selector of form */
+	$controllerUtils->refs[] = $ref;
+$app->controllers['UtilsController'] 	= $controllerUtils;
+
+
+
+# Create Project structure
 $architect = new Architect();
 $architect->setApp($app);
 	$resource = new LibraryResource();

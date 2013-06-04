@@ -154,6 +154,32 @@ class Architect {
 			);
 		}
 		/* TODO: save all controllers */
+		Debug::dump('[save] Save all controllers');
+		foreach($this->application->controllers as $controller) {
+			@mkdir($path.PROJECT_PATH.'/metadata/controller/', 0777, true);
+			$parseArray = $controller->toMetaDataArray();
+			/* add to xds */
+			$fileMap = new FileMap();
+				$fileMap->__className	= $controller->__className;
+				$fileMap->paths	= array(
+					"metadata/controller/".$controller->__fileName,
+					"app/controller/override/".$controller->__fileName.".js",
+					"app/controller/".$controller->__fileName.".js"
+				);
+			$orderMap->controller[] = $controller->__designerId;
+			$xds->topInstanceFileMap[$controller->__designerId] = $fileMap->toMap();
+			
+			$key = $controller->__designerId;
+			$this->expandedState->$key = $controller->toArchitect();
+			
+			
+			file_put_contents(
+				$path.PROJECT_PATH.'/metadata/controller/'.$controller->__fileName, 
+				json_encode($parseArray , JSON_PRETTY_PRINT )
+			);
+		}
+		
+		
 		
 		$orderMap->app[] = 'application';
 		$xds->viewOrderMap	= $orderMap;

@@ -9,10 +9,10 @@ class XDS extends Base {
 	
 	public $name				= "project_xds";
     public $settings			= NULL;
-    public $xdsVersion			= "2.2.1";
-    public $xdsBuild			= 951;
+    public $xdsVersion			= "2.2.2";
+    public $xdsBuild			= 991;
     public $schemaVersion		= 1;
-    public $upgradeVersion		= 210000000500;
+    public $upgradeVersion		= 210000000503;
 	public $framework			= "ext42";
 	public $topInstanceFileMap	= array();
 	public $viewOrderMap		= NULL;

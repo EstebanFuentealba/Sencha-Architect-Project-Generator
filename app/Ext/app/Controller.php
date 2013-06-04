@@ -9,14 +9,31 @@ class Controller extends Base  {
 
 	public $id		= NULL;
 	public $models	= array();
-	public $refs 	= NULL;
+	public $refs 	= array();
 	public $stores	= array();
 	public $views	= array();
 	
+	# Sencha Architect Attribute
+	public $actions = array();
+	
 	public function __construct(){
 		parent::__construct();
+		$this->__reference = array(
+			"name"	=> "items",
+			"type"	=> "array"
+		);
 	}
 	
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		foreach($this->actions as $action) {
+			$meta["cn"][] = $action->toMetaDataArray();
+		}
+		foreach($this->refs as $ref) {
+			$meta["cn"][] = $ref->toMetaDataArray();
+		}
+		return $meta;
+	}
 }
 
 ?>
