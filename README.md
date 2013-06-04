@@ -20,8 +20,13 @@ Steps
 2. Configure database in **config.php** file
 3. Open in your browser http://localhost/ExtJS-Code-Generator/app/bootstrap.php
 4. Go to **build** dir , open Sencha Architect Project
-5. Smiles
+5. In the Sencha Architect **press Build Button**
+6. Smiles
  
  
 TODO List
 --------------------------------------
+- Add Validators
+- Generate Actions of Controllers
+- Add UI configuration (layouts, order, theme, Initial View)
+- Generate Back-End .NET, Java, PHP (Optional)
