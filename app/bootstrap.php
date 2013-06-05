@@ -112,6 +112,10 @@ foreach($tables as $tableName => $table){
 	$store->__userClassName	= $storeName;
 	$store->__className		= $storeName;
 	$store->__fileName		= $storeName;
+
+	$store->autoLoad		= true;
+	$store->autoSync		= true;
+
 		$customProperty = new Property();
 		$customProperty->name = 'actionMethods';
 		$customProperty->value = array(
@@ -170,7 +174,13 @@ foreach($tables as $tableName => $table){
 				$removeSelectedButton = new Button();
 				$removeSelectedButton->text	= 'Remove Selected';
 				$removeSelectedButton->iconCls	= 'icon-delete';
+				$removeSelectedButton->itemId	= 'btnRemoveSelected';
 				$removeSelectedButton->disabled = true;
+					#	Extra attributes (used in controller)
+					$customProperty = new Property();
+					$customProperty->name = 'storeName';
+					$customProperty->value = $storeName;
+				$removeSelectedButton->__customProperties[]	= $customProperty;
 				$gridToolbar->items[] = $removeSelectedButton;
 			$gridToolbar->dock = 'top';
 		$grid->dockedItems[] = $gridToolbar;	
@@ -381,6 +391,7 @@ $controllerUtils->__fileName		= 'UtilsController';
 	$action->name			= "click";
 	$action->__controlQuery	= "#btnClear";
 $controllerUtils->actions[] = $action;
+
 	#	Action add record
 	$action = new Action();
 	$action->fn 			= 'addForm';
@@ -406,11 +417,38 @@ $controllerUtils->actions[] = $action;
 	$action->name			= "click";
 	$action->__controlQuery	= "#btnCreate";
 $controllerUtils->actions[] = $action;
-	#	Reference to component
+
+	#	Action Delete item
+	$action = new Action();
+	$action->fn 			= 'removeItem';
+	$action->implHandler 	= array(
+		"var records = this.getGridList().getView().getSelectionModel().getSelection();\r",
+		"if(records.length > 0) {\r",
+		"	Ext.MessageBox.confirm('Confirmar', '¿Estás seguro que quieres eliminar los seleccionados?', function(opt){\r",
+		"		if(opt != 'no') {\r",
+		"			var store = Ext.data.StoreManager.lookup(target.storeName);\r",
+		"			store.remove(records);\r",
+		"		}\r",
+		"	});\r",
+		"}\r"
+	);
+	$action->name			= "click";
+	$action->__controlQuery	= "#btnRemoveSelected";
+$controllerUtils->actions[] = $action;
+
+
+	#	Reference to component Form
 	$ref = new Ref();
 	$ref->ref = "createForm"; /* obtain form */
 	$ref->selector = 'form'; /* itemid selector of form */
-	$controllerUtils->refs[] = $ref;
+$controllerUtils->refs[] = $ref;
+	#	Reference to component Form
+	$ref = new Ref();
+	$ref->ref = "gridList"; /* obtain form */
+	$ref->selector = 'form'; /* itemid selector of form */
+$controllerUtils->refs[] = $ref;
+
+
 $app->controllers['UtilsController'] 	= $controllerUtils;
 
 
