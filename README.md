@@ -21,7 +21,9 @@ Steps
 3. Open in your browser http://localhost/ExtJS-Code-Generator/app/bootstrap.php
 4. Go to **build** dir , open Sencha Architect Project
 5. In the Sencha Architect **press Build Button**
-6. Smiles
+6. Choose one View as **Initial View**
+7. Run Project
+8. Smiles
  
  
 TODO List
