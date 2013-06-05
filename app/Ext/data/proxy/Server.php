@@ -30,6 +30,13 @@ class Server extends Proxy implements Observable {
 	public function __construct(){
 		parent::__construct();
 	}
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		if(!is_null($this->api) && is_array($this->api) && count($this->api) > 0){
+			$meta["userConfig"]["api"] = $this->api;
+		}
+		return $meta;
+	}
 }
 
 ?>

@@ -18,6 +18,7 @@ require_once(dirname(__FILE__).'/Sencha/Architect.php');
 require_once(dirname(__FILE__).'/Sencha/Architect/Base.php');
 require_once(dirname(__FILE__).'/Sencha/Architect/app/controller/Ref.php');
 require_once(dirname(__FILE__).'/Sencha/Architect/app/controller/Action.php');
+require_once(dirname(__FILE__).'/Sencha/Architect/property/Property.php');
 
 /* ExtJS 4.2 Files */
 require_once(dirname(__FILE__).'/ext/app/Controller.php');
@@ -45,6 +46,7 @@ require_once(dirname(__FILE__).'/ext/button/Button.php');
 use Ext\app\Controller as Controller;
 use Sencha\Architect\app\controller\Action as Action;
 use Sencha\Architect\app\controller\Ref as Ref;
+use Sencha\Architect\property\Property as Property;
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
@@ -72,6 +74,7 @@ use Ext\form\field\ComboBox as ComboBox;
 use Ext\form\field\Hidden as Hidden;
 use Ext\button\Button as Button;
 
+
 /*
 	First: Mapping Tables of database
 */
@@ -96,15 +99,42 @@ foreach($tables as $tableName => $table){
 	
 	$PHPClassName = Utils::getUnionName($tableName, $tableConfig);
 	
+	$storeName 		= 'store'.$PHPClassName;
+	$modelName		= $PHPClassName;
+	$viewName		= $PHPClassName.'View';
+	$controllerName	= $PHPClassName.'Controller';
+	
+	
 	
 	/* STORE */
 	$store = new JsonStore();
-	$store->storeId 		= 'store'.$PHPClassName;
-	$store->__userClassName	= 'store'.$PHPClassName;
-	$store->__className		= 'store'.$PHPClassName;
-	$store->__fileName		= 'store'.$PHPClassName;
+	$store->storeId 		= $storeName;
+	$store->__userClassName	= $storeName;
+	$store->__className		= $storeName;
+	$store->__fileName		= $storeName;
+		$customProperty = new Property();
+		$customProperty->name = 'actionMethods';
+		$customProperty->value = array(
+			"{\r",
+            "    create: 'POST',\r",
+            "    read: 'GET',\r",
+            "    update: 'POST',\r",
+            "    destroy: 'POST'\r",
+            "}"
+		);
+		$customProperty->configAlternates = 'object';
+	$store->__customProperties[]	= $customProperty;
+	
 		$proxy = new Ajax();
-		$proxy->url 	= './mantenedor/'.$PHPClassName.'/read.php';
+		#$proxy->url 	= './mantenedor/'.$PHPClassName.'/read.php';
+		$proxy->api		= array(
+			"{\r",
+			"    create: './mantenedor/".$PHPClassName."/add.php',\r",
+			"    read: './mantenedor/".$PHPClassName."/read.php',\r",
+			"    update: './mantenedor/".$PHPClassName."/update.php',\r",
+			"    destroy: './mantenedor/".$PHPClassName."/delete.php'\r",
+			"}"
+		);
 			$reader = new Json();
 			$reader->root = 'records';
 		$proxy->reader	= $reader;
@@ -112,18 +142,18 @@ foreach($tables as $tableName => $table){
 	
 	/* MODEL */
 	$model = new Model();
-	$model->__userClassName	= $PHPClassName;
-	$model->__className		= $PHPClassName;
-	$model->__fileName		= $PHPClassName;
+	$model->__userClassName	= $modelName;
+	$model->__className		= $modelName;
+	$model->__fileName		= $modelName;
 	
 	
 	
 	/* VIEW */
 	$panel = new Panel();
 	$panel->title = 'Panel '. $model->__className;
-	$panel->__userClassName	= $PHPClassName.'View';
-	$panel->__className		= $PHPClassName.'View';
-	$panel->__fileName		= $PHPClassName.'View';
+	$panel->__userClassName	= $viewName;
+	$panel->__className		= $viewName;
+	$panel->__fileName		= $viewName;
 	
 	$panel->layout			= "column";
 	$panel->bodyPadding		= 5;
@@ -164,6 +194,18 @@ foreach($tables as $tableName => $table){
 				$createButton->text	= 'Create';
 				$createButton->iconCls	= 'icon-create';
 				$createButton->itemId	= 'btnCreate';
+				
+				#	Extra attributes (used in controller)
+					$customProperty = new Property();
+					$customProperty->name = 'storeName';
+					$customProperty->value = $storeName;
+				$createButton->__customProperties[]	= $customProperty;
+					$customProperty = new Property();
+					$customProperty->name = 'modelName';
+					$customProperty->value = $app->name.'.model.'.$modelName;
+				$createButton->__customProperties[]	= $customProperty;
+				
+				
 			$formToolbar->items[] = $createButton;
 			$formToolbar->dock = 'bottom';
 		$form->dockedItems[] = $formToolbar;
@@ -303,13 +345,13 @@ foreach($tables as $tableName => $table){
 	
 	/* CONTROLLER */
 	$controller = new Controller();
-	$controller->__userClassName = $PHPClassName.'Controller';
-	$controller->__className 	= $PHPClassName.'Controller';
-	$controller->__fileName		= $PHPClassName.'Controller';
+	$controller->__userClassName 	= $controllerName;
+	$controller->__className 		= $controllerName;
+	$controller->__fileName			= $controllerName;
 	$controller->views[] = $panel->__className;
-	$ref = new Ref();
-	$ref->ref = "form".ucwords($PHPClassName); /* obtain form */
-	$ref->selector = '#form'.ucwords($PHPClassName); /* itemid selector of form */
+		$ref = new Ref();
+		$ref->ref = "form".ucwords($PHPClassName); /* obtain form */
+		$ref->selector = '#form'.ucwords($PHPClassName); /* itemid selector of form */
 	$controller->refs[] = $ref;
 	
 	
@@ -332,14 +374,39 @@ $controllerUtils = new Controller();
 $controllerUtils->__userClassName 	= 'UtilsController';
 $controllerUtils->__className 		= 'UtilsController';
 $controllerUtils->__fileName		= 'UtilsController';
+	#	Action Reset Form
 	$action = new Action();
 	$action->fn 			= 'clearForm';
-	$action->implHandler[] 	= "console.log(\"CLEAR FORM\");\r";
-	$action->implHandler[] 	= "console.log(this.getCreateForm().getItemId( ));\r";
 	$action->implHandler[] 	= "this.getCreateForm().getForm().reset();\r"; /*Reset forms*/
 	$action->name			= "click";
 	$action->__controlQuery	= "#btnClear";
 $controllerUtils->actions[] = $action;
+	#	Action add record
+	$action = new Action();
+	$action->fn 			= 'addForm';
+	$action->implHandler 	= array(
+		"var form = this.getCreateForm();\r",
+		"if(form.getForm().isValid()) {\r",
+		"	var record = Ext.create(target.modelName, form.getForm().getValues()),\r",
+		"		store = Ext.data.StoreManager.lookup(target.storeName),\r",
+		"		model = Ext.ModelManager.getModel(target.modelName);\r",
+		"	model.setProxy(store.getProxy());\r",
+		"	record.save({\r",
+		"		success: function(rec, op) {\r",
+		"			store.add(rec);\r",
+		"			form.getForm().reset();\r",
+		"		},\r",
+		"		failure: function(rec, op) {\r",
+		"			console.log('ERROR');\r",
+		"			console.log(op);\r",
+		"		}\r",
+		"	});\r",
+		"};\r",
+	);
+	$action->name			= "click";
+	$action->__controlQuery	= "#btnCreate";
+$controllerUtils->actions[] = $action;
+	#	Reference to component
 	$ref = new Ref();
 	$ref->ref = "createForm"; /* obtain form */
 	$ref->selector = 'form'; /* itemid selector of form */

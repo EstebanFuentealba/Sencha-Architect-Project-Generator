@@ -17,6 +17,7 @@ class Base {
 	public $__object			= NULL;
 	public $__params			= NULL;
 	public $__controlQuery		= NULL;
+	public $__customProperties	= array();
 	
 	public function __construct(){
 		$this->__object	= $this;
@@ -87,6 +88,14 @@ class Base {
 		if(!is_null($this->__columnWidth)){
 			$meta["userConfig"]["layout|columnWidth"] = $this->__columnWidth;
 		}
+		foreach($this->__customProperties as $customProperty) {
+			$meta["customConfigs"][] = $customProperty->toArrayDefinition();
+			$meta["userConfig"][$customProperty->name] = $customProperty->value;
+			if(!is_null($customProperty->configAlternates)){
+				$meta['configAlternates'][$customProperty->name]	= $customProperty->configAlternates;
+			}
+		}
+		
 		foreach($this as $key => $value) {
 			if(!is_null($value)){
 				if(!is_object($value) && !is_array($value)) {

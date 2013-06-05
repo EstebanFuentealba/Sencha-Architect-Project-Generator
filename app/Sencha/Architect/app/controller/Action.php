@@ -5,7 +5,7 @@ class Action extends Base {
 
 	public $fn			= NULL;
 	public $implHandler	= array(
-		"console.log(\"CLICK\");\r"
+		"/* Action Generated */\r"
 	);
 	public $name		= NULL;
 	public $scope		= "me";
