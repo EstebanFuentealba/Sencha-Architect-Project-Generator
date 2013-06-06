@@ -167,6 +167,7 @@ foreach($tables as $tableName => $table){
 		$grid = new GridPanel();
 		$grid->__columnWidth	= 0.6;
 		$grid->store			= $store->__className;
+		$grid->itemId			= 'gridListPanel';
 			$paging	= new Paging();
 			$paging->store	= $grid->store;
 		$grid->dockedItems[] = $paging;	
@@ -354,16 +355,17 @@ foreach($tables as $tableName => $table){
 	
 	
 	/* CONTROLLER */
+	/*
 	$controller = new Controller();
 	$controller->__userClassName 	= $controllerName;
 	$controller->__className 		= $controllerName;
 	$controller->__fileName			= $controllerName;
 	$controller->views[] = $panel->__className;
 		$ref = new Ref();
-		$ref->ref = "form".ucwords($PHPClassName); /* obtain form */
-		$ref->selector = '#form'.ucwords($PHPClassName); /* itemid selector of form */
+		$ref->ref = "form".ucwords($PHPClassName);
+		$ref->selector = '#form'.ucwords($PHPClassName);
 	$controller->refs[] = $ref;
-	
+	*/
 	
 	/* append to generic controller */
 	$controllerUtils->views[] = $panel->__className;
@@ -375,15 +377,15 @@ foreach($tables as $tableName => $table){
 	$app->models[$model->__className] 				= $model;
 	$app->stores[$store->__className] 				= $store;
 	$app->views[$panel->__className] 				= $panel;
-	$app->controllers[$controller->__className] 	= $controller;
+	#$app->controllers[$controller->__className] 	= $controller;
 	
 }
 
 # Generic Controller (basic functions)
 $controllerUtils = new Controller();
-$controllerUtils->__userClassName 	= 'UtilsController';
-$controllerUtils->__className 		= 'UtilsController';
-$controllerUtils->__fileName		= 'UtilsController';
+$controllerUtils->__userClassName 	= 'GenericController';
+$controllerUtils->__className 		= 'GenericController';
+$controllerUtils->__fileName		= 'GenericController';
 	#	Action Reset Form
 	$action = new Action();
 	$action->fn 			= 'clearForm';
@@ -436,20 +438,31 @@ $controllerUtils->actions[] = $action;
 	$action->__controlQuery	= "#btnRemoveSelected";
 $controllerUtils->actions[] = $action;
 
+	#	Action Selection item
+	$action = new Action();
+	$action->fn 			= 'selectRowOfGrid';
+	$action->__params[]		= 'selections';	
+	$action->implHandler 	= array(
+		"this.getGridList().down('#btnRemoveSelected').setDisabled(selections.length === 0);\r"
+	);
+	$action->name			= "selectionchange";
+	$action->__controlQuery	= "#gridListPanel";
+$controllerUtils->actions[] = $action;
+
 
 	#	Reference to component Form
 	$ref = new Ref();
 	$ref->ref = "createForm"; /* obtain form */
 	$ref->selector = 'form'; /* itemid selector of form */
 $controllerUtils->refs[] = $ref;
-	#	Reference to component Form
+	#	Reference to component Grid
 	$ref = new Ref();
 	$ref->ref = "gridList"; /* obtain form */
-	$ref->selector = 'form'; /* itemid selector of form */
+	$ref->selector = '#gridListPanel'; /* itemid selector of grid */
 $controllerUtils->refs[] = $ref;
 
 
-$app->controllers['UtilsController'] 	= $controllerUtils;
+$app->controllers['GenericController'] 	= $controllerUtils;
 
 
 
