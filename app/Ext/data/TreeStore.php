@@ -16,6 +16,15 @@ class TreeStore extends AbstractStore {
 	public function __construct(){
 		parent::__construct();
 	}
+	
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		if(count($this->root)>0) {
+			$meta['userConfig']['root'] = $this->root;
+		}
+		return $meta;
+	}
+	
 }
 
 ?>

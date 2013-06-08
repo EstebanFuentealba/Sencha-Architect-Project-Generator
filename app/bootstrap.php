@@ -89,6 +89,11 @@ Debug::dump("[mapping] get all tables name");
 $tables = KoalaMapping::getTables();
 
 
+$treeFile	= array(
+	'text'		=> '.',
+	'children'	=> array()
+);
+
 
 $architect = new Architect();
 
@@ -108,11 +113,18 @@ $app->autoCreateViewport 	= true;
 		$field->name = 'module_name';
 	$model->addField($field);
 		$field = new Field();
-		$field->name = 'component_id';
+		$field->name = 'component';
 	$model->addField($field);
 		$field = new Field();
 		$field->name = 'text';
 	$model->addField($field);
+		$field = new Field();
+		$field->name = 'node_type';
+	$model->addField($field);
+		$field = new Field();
+		$field->name = 'url_action';
+	$model->addField($field);
+		
 	
 $architect->models[$model->__className] = $model;
 $app->models[$model->__className] 		= $model;
@@ -128,7 +140,6 @@ $app->models[$model->__className] 		= $model;
 		$proxy = new Ajax();
 		$proxy->url 	= './mantenedor/__menu/read.php';
 			$reader = new Json();
-			$reader->root = 'records';
 		$proxy->reader	= $reader;
 	$store->proxy		= $proxy;
 	$store->root		= array(
@@ -170,7 +181,7 @@ $app->stores[$store->__className] 		= $store;
 	$viewport->items[] = $panel;
 		$contentPanel 			= new Panel();
 		$contentPanel->region 	= 'center';
-		$contentPanel->id  		= 'content-panel';
+		$contentPanel->itemId  		= 'content-panel';
 		$contentPanel->margin	= '5 5 5 0';
 		$contentPanel->stateful = true;
 		$contentPanel->layout 	= 'card';
@@ -178,7 +189,7 @@ $app->stores[$store->__className] 		= $store;
 		$contentPanel->border 	= 0;
 			$container 			= new Panel();
 			$container->title	= 'ExtJS Code Creator Portal';
-			$container->id 		= 'content-panel-container';
+			$container->itemId 	= 'content-panel-container';
 			$container->html	= '<div style="margin: 20px;"><b>Link: </b> <a target="_blank" href="https://github.com/EstebanFuentealba/ExtJS-Code-Generator">https://github.com/EstebanFuentealba/ExtJS-Code-Generator</a></div>';
 		$contentPanel->items[]	= $container;
 	$viewport->items[] = $contentPanel;
@@ -191,9 +202,20 @@ $tableConfig	= array(
 );
 
 
+
 Debug::dump("[mapping] obtaining all tables name");
 foreach($tables as $tableName => $table){
 	Debug::dump("[mapping] obtaining info the {".$tableName."}");
+	
+	$treeComponent = array(
+		'views'			=> array(),
+		'stores'		=> array(),
+		'models'		=> array(),
+		'controllers'	=> array(),
+		'requires'		=> array()
+	);
+	
+	
 	
 	$PHPClassName = Utils::getUnionName($tableName, $tableConfig);
 	
@@ -256,6 +278,11 @@ foreach($tables as $tableName => $table){
 	$panel->__userClassName	= $viewName;
 	$panel->__className		= $viewName;
 	$panel->__fileName		= $viewName;
+	
+	$panelItemId 			= 'panel-'.strtolower(str_replace(array($tableConfig['prefix'], $tableConfig['suffix'],'_','-'),array("", "","-","-"), $tableName));
+	$panelNameText			= ucwords(str_replace(array($tableConfig['prefix'], $tableConfig['suffix'],'_','-'),array("", "","-","-"), $tableName));
+	
+	$panel->itemId			= $panelItemId;
 	
 	$panel->layout			= "column";
 	$panel->bodyPadding		= 5;
@@ -355,6 +382,8 @@ foreach($tables as $tableName => $table){
 			##	TODO: Add variable to configure pageSize
 			$formField->pageSize	= 25;
 			$formField->valueField	= $table['constraints'][$columnName]['foreignColumn'];
+			
+			$treeComponent['stores'][] 	= $formField->store;
 		} else {
 			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
 				$formField = new Hidden();
@@ -402,6 +431,7 @@ foreach($tables as $tableName => $table){
 					$formField->valueField		= 'key';
 					
 					$architect->stores[$storeENUM->__className] = $storeENUM;
+					$treeComponent['stores'][] 	= $storeENUM->__className;
 				} else {
 					$formField = new TextField();
 				}
@@ -476,10 +506,24 @@ $app->controllers[$controller->__className] 	= $controller;
 	$architect->views[$panel->__className] 			= $panel;
 	
 	
+	$treeComponent['views'][] 	= $app->name.'.view.'.$panel->__className;
+	$treeComponent['models'][] 	= $app->name.'.model.'.$modelName;
+	$treeComponent['stores'][] 	= $store->__className;
+	
 	/* Add Models, Stores, Views to Aplication */
 	#$app->models[$model->__className] 				= $model;
 	#$app->stores[$store->__className] 				= $store;
 	#$app->views[$panel->__className] 				= $panel;
+	
+	
+	$treeItem = array(
+		'text'		=> $panelNameText,
+		'itemId'	=> $panelItemId,
+		'node_type'	=> 'panel',
+		'leaf'		=> true,
+		'component'	=> $treeComponent
+	);
+	$treeFile['children'][] = $treeItem;
 	
 }
 
@@ -564,22 +608,70 @@ $controllerUtils->refs[] = $ref;
 $controllerUtils->refs[] = $ref;
 
 
-$architect->controllers['GenericController'] = $controllerUtils;
-#$app->controllers['GenericController'] 	= $controllerUtils;
-
-
-$app->controllers['GenericController'] = $controllerUtils;
+$architect->controllers['GenericController'] 	= $controllerUtils;
+$app->controllers['GenericController'] 			= $controllerUtils;
 
 
 
 #Portal Controller
-$controllerUtils = new Controller();
-$controllerUtils->__userClassName 	= 'Portal';
-$controllerUtils->__className 		= 'Portal';
-$controllerUtils->__fileName		= 'Portal';
-
-
-
+$controllerPortal = new Controller();
+$controllerPortal->__userClassName 	= 'Portal';
+$controllerPortal->__className 		= 'Portal';
+$controllerPortal->__fileName		= 'Portal';
+	#	Action Event Select Tree Item
+	$action = new Action();
+	$action->fn 			= 'selectItem';
+	$action->__params		= array(
+		'selModel',
+		'record',
+		'index',
+		'options'
+	);	
+	$action->implHandler 	= array(
+		"console.log('select item');\r",
+		"var contentPanel = this.getContentPanel();\r",
+		"contentPanel.setLoading(true);\r",
+		"switch (record.get(\"node_type\")) {\r",
+		"\tcase 'panel' :\r",
+		"\tif (record.get('leaf')) {\r",
+		"\t\tvar component = record.get('component');\r",
+		"\t\tExt.application({\r",
+		"\t\t\trequires: \tcomponent.requires,\r",
+		"\t\t\tmodels: \tcomponent.models,\r",
+		"\t\t\tstores: \tcomponent.stores,\r",
+		"\t\t\tviews: \t\tcomponent.views,\r",
+		"\t\t\tlaunch: \tfunction() {\r",
+		"\t\t\t\tvar view = Ext.create(component.views[0],{\r",
+		"\t\t\t\t\tlisteners: {\r",
+		"\t\t\t\t\t\trender: function () {\r",
+		"\t\t\t\t\t\t\tcontentPanel.layout.setActiveItem(this.getItemId());\r",
+		"\t\t\t\t\t\t\tcontentPanel.setLoading(false);\r",
+		"\t\t\t\t\t\t}\r",
+		"\t\t\t\t\t}\r",
+		"\t\t\t\t});\r",
+		"\t\t\t\tcontentPanel.removeAll();\r",
+		"\t\t\t\tcontentPanel.add(view);\r",
+		"\t\t\t},\r",
+		"\t\t\tname: '".$app->name."'\r",
+		"\t\t});\r",
+		"\t}\r",
+		"\tbreak;\r",
+		"\tcase 'link' :\r",
+		"\t\tcontentPanel.setLoading(false);\r",
+		"\t\twindow.location = record.get(\"url_action\");\r",
+		"\tbreak;\r",
+		"}"
+	);
+	$action->name			= "select";
+	$action->__controlQuery	= "#tree-panel-menu";
+$controllerPortal->actions[] = $action;
+$architect->controllers['Portal'] 	= $controllerPortal;
+$app->controllers['Portal'] 		= $controllerPortal;
+	#	Reference to component Content Panel
+	$ref = new Ref();
+	$ref->ref = "contentPanel"; /* obtain form */
+	$ref->selector = '#content-panel'; /* itemid selector of grid */
+$controllerPortal->refs[] = $ref;
 
 
 
@@ -591,4 +683,7 @@ $architect->resources[] = $resource;
 $architect->save(dirname(__FILE__).'/../');
 
 
+$treeFilePath = dirname(__FILE__).'/../build/mantenedor/__menu';
+@mkdir($treeFilePath, 0755, true);
+file_put_contents($treeFilePath.'/read.php', json_encode($treeFile));
 ?>
