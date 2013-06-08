@@ -29,6 +29,7 @@ TODO List
 --------------------------------------
 
 - Order the code and create class model
+- Add language pack
 - Add Validators
 - ~~Generate Actions of Controllers~~
 - Add UI configuration (layouts, order, theme, Initial View)

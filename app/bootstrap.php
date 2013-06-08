@@ -572,7 +572,7 @@ $controllerUtils->actions[] = $action;
 	$action->implHandler 	= array(
 		"var records = this.getGridList().getView().getSelectionModel().getSelection();\r",
 		"if(records.length > 0) {\r",
-		"	Ext.MessageBox.confirm('Confirmar', '¿Estás seguro que quieres eliminar los seleccionados?', function(opt){\r",
+		"	Ext.MessageBox.confirm('Confirmar', 'Are you sure you want to delete the selected rows?', function(opt){\r",
 		"		if(opt != 'no') {\r",
 		"			var store = Ext.data.StoreManager.lookup(target.storeName);\r",
 		"			store.remove(records);\r",
