@@ -21,16 +21,19 @@ require_once(dirname(__FILE__).'/Sencha/Architect/app/controller/Action.php');
 require_once(dirname(__FILE__).'/Sencha/Architect/property/Property.php');
 
 /* ExtJS 4.2 Files */
+require_once(dirname(__FILE__).'/ext/container/Viewport.php');
 require_once(dirname(__FILE__).'/ext/app/Controller.php');
 require_once(dirname(__FILE__).'/ext/resource/LibraryResource.php');
 require_once(dirname(__FILE__).'/ext/data/Field.php');
 require_once(dirname(__FILE__).'/ext/data/Model.php');
 require_once(dirname(__FILE__).'/ext/data/proxy/Ajax.php');
 require_once(dirname(__FILE__).'/ext/data/JsonStore.php');
+require_once(dirname(__FILE__).'/ext/data/TreeStore.php');
 require_once(dirname(__FILE__).'/ext/data/reader/Json.php');
 require_once(dirname(__FILE__).'/ext/panel/Panel.php');
 require_once(dirname(__FILE__).'/ext/form/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/Panel.php');
+require_once(dirname(__FILE__).'/ext/tree/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
 require_once(dirname(__FILE__).'/ext/toolbar/Paging.php');
 require_once(dirname(__FILE__).'/ext/selection/CheckboxModel.php');
@@ -43,6 +46,9 @@ require_once(dirname(__FILE__).'/ext/form/field/Hidden.php');
 require_once(dirname(__FILE__).'/ext/button/Button.php');
 
 
+use Ext\container\Viewport as Viewport;
+use Ext\container\Container as Container;
+use Ext\tree\Panel as TreePanel;
 use Ext\app\Controller as Controller;
 use Sencha\Architect\app\controller\Action as Action;
 use Sencha\Architect\app\controller\Ref as Ref;
@@ -50,6 +56,7 @@ use Sencha\Architect\property\Property as Property;
 
 use Ext\data\proxy\Ajax as Ajax;
 use Ext\data\JsonStore as JsonStore;
+use Ext\data\TreeStore as TreeStore;
 use Ext\data\Store as Store;
 use Ext\data\reader\Json as Json;
 use Ext\data\Model as Model;
@@ -82,11 +89,102 @@ Debug::dump("[mapping] get all tables name");
 $tables = KoalaMapping::getTables();
 
 
+
+$architect = new Architect();
+
+
+
 $app = new Application();
 $app->name					=	'MyAppTest';
 $app->autoCreateViewport 	= true;
 
+/* PORTAL VIEW */
 
+	$model = new Model();
+	$model->__userClassName	= 'TreeMenuNode';
+	$model->__className		= 'TreeMenuNode';
+	$model->__fileName		= 'TreeMenuNode';
+		$field = new Field();
+		$field->name = 'module_name';
+	$model->addField($field);
+		$field = new Field();
+		$field->name = 'component_id';
+	$model->addField($field);
+		$field = new Field();
+		$field->name = 'text';
+	$model->addField($field);
+	
+$architect->models[$model->__className] = $model;
+$app->models[$model->__className] 		= $model;
+
+	$store = new TreeStore();
+	$store->storeId 		= 'TreeMenuStore';
+	$store->__userClassName	= 'TreeMenuStore';
+	$store->__className		= 'TreeMenuStore';
+	$store->__fileName		= 'TreeMenuStore';
+
+	$store->autoLoad		= true;
+	$store->autoSync		= true;
+		$proxy = new Ajax();
+		$proxy->url 	= './mantenedor/__menu/read.php';
+			$reader = new Json();
+			$reader->root = 'records';
+		$proxy->reader	= $reader;
+	$store->proxy		= $proxy;
+	$store->root		= array(
+		"{\r",
+		"    text: 'Portal',\r",
+		"    expanded: true\r",
+		"}"
+	);
+	$store->model 		= $model->__userClassName;
+$architect->stores[$store->__className] = $store;
+$app->stores[$store->__className] 		= $store;
+
+
+	$viewport = new Viewport();
+	$viewport->__userClassName	= 'Portal';
+	$viewport->__className		= 'Portal';
+	$viewport->__fileName		= 'Portal';
+	$viewport->__initialView	= true;
+	$viewport->stateful = true;
+	$viewport->layout = "border";
+		$container 			= new Container();
+		$container->region 	= 'north';
+		$container->height 	= 30;
+	$viewport->items[] = $container;
+		$panel 			= new Panel();
+		$panel->region 	= 'west';
+		$panel->margin 	= '5 5 5 5';
+		$panel->width	= 150;
+		$panel->title	= 'Menu';
+			$treepanel = new TreePanel();
+			$treepanel->border 		= 0;
+			$treepanel->itemId		= 'tree-panel-menu';
+			$treepanel->title		= '';
+			$treepanel->store		= $store->__userClassName;
+			$treepanel->useArrows 	= true;
+			$treepanel->autoScroll	= true;
+			$treepanel->rootVisible	= false;
+		$panel->items[] = $treepanel;
+	$viewport->items[] = $panel;
+		$contentPanel 			= new Panel();
+		$contentPanel->region 	= 'center';
+		$contentPanel->id  		= 'content-panel';
+		$contentPanel->margin	= '5 5 5 0';
+		$contentPanel->stateful = true;
+		$contentPanel->layout 	= 'card';
+		$contentPanel->title	= '';
+		$contentPanel->border 	= 0;
+			$container 			= new Panel();
+			$container->title	= 'ExtJS Code Creator Portal';
+			$container->id 		= 'content-panel-container';
+			$container->html	= '<div style="margin: 20px;"><b>Link: </b> <a target="_blank" href="https://github.com/EstebanFuentealba/ExtJS-Code-Generator">https://github.com/EstebanFuentealba/ExtJS-Code-Generator</a></div>';
+		$contentPanel->items[]	= $container;
+	$viewport->items[] = $contentPanel;
+$architect->views[$viewport->__className] = $viewport;
+$app->views[$viewport->__className] = $viewport;
+	
 $tableConfig	= array(
 	'prefix'	=> 'm_',
 	'suffix'	=> ''
@@ -302,8 +400,8 @@ foreach($tables as $tableName => $table){
 					$formField->pageSize		= 25;
 					$formField->displayField	= 'value';
 					$formField->valueField		= 'key';
-					$app->stores[$storeENUM->__className] 	= $storeENUM;
 					
+					$architect->stores[$storeENUM->__className] = $storeENUM;
 				} else {
 					$formField = new TextField();
 				}
@@ -365,19 +463,23 @@ foreach($tables as $tableName => $table){
 		$ref->ref = "form".ucwords($PHPClassName);
 		$ref->selector = '#form'.ucwords($PHPClassName);
 	$controller->refs[] = $ref;
+$app->controllers[$controller->__className] 	= $controller;
 	*/
-	
-	/* append to generic controller */
-	$controllerUtils->views[] = $panel->__className;
 	
 	
 	
 
 	/* Append store, Model, View and Controller to Applicaton */
-	$app->models[$model->__className] 				= $model;
-	$app->stores[$store->__className] 				= $store;
-	$app->views[$panel->__className] 				= $panel;
-	#$app->controllers[$controller->__className] 	= $controller;
+	
+	$architect->models[$model->__className] 		= $model;
+	$architect->stores[$store->__className] 		= $store;
+	$architect->views[$panel->__className] 			= $panel;
+	
+	
+	/* Add Models, Stores, Views to Aplication */
+	#$app->models[$model->__className] 				= $model;
+	#$app->stores[$store->__className] 				= $store;
+	#$app->views[$panel->__className] 				= $panel;
 	
 }
 
@@ -462,12 +564,26 @@ $controllerUtils->refs[] = $ref;
 $controllerUtils->refs[] = $ref;
 
 
-$app->controllers['GenericController'] 	= $controllerUtils;
+$architect->controllers['GenericController'] = $controllerUtils;
+#$app->controllers['GenericController'] 	= $controllerUtils;
+
+
+$app->controllers['GenericController'] = $controllerUtils;
+
+
+
+#Portal Controller
+$controllerUtils = new Controller();
+$controllerUtils->__userClassName 	= 'Portal';
+$controllerUtils->__className 		= 'Portal';
+$controllerUtils->__fileName		= 'Portal';
+
+
+
 
 
 
 # Create Project structure
-$architect = new Architect();
 $architect->setApp($app);
 	$resource = new LibraryResource();
 	$resource->theme = 'gray';

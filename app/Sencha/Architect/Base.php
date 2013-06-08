@@ -18,6 +18,7 @@ class Base {
 	public $__params			= NULL;
 	public $__controlQuery		= NULL;
 	public $__customProperties	= array();
+	public $__initialView		= NULL;
 	
 	public function __construct(){
 		$this->__object	= $this;
@@ -84,6 +85,9 @@ class Base {
 		}
 		if(!is_null($this->__createAlias)) {
 			$meta["userConfig"]["designer|createAlias"] = $this->__createAlias;
+		}
+		if(!is_null($this->__initialView)) {
+			$meta["userConfig"]["designer|initialView"] = $this->__initialView;
 		}
 		if(!is_null($this->__columnWidth)){
 			$meta["userConfig"]["layout|columnWidth"] = $this->__columnWidth;

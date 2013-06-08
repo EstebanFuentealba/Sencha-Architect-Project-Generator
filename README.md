@@ -29,6 +29,7 @@ Steps
 TODO List
 --------------------------------------
 - Add Validators
-- Generate Actions of Controllers
+- ~~Generate Actions of Controllers~~
 - Add UI configuration (layouts, order, theme, Initial View)
 - Generate Back-End .NET, Java, PHP (Optional)
+- Add Sencha Touch Option

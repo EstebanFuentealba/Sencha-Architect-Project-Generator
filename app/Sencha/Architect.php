@@ -32,6 +32,12 @@ class Architect {
 	public $resources		= 	array();
 	public $expandedState	= 	NULL;
 	
+	public $models			= array();
+	public $stores			= array();
+	public $views			= array();
+	public $controllers		= array();
+	
+	
 	public function __construct(){
 	}
 	public function setApp($app) {
@@ -55,7 +61,7 @@ class Architect {
 		$orderMap = new OrderMap();
 		/* Save all models */
 		Debug::dump('[save] Save all models');
-		foreach($this->application->models as $model) {
+		foreach($this->models as $model) {
 			@mkdir($path.PROJECT_PATH.'/metadata/model/', 0777, true);
 			$parseArray = $model->toMetaDataArray();
 			
@@ -83,7 +89,7 @@ class Architect {
 		}
 		/* Save all stores */
 		Debug::dump('[save] Save all stores');
-		foreach($this->application->stores as $store) {
+		foreach($this->stores as $store) {
 			@mkdir($path.PROJECT_PATH.'/metadata/store/', 0777, true);
 			$parseArray = $store->toMetaDataArray();
 			
@@ -132,7 +138,7 @@ class Architect {
 		}
 		/* Save all views */
 		Debug::dump('[save] Save all views');
-		foreach($this->application->views as $view) {
+		foreach($this->views as $view) {
 			@mkdir($path.PROJECT_PATH.'/metadata/view/', 0777, true);
 			$parseArray = $view->toMetaDataArray();
 			/* add to xds */
@@ -155,7 +161,7 @@ class Architect {
 		}
 		/* TODO: save all controllers */
 		Debug::dump('[save] Save all controllers');
-		foreach($this->application->controllers as $controller) {
+		foreach($this->controllers as $controller) {
 			@mkdir($path.PROJECT_PATH.'/metadata/controller/', 0777, true);
 			$parseArray = $controller->toMetaDataArray();
 			/* add to xds */
