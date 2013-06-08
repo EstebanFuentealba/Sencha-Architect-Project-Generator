@@ -20,14 +20,15 @@ Steps
 2. Configure database in **config.php** file
 3. Open in your browser http://localhost/ExtJS-Code-Generator/app/bootstrap.php
 4. Go to **build** dir , open Sencha Architect Project
-5. In the Sencha Architect **press Build Button**
-6. Choose one View as **Initial View**
+5. In the Sencha Architect **press Build Button** 
 7. Run Project
 8. Smiles
  
  
 TODO List
 --------------------------------------
+
+- Order the code and create class model
 - Add Validators
 - ~~Generate Actions of Controllers~~
 - Add UI configuration (layouts, order, theme, Initial View)
