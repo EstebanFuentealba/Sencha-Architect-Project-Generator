@@ -22,7 +22,11 @@ class Panel extends Table {
 	public $useArrows		= NULL;
 	
 	public function __construct(){
-		parent::__construct();
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
+		
 		$this->__reference = array(
 			"name"	=> "viewConfig",
 			"type"	=> "object"

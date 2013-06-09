@@ -18,7 +18,10 @@ class Application extends Controller {
 	public $scope				= NULL;
 	
 	public function __construct(){
-		parent::__construct();
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 		$this->__designerId 	= 'application';
 		$this->__fileName 		= 'Application';
 		$this->__type 			= 'Ext.app.Application';

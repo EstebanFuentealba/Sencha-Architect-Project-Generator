@@ -27,7 +27,7 @@ class ComboBox extends Picker {
 	public $queryMode	=	NULL;
 	public $queryParam	=	NULL;
 	public $selectOnTab	=	NULL;
-	public $store	=	NULL;
+	public $store		=	NULL;
 	public $transform	=	NULL;
 	public $triggerAction	=	NULL;
 	public $triggerCls	=	NULL;
@@ -37,7 +37,10 @@ class ComboBox extends Picker {
 	public $valueNotFoundText 	=	NULL;
 	
 	public function __construct(){
-		parent::__construct();
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 	}
 	
 	

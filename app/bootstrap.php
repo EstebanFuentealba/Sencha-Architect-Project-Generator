@@ -95,104 +95,118 @@ $treeFile	= array(
 );
 
 
-$architect = new Architect();
+$architect = new Architect(array(
+	'resources'	=> array(
+		new LibraryResource(array(
+			'theme' => 'gray'
+		))
+	)
+));
 
-
-
-$app = new Application();
-$app->name					=	'MyAppTest';
-$app->autoCreateViewport 	= true;
+$app = new Application(array(
+	'name'					=>	'MyAppTest',
+	'autoCreateViewport' 	=> true
+));
 
 /* PORTAL VIEW */
 
-	$model = new Model();
-	$model->__userClassName	= 'TreeMenuNode';
-	$model->__className		= 'TreeMenuNode';
-	$model->__fileName		= 'TreeMenuNode';
-		$field = new Field();
-		$field->name = 'module_name';
-	$model->addField($field);
-		$field = new Field();
-		$field->name = 'component';
-	$model->addField($field);
-		$field = new Field();
-		$field->name = 'text';
-	$model->addField($field);
-		$field = new Field();
-		$field->name = 'node_type';
-	$model->addField($field);
-		$field = new Field();
-		$field->name = 'url_action';
-	$model->addField($field);
-		
-	
+	$model = new Model(array(
+		'__userClassName'	=> 'TreeMenuNode',
+		'__className'		=> 'TreeMenuNode',
+		'__fileName'		=> 'TreeMenuNode',
+		'fields'			=> array(
+			new Field(array(
+				'name'	=> 'module_name'
+			)),
+			new Field(array(
+				'name'	=> 'component'
+			)),
+			new Field(array(
+				'name'	=> 'text'
+			)),
+			new Field(array(
+				'name'	=> 'node_type'
+			)),
+			new Field(array(
+				'name'	=> 'url_action'
+			))
+		)
+	));
 $architect->models[$model->__className] = $model;
 $app->models[$model->__className] 		= $model;
 
-	$store = new TreeStore();
-	$store->storeId 		= 'TreeMenuStore';
-	$store->__userClassName	= 'TreeMenuStore';
-	$store->__className		= 'TreeMenuStore';
-	$store->__fileName		= 'TreeMenuStore';
+	$store = new TreeStore(array(
+		'storeId'			=> 'TreeMenuStore',
+		'__userClassName'	=> 'TreeMenuStore',
+		'__className'		=> 'TreeMenuStore',
+		'__fileName'		=> 'TreeMenuStore',
+		'autoLoad'			=> true,
+		'autoSync'			=> true,
+		'proxy'				=> new Ajax(array(
+			'url'		=> './mantenedor/__menu/read.php',
+			'reader'	=> new Json()
+		)),
+		'root'				=> array(
+			"{\r",
+			"    text: 'Portal',\r",
+			"    expanded: true\r",
+			"}"
+		),
+		'model'				=> $model->__userClassName
+	));
 
-	$store->autoLoad		= true;
-	$store->autoSync		= true;
-		$proxy = new Ajax();
-		$proxy->url 	= './mantenedor/__menu/read.php';
-			$reader = new Json();
-		$proxy->reader	= $reader;
-	$store->proxy		= $proxy;
-	$store->root		= array(
-		"{\r",
-		"    text: 'Portal',\r",
-		"    expanded: true\r",
-		"}"
-	);
-	$store->model 		= $model->__userClassName;
 $architect->stores[$store->__className] = $store;
 $app->stores[$store->__className] 		= $store;
 
 
-	$viewport = new Viewport();
-	$viewport->__userClassName	= 'Portal';
-	$viewport->__className		= 'Portal';
-	$viewport->__fileName		= 'Portal';
-	$viewport->__initialView	= true;
-	$viewport->stateful = true;
-	$viewport->layout = "border";
-		$container 			= new Container();
-		$container->region 	= 'north';
-		$container->height 	= 30;
-	$viewport->items[] = $container;
-		$panel 			= new Panel();
-		$panel->region 	= 'west';
-		$panel->margin 	= '5 5 5 5';
-		$panel->width	= 150;
-		$panel->title	= 'Menu';
-			$treepanel = new TreePanel();
-			$treepanel->border 		= 0;
-			$treepanel->itemId		= 'tree-panel-menu';
-			$treepanel->title		= '';
-			$treepanel->store		= $store->__userClassName;
-			$treepanel->useArrows 	= true;
-			$treepanel->autoScroll	= true;
-			$treepanel->rootVisible	= false;
-		$panel->items[] = $treepanel;
-	$viewport->items[] = $panel;
-		$contentPanel 			= new Panel();
-		$contentPanel->region 	= 'center';
-		$contentPanel->itemId  		= 'content-panel';
-		$contentPanel->margin	= '5 5 5 0';
-		$contentPanel->stateful = true;
-		$contentPanel->layout 	= 'card';
-		$contentPanel->title	= '';
-		$contentPanel->border 	= 0;
-			$container 			= new Panel();
-			$container->title	= 'ExtJS Code Creator Portal';
-			$container->itemId 	= 'content-panel-container';
-			$container->html	= '<div style="margin: 20px;"><b>Link: </b> <a target="_blank" href="https://github.com/EstebanFuentealba/ExtJS-Code-Generator">https://github.com/EstebanFuentealba/ExtJS-Code-Generator</a></div>';
-		$contentPanel->items[]	= $container;
-	$viewport->items[] = $contentPanel;
+	$viewport = new Viewport(array(
+		'__userClassName'	=> 'Portal',
+		'__className'		=> 'Portal',
+		'__fileName'		=> 'Portal',
+		'__initialView'		=> true,
+		'stateful' 			=> true,
+		'layout' 			=> "border",
+		'items'				=> array(
+			new Container(array(
+				'region'	=> 'north',
+				'height'	=> 30
+			)),
+			new Panel(array(
+				'region' 	=> 'west',
+				'margin' 	=> '5 5 5 5',
+				'width'		=> 150,
+				'title'		=> 'Menu',
+				'items'		=> array(
+					new TreePanel(array(
+						'border' 		=> 0,
+						'itemId'		=> 'tree-panel-menu',
+						'title'			=> '',
+						'store'			=> $store->__userClassName,
+						'useArrows' 	=> true,
+						'autoScroll'	=> true,
+						'rootVisible'	=> false
+					))
+				)
+			)),
+			new Panel(array(
+				'region' 	=> 'center',
+				'itemId'  	=> 'content-panel',
+				'margin'	=> '5 5 5 0',
+				'stateful' 	=> true,
+				'layout' 	=> 'card',
+				'title'		=> '',
+				'border' 	=> 0,
+				'items'		=> array(
+					new Panel(array(
+						'title'		=> 'ExtJS Code Creator Portal',
+						'itemId' 	=> 'content-panel-container',
+						'html'		=> '<div style="margin: 20px;"><b>Link: </b> <a target="_blank" href="https://github.com/EstebanFuentealba/ExtJS-Code-Generator">https://github.com/EstebanFuentealba/ExtJS-Code-Generator</a></div>'
+					))
+				)
+			))
+		)
+	));
+	
 $architect->views[$viewport->__className] = $viewport;
 $app->views[$viewport->__className] = $viewport;
 	
@@ -227,136 +241,140 @@ foreach($tables as $tableName => $table){
 	
 	
 	/* STORE */
-	$store = new JsonStore();
-	$store->storeId 		= $storeName;
-	$store->__userClassName	= $storeName;
-	$store->__className		= $storeName;
-	$store->__fileName		= $storeName;
-
-	$store->autoLoad		= true;
-	$store->autoSync		= true;
-
-		$customProperty = new Property();
-		$customProperty->name = 'actionMethods';
-		$customProperty->value = array(
-			"{\r",
-            "    create: 'POST',\r",
-            "    read: 'GET',\r",
-            "    update: 'POST',\r",
-            "    destroy: 'POST'\r",
-            "}"
-		);
-		$customProperty->configAlternates = 'object';
-	$store->__customProperties[]	= $customProperty;
-	
-		$proxy = new Ajax();
-		#$proxy->url 	= './mantenedor/'.$PHPClassName.'/read.php';
-		$proxy->api		= array(
-			"{\r",
-			"    create: './mantenedor/".$PHPClassName."/add.php',\r",
-			"    read: './mantenedor/".$PHPClassName."/read.php',\r",
-			"    update: './mantenedor/".$PHPClassName."/update.php',\r",
-			"    destroy: './mantenedor/".$PHPClassName."/delete.php'\r",
-			"}"
-		);
-			$reader = new Json();
-			$reader->root = 'records';
-		$proxy->reader	= $reader;
-	$store->proxy		= $proxy;
+	$store = new JsonStore(array(
+		'storeId'				=> $storeName,
+		'__userClassName'		=> $storeName,
+		'__className'			=> $storeName,
+		'__fileName'			=> $storeName,
+		'autoLoad'				=> true,
+		'autoSync'				=> true,
+		'__customProperties'	=> array(
+			new Property(array(
+				'name'		=> 'actionMethods',
+				'value'		=> array(
+					"{\r",
+					"    create: 'POST',\r",
+					"    read: 'GET',\r",
+					"    update: 'POST',\r",
+					"    destroy: 'POST'\r",
+					"}"
+				),
+				'configAlternates'	=> 'object'
+			))
+		),
+		'proxy'					=> new Ajax(array(
+			'api'	=> array(
+				"{\r",
+				"    create: './mantenedor/".$PHPClassName."/add.php',\r",
+				"    read: './mantenedor/".$PHPClassName."/read.php',\r",
+				"    update: './mantenedor/".$PHPClassName."/update.php',\r",
+				"    destroy: './mantenedor/".$PHPClassName."/delete.php'\r",
+				"}"
+			),
+			'reader'	=> new Json(array(
+				'root'	=> 'records'
+			))
+		))
+	));
 	
 	/* MODEL */
-	$model = new Model();
-	$model->__userClassName	= $modelName;
-	$model->__className		= $modelName;
-	$model->__fileName		= $modelName;
-	
-	
+	$model = new Model(array(
+		'__userClassName'	=> $modelName,
+		'__className'		=> $modelName,
+		'__fileName'		=> $modelName
+	));	
 	
 	/* VIEW */
-	$panel = new Panel();
-	$panel->title = 'Panel '. $model->__className;
-	$panel->__userClassName	= $viewName;
-	$panel->__className		= $viewName;
-	$panel->__fileName		= $viewName;
 	
 	$panelItemId 			= 'panel-'.strtolower(str_replace(array($tableConfig['prefix'], $tableConfig['suffix'],'_','-'),array("", "","-","-"), $tableName));
 	$panelNameText			= ucwords(str_replace(array($tableConfig['prefix'], $tableConfig['suffix'],'_','-'),array("", "","-","-"), $tableName));
 	
-	$panel->itemId			= $panelItemId;
-	
-	$panel->layout			= "column";
-	$panel->bodyPadding		= 5;
-	if(is_null($panel->items) || !is_array($panel->items)){
-		$panel->items = array();
-	}
-		$grid = new GridPanel();
-		$grid->__columnWidth	= 0.6;
-		$grid->store			= $store->__className;
-		$grid->itemId			= 'gridListPanel';
-			$paging	= new Paging();
-			$paging->store	= $grid->store;
-		$grid->dockedItems[] = $paging;	
-			$gridToolbar = new Toolbar();
-				$removeSelectedButton = new Button();
-				$removeSelectedButton->text	= 'Remove Selected';
-				$removeSelectedButton->iconCls	= 'icon-delete';
-				$removeSelectedButton->itemId	= 'btnRemoveSelected';
-				$removeSelectedButton->disabled = true;
-					#	Extra attributes (used in controller)
-					$customProperty = new Property();
-					$customProperty->name = 'storeName';
-					$customProperty->value = $storeName;
-				$removeSelectedButton->__customProperties[]	= $customProperty;
-				$gridToolbar->items[] = $removeSelectedButton;
-			$gridToolbar->dock = 'top';
-		$grid->dockedItems[] = $gridToolbar;	
-			$selModel	= new CheckboxModel();
-			$selModel->__userClassName	= 'MyCheckboxSelectionModel';
-		$grid->selModel = $selModel;	
+	$panel = new Panel(array(
+		'title' 			=> 'Panel '. $model->__className,
+		'__userClassName'	=> $viewName,
+		'__className'		=> $viewName,
+		'__fileName'		=> $viewName,
+		'itemId'			=> $panelItemId,
+		'layout'			=> "column",
+		'bodyPadding'		=> 5,
+		
+	));
+		$grid = new GridPanel(array(
+			'__columnWidth'	=> 0.6,
+			'store'			=> $store->__className,
+			'itemId'		=> 'gridListPanel',
+			'dockedItems'	=> array(
+				new Paging(array(
+					'dock'		=> 'bottom',
+					'store'		=> $store->__className
+				)),
+				new Toolbar(array(
+					'dock'		=> 'top',
+					'items'		=> array(
+						new Button(array(
+							'text'					=> 'Remove Selected',
+							'iconCls'				=> 'icon-delete',
+							'itemId'				=> 'btnRemoveSelected',
+							'disabled'				=> true,
+							'__customProperties'	=> array(
+								new Property(array(
+									'name'	=> 'storeName',
+									'value'	=> $storeName
+								))
+							)
+						))
+					)
+				))
+			),
+			'selModel'		=> new CheckboxModel(array(
+				'__userClassName'	=> 'MyCheckboxSelectionModel'
+			))
+		));	
 		
 		
-		$form = new FormPanel();
-		$form->itemId 			= 'form'.ucwords($PHPClassName);
-		$form->title			= 'Form ';
-		$form->__columnWidth	= 0.4;
-		$form->margin			= '0 0 0 5';
-			$formToolbar = new Toolbar();
-				$clearButton = new Button();
-				$clearButton->text	= 'Clear';
-				$clearButton->iconCls	= 'icon-clear';
-				$clearButton->itemId	= 'btnClear';
-			$formToolbar->items[] = $clearButton;
-				$createButton = new Button();
-				$createButton->text	= 'Create';
-				$createButton->iconCls	= 'icon-create';
-				$createButton->itemId	= 'btnCreate';
-				
-				#	Extra attributes (used in controller)
-					$customProperty = new Property();
-					$customProperty->name = 'storeName';
-					$customProperty->value = $storeName;
-				$createButton->__customProperties[]	= $customProperty;
-					$customProperty = new Property();
-					$customProperty->name = 'modelName';
-					$customProperty->value = $app->name.'.model.'.$modelName;
-				$createButton->__customProperties[]	= $customProperty;
-				
-				
-			$formToolbar->items[] = $createButton;
-			$formToolbar->dock = 'bottom';
-		$form->dockedItems[] = $formToolbar;
+		$form = new FormPanel(array(
+			'itemId' 			=> 'form'.ucwords($PHPClassName),
+			'title'				=> 'Form ',
+			'__columnWidth'		=> 0.4,
+			'margin'			=> '0 0 0 5',
+			'dockedItems'		=> array(
+				new Toolbar(array(
+					'dock' 	=> 'bottom',
+					'items'	=> array(
+						new Button(array(
+							'text'		=> 'Clear',
+							'iconCls'	=> 'icon-clear',
+							'itemId'	=> 'btnClear'
+						)),
+						new Button(array(
+							'text'					=> 'Create',
+							'iconCls'				=> 'icon-create',
+							'itemId'				=> 'btnCreate',
+							'__customProperties'	=> array(
+								new Property(array(
+									'name' 	=> 'storeName',
+									'value' => $storeName
+								)),
+								new Property(array(
+									'name' 	=> 'modelName',
+									'value' => $app->name.'.model.'.$modelName
+								))
+							)
+						))
+					)
+				))
+			)
+		));
 	
 	foreach($table["columns"] as $columnName => $col){
 
 		##
 		##	Fields of Model
 		##
-		
-		$field = new Field();
-			$field->name = $col["columnName"];
-			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
-				$field->useNull = true;
-			}
+			$field = new Field(array(
+				'name'		=> $col["columnName"],
+				'useNull'	=> ($col['isPrimaryKey'] && $col['extra'] == 'auto_increment')
+			));
 		$model->addField($field);
 		
 		##
@@ -370,20 +388,28 @@ foreach($tables as $tableName => $table){
 		} else {
 			$column = new Column();
 		}
+		##	Configure Column 
+		$column->text 		= $col["columnName"];
+		$column->dataIndex 	= $col["columnName"];
+		
 		
 		##
 		##	Fields of Form
 		##
 		
 		if(array_key_exists($columnName, $table['constraints'])){
+		
 			##	Foreign Key to Combobox
-			$formField = new ComboBox();
-			$formField->store = 'store'.Utils::getUnionName($table['constraints'][$columnName]['foreignTable'], $tableConfig);
-			##	TODO: Add variable to configure pageSize
-			$formField->pageSize	= 25;
-			$formField->valueField	= $table['constraints'][$columnName]['foreignColumn'];
+			$formField = new ComboBox(array(
+				'store'			=> 'store'.Utils::getUnionName($table['constraints'][$columnName]['foreignTable'], $tableConfig),
+				'pageSize'		=> 25,
+				'valueField'	=> $table['constraints'][$columnName]['foreignColumn']
+			));
+			
 			
 			$treeComponent['stores'][] 	= $formField->store;
+			
+			
 		} else {
 			if($col['isPrimaryKey'] && $col['extra'] == 'auto_increment') {
 				$formField = new Hidden();
@@ -397,22 +423,6 @@ foreach($tables as $tableName => $table){
 					
 					$PHPClassName = Utils::getUnionName($columnName, $tableConfig);
 					
-					
-					$storeENUM = new Store();
-					$storeENUM->storeId 		= $PHPClassName;
-					$storeENUM->__userClassName	= $PHPClassName;
-					$storeENUM->__className		= $PHPClassName;
-					$storeENUM->__fileName		= $PHPClassName;
-					
-					if(is_null($storeENUM->fields) || !is_array($storeENUM->fields)){
-						$storeENUM->fields = array();
-					}
-						$fieldKey = new Field();
-						$fieldKey->name = "key";
-					$storeENUM->fields[] = $fieldKey;
-						$fieldValue = new Field();
-						$fieldValue->name = "value";
-					$storeENUM->fields[] = $fieldValue;
 					$enumArray = array();
 					foreach($col['columnValues'] as $enumValue) {
 						$enumArray[] = array(
@@ -420,15 +430,30 @@ foreach($tables as $tableName => $table){
 							'value'	=> $enumValue
 						);
 					}
-					$storeENUM->data = json_encode($enumArray);
 					
-					$formField 					= new ComboBox();
-					$formField->mode			= 'local';
-					$formField->store 			= $storeENUM->__className;
-					##	TODO: Add variable to configure pageSize
-					$formField->pageSize		= 25;
-					$formField->displayField	= 'value';
-					$formField->valueField		= 'key';
+					$storeENUM = new Store(array(
+						'storeId' 			=> $PHPClassName,
+						'__userClassName'	=> $PHPClassName,
+						'__className'		=> $PHPClassName,
+						'__fileName'		=> $PHPClassName,
+						'fields'			=> array(
+							new Field(array(
+								'name' => "key"
+							)),
+							new Field(array(
+								'name' => "value"
+							))
+						),
+						'data' 				=> json_encode($enumArray)
+					));
+					
+					$formField 					= new ComboBox(array(
+						'mode'			=> 'local',
+						'store' 		=> $storeENUM->__className,
+						'pageSize'		=> 25,
+						'displayField'	=> 'value',
+						'valueField'	=> 'key'
+					));
 					
 					$architect->stores[$storeENUM->__className] = $storeENUM;
 					$treeComponent['stores'][] 	= $storeENUM->__className;
@@ -443,16 +468,10 @@ foreach($tables as $tableName => $table){
 			$formField->allowBlank = false;
 		}
 		
-		##	Configure Column 
-		$column->text 		= $col["columnName"];
-		$column->dataIndex 	= $col["columnName"];
-		
 		##	Configure Form Field
 		$formField->fieldLabel	= $col["columnName"];
 		$formField->name		= $col["columnName"];
 		$formField->anchor		= '100%';
-		
-		
 		
 		## Append Form Field to Form Items 
 		$form->items[] = $formField;
@@ -480,26 +499,8 @@ foreach($tables as $tableName => $table){
 	
 	$store->model 	= $model->__className;
 	
-	
-	
-	/* CONTROLLER */
-	/*
-	$controller = new Controller();
-	$controller->__userClassName 	= $controllerName;
-	$controller->__className 		= $controllerName;
-	$controller->__fileName			= $controllerName;
-	$controller->views[] = $panel->__className;
-		$ref = new Ref();
-		$ref->ref = "form".ucwords($PHPClassName);
-		$ref->selector = '#form'.ucwords($PHPClassName);
-	$controller->refs[] = $ref;
-$app->controllers[$controller->__className] 	= $controller;
-	*/
-	
-	
-	
 
-	/* Append store, Model, View and Controller to Applicaton */
+	#	Append store, Model, View and Controller to Applicaton
 	
 	$architect->models[$model->__className] 		= $model;
 	$architect->stores[$store->__className] 		= $store;
@@ -528,85 +529,83 @@ $app->controllers[$controller->__className] 	= $controller;
 }
 
 # Generic Controller (basic functions)
-$controllerUtils = new Controller();
-$controllerUtils->__userClassName 	= 'GenericController';
-$controllerUtils->__className 		= 'GenericController';
-$controllerUtils->__fileName		= 'GenericController';
-	#	Action Reset Form
-	$action = new Action();
-	$action->fn 			= 'clearForm';
-	$action->implHandler[] 	= "this.getCreateForm().getForm().reset();\r"; /*Reset forms*/
-	$action->name			= "click";
-	$action->__controlQuery	= "#btnClear";
-$controllerUtils->actions[] = $action;
-
-	#	Action add record
-	$action = new Action();
-	$action->fn 			= 'addForm';
-	$action->implHandler 	= array(
-		"var form = this.getCreateForm();\r",
-		"if(form.getForm().isValid()) {\r",
-		"	var record = Ext.create(target.modelName, form.getForm().getValues()),\r",
-		"		store = Ext.data.StoreManager.lookup(target.storeName),\r",
-		"		model = Ext.ModelManager.getModel(target.modelName);\r",
-		"	model.setProxy(store.getProxy());\r",
-		"	record.save({\r",
-		"		success: function(rec, op) {\r",
-		"			store.add(rec);\r",
-		"			form.getForm().reset();\r",
-		"		},\r",
-		"		failure: function(rec, op) {\r",
-		"			console.log('ERROR');\r",
-		"			console.log(op);\r",
-		"		}\r",
-		"	});\r",
-		"};\r",
-	);
-	$action->name			= "click";
-	$action->__controlQuery	= "#btnCreate";
-$controllerUtils->actions[] = $action;
-
-	#	Action Delete item
-	$action = new Action();
-	$action->fn 			= 'removeItem';
-	$action->implHandler 	= array(
-		"var records = this.getGridList().getView().getSelectionModel().getSelection();\r",
-		"if(records.length > 0) {\r",
-		"	Ext.MessageBox.confirm('Confirmar', 'Are you sure you want to delete the selected rows?', function(opt){\r",
-		"		if(opt != 'no') {\r",
-		"			var store = Ext.data.StoreManager.lookup(target.storeName);\r",
-		"			store.remove(records);\r",
-		"		}\r",
-		"	});\r",
-		"}\r"
-	);
-	$action->name			= "click";
-	$action->__controlQuery	= "#btnRemoveSelected";
-$controllerUtils->actions[] = $action;
-
-	#	Action Selection item
-	$action = new Action();
-	$action->fn 			= 'selectRowOfGrid';
-	$action->__params[]		= 'selections';	
-	$action->implHandler 	= array(
-		"this.getGridList().down('#btnRemoveSelected').setDisabled(selections.length === 0);\r"
-	);
-	$action->name			= "selectionchange";
-	$action->__controlQuery	= "#gridListPanel";
-$controllerUtils->actions[] = $action;
-
-
-	#	Reference to component Form
-	$ref = new Ref();
-	$ref->ref = "createForm"; /* obtain form */
-	$ref->selector = 'form'; /* itemid selector of form */
-$controllerUtils->refs[] = $ref;
-	#	Reference to component Grid
-	$ref = new Ref();
-	$ref->ref = "gridList"; /* obtain form */
-	$ref->selector = '#gridListPanel'; /* itemid selector of grid */
-$controllerUtils->refs[] = $ref;
-
+$controllerUtils = new Controller(array(
+	'__userClassName' 	=> 'GenericController',
+	'__className' 		=> 'GenericController',
+	'__fileName'		=> 'GenericController',
+	'actions'			=> array(
+		new Action(array(
+			'fn' 				=> 'clearForm',
+			'implHandler' 		=> array(
+				"this.getCreateForm().getForm().reset();\r"
+			),
+			'name'				=> "click",
+			'__controlQuery'	=> "#btnClear"
+		)),
+		new Action(array(
+			'fn' 				=> 'addForm',
+			'implHandler' 		=> array(
+				"var form = this.getCreateForm();\r",
+				"if(form.getForm().isValid()) {\r",
+				"	var record = Ext.create(target.modelName, form.getForm().getValues()),\r",
+				"		store = Ext.data.StoreManager.lookup(target.storeName),\r",
+				"		model = Ext.ModelManager.getModel(target.modelName);\r",
+				"	model.setProxy(store.getProxy());\r",
+				"	record.save({\r",
+				"		success: function(rec, op) {\r",
+				"			store.add(rec);\r",
+				"			form.getForm().reset();\r",
+				"		},\r",
+				"		failure: function(rec, op) {\r",
+				"			console.log('ERROR');\r",
+				"			console.log(op);\r",
+				"		}\r",
+				"	});\r",
+				"};\r",
+			),
+			'name'				=> "click",
+			'__controlQuery'	=> "#btnCreate"
+		)),
+		new Action(array(
+			'fn' 				=> 'removeItem',
+			'implHandler' 		=> array(
+				"var records = this.getGridList().getView().getSelectionModel().getSelection();\r",
+				"if(records.length > 0) {\r",
+				"	Ext.MessageBox.confirm('Confirmar', 'Are you sure you want to delete the selected rows?', function(opt){\r",
+				"		if(opt != 'no') {\r",
+				"			var store = Ext.data.StoreManager.lookup(target.storeName);\r",
+				"			store.remove(records);\r",
+				"		}\r",
+				"	});\r",
+				"}\r"
+			),
+			'name'				=> "click",
+			'__controlQuery'	=> "#btnRemoveSelected"
+		)),
+		new Action(array(
+			'fn' 				=> 'selectRowOfGrid',
+			'__params'			=> array(
+				'target',
+				'selections'
+			),
+			'implHandler' 		=> array(
+				"this.getGridList().down('#btnRemoveSelected').setDisabled(selections.length === 0);\r"
+			),
+			'name'				=> "selectionchange",
+			'__controlQuery'	=> "#gridListPanel"
+		))
+	),
+	'refs'	=> array(
+		new Ref(array(
+			'ref' 		=> "createForm",
+			'selector' 	=> 'form'
+		)),
+		new Ref(array(
+			'ref' 		=> "gridList",
+			'selector' 	=> '#gridListPanel'
+		))
+	)
+));
 
 $architect->controllers['GenericController'] 	= $controllerUtils;
 $app->controllers['GenericController'] 			= $controllerUtils;
@@ -614,72 +613,79 @@ $app->controllers['GenericController'] 			= $controllerUtils;
 
 
 #Portal Controller
-$controllerPortal = new Controller();
-$controllerPortal->__userClassName 	= 'Portal';
-$controllerPortal->__className 		= 'Portal';
-$controllerPortal->__fileName		= 'Portal';
-	#	Action Event Select Tree Item
-	$action = new Action();
-	$action->fn 			= 'selectItem';
-	$action->__params		= array(
-		'selModel',
-		'record',
-		'index',
-		'options'
-	);	
-	$action->implHandler 	= array(
-		"console.log('select item');\r",
-		"var contentPanel = this.getContentPanel();\r",
-		"contentPanel.setLoading(true);\r",
-		"switch (record.get(\"node_type\")) {\r",
-		"\tcase 'panel' :\r",
-		"\tif (record.get('leaf')) {\r",
-		"\t\tvar component = record.get('component');\r",
-		"\t\tExt.application({\r",
-		"\t\t\trequires: \tcomponent.requires,\r",
-		"\t\t\tmodels: \tcomponent.models,\r",
-		"\t\t\tstores: \tcomponent.stores,\r",
-		"\t\t\tviews: \t\tcomponent.views,\r",
-		"\t\t\tlaunch: \tfunction() {\r",
-		"\t\t\t\tvar view = Ext.create(component.views[0],{\r",
-		"\t\t\t\t\tlisteners: {\r",
-		"\t\t\t\t\t\trender: function () {\r",
-		"\t\t\t\t\t\t\tcontentPanel.layout.setActiveItem(this.getItemId());\r",
-		"\t\t\t\t\t\t\tcontentPanel.setLoading(false);\r",
-		"\t\t\t\t\t\t}\r",
-		"\t\t\t\t\t}\r",
-		"\t\t\t\t});\r",
-		"\t\t\t\tcontentPanel.removeAll();\r",
-		"\t\t\t\tcontentPanel.add(view);\r",
-		"\t\t\t},\r",
-		"\t\t\tname: '".$app->name."'\r",
-		"\t\t});\r",
-		"\t}\r",
-		"\tbreak;\r",
-		"\tcase 'link' :\r",
-		"\t\tcontentPanel.setLoading(false);\r",
-		"\t\twindow.location = record.get(\"url_action\");\r",
-		"\tbreak;\r",
-		"}"
-	);
-	$action->name			= "select";
-	$action->__controlQuery	= "#tree-panel-menu";
-$controllerPortal->actions[] = $action;
+$controllerPortal = new Controller(array(
+	'__userClassName' 	=> 'Portal',
+	'__className' 		=> 'Portal',
+	'__fileName'		=> 'Portal',
+	'actions'			=> array(
+		new Action(array(
+			'fn' 			=> 'selectItem',
+			'__params'		=> array(
+				'selModel',
+				'record',
+				'index',
+				'options'
+			),
+			'implHandler' 	=> array(
+				"console.log('select item');\r",
+				"var contentPanel = this.getContentPanel();\r",
+				"contentPanel.setLoading(true);\r",
+				"switch (record.get(\"node_type\")) {\r",
+				"    case 'panel' :\r",
+				"    if (record.get('leaf')) {\r",
+				"        var component = record.get('component');\r",
+				"       \r",
+				"        Ext.application({\r",
+				"            requires: \tcomponent.requires,\r",
+				"            models: \tcomponent.models,\r",
+				"            stores: \tcomponent.stores,\r",
+				"            views: \t\tcomponent.views,\r",
+				"            launch: \tfunction() {\r",
+				"                try{\r",
+				"                    var view = Ext.create(component.views[0],{\r",
+				"                        listeners: {\r",
+				"                            render: function () {\r",
+				"                                contentPanel.layout.setActiveItem(this.getItemId());\r",
+				"                                contentPanel.setLoading(false);\r",
+				"                            }\r",
+				"                        }\r",
+				"                    });\r",
+				"                    contentPanel.removeAll();\r",
+				"                    contentPanel.add(view);\r",
+				"                    \r",
+				"                }catch(e){\r",
+				"                \tcontentPanel.setLoading(false);\r",
+				"                }\r",
+				"            },\r",
+				"            name: '".$app->name."'\r",
+				"        });\r",
+				"    }\r",
+				"    break;\r",
+				"    case 'link' :\r",
+				"    contentPanel.setLoading(false);\r",
+				"    window.location = record.get(\"url_action\");\r",
+				"    break;\r",
+				"}"
+			),
+			'name'					=> "select",
+			'__controlQuery'		=> "#tree-panel-menu"
+		))
+	),
+	'refs'			=> array(
+		new Ref(array(
+			'ref'		=> "contentPanel",
+			'selector'	=> '#content-panel'
+		))
+	)
+));
+
 $architect->controllers['Portal'] 	= $controllerPortal;
 $app->controllers['Portal'] 		= $controllerPortal;
-	#	Reference to component Content Panel
-	$ref = new Ref();
-	$ref->ref = "contentPanel"; /* obtain form */
-	$ref->selector = '#content-panel'; /* itemid selector of grid */
-$controllerPortal->refs[] = $ref;
 
 
 
 # Create Project structure
 $architect->setApp($app);
-	$resource = new LibraryResource();
-	$resource->theme = 'gray';
-$architect->resources[] = $resource;
 $architect->save(dirname(__FILE__).'/../');
 
 

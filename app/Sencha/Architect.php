@@ -9,7 +9,9 @@ require_once(dirname(__FILE__).'/Architect/OrderMap.php');
 require_once(dirname(__FILE__).'/Architect/State.php');
 require_once(dirname(__FILE__).'/Architect/TabState.php');
 require_once(dirname(__FILE__).'/Architect/ExpandedState.php');
+require_once(dirname(__FILE__).'/Architect/Base.php');
 
+use Sencha\Architect\Base as Base;
 use Sencha\XDS as XDS;
 use Sencha\Architect\FileMap as FileMap;
 use Sencha\Architect\OrderMap as OrderMap;
@@ -21,7 +23,7 @@ use \Utils as Utils;
 use \Debug as Debug;
 
 
-class Architect {
+class Architect extends Base {
 	/* Config */
 	public $application 	= 	NULL;
 	public $tabState		= 	NULL;
@@ -39,6 +41,10 @@ class Architect {
 	
 	
 	public function __construct(){
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 	}
 	public function setApp($app) {
 		$this->application = $app;

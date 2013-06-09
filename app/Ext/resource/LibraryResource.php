@@ -15,10 +15,13 @@ class LibraryResource extends Base {
 	public $theme		= 	NULL; /* gray, classic, access, neptune */
 	
 	public function __construct(){
-		parent::__construct();
+		$this->className	= 'Library';
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 		$this->__type 		= 'libraryresource';
 		$this->__fileName	= 'Library';
-		$this->className	= 'Library';
 	}
 	
 }

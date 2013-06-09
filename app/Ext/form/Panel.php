@@ -12,8 +12,11 @@ class Panel extends Pnl {
 	public $pollInterval	= NULL;
 	
 	public function __construct(){
-		parent::__construct();
 		$this->bodyPadding = 10;
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 	}
 	
 	

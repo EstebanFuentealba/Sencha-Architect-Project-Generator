@@ -4,7 +4,7 @@ namespace Sencha\Architect;
 
 class Base {
 	
-	private $__fileName			= NULL;
+	public $__fileName			= NULL;
 	public $__functions			= array();
 	public $__events			= array();
 	public $__userClassName		= NULL;
@@ -24,6 +24,19 @@ class Base {
 		$this->__object	= $this;
 		$this->__object->__type	= str_replace('\\','.',get_class($this->__object));
 		$this->__type	= str_replace('\\','.',get_class($this));
+		
+		if(func_num_args() > 0){
+			$args 			= func_get_args();
+			$attributtes 	= get_object_vars($this);
+			if(is_array($args[0])){
+				foreach($args[0] as $name => $arg) {
+					if(array_key_exists($name, $attributtes)){ 
+						$this->$name = $arg;
+					}
+				}
+			}
+		}
+		
 	}
 	public function toArray(){
 		#return (array)$this->__object;

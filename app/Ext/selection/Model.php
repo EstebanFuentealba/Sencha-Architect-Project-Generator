@@ -16,7 +16,10 @@ abstract class Model extends Base	implements Observable , Bindable {
 	public $pruneRemoved		=	NULL;
 	
 	public function __construct(){
-		parent::__construct();
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 	}
 	
 }

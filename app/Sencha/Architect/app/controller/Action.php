@@ -11,15 +11,19 @@ class Action extends Base {
 	public $scope		= "me";
 	
 	public function __construct(){
-		parent::__construct();
+		$this->__params = array(
+			'target'
+		);
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
+		
 		$this->__reference = array(
 			"name"	=> "listeners",
 			"type"	=> "array"
 		);
 		$this->__type = 'controlleraction';
-		$this->__params = array(
-			'target'
-		);
 	}
 	public function toMetaDataArray() {
 		$meta = parent::toMetaDataArray();

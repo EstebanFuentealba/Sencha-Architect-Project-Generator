@@ -15,7 +15,7 @@ abstract class AbstractStore extends Base implements Observable, Sortable {
 	public	$autoSync				= NULL;
 	public 	$batchUpdateMode		= NULL;
 	public 	$defaultSortDirection	= NULL;
-	public 	$fields					= NULL;
+	public 	$fields					= array();
 	public 	$filterOnLoad			= NULL;
 	public 	$filters				= NULL;
 	public 	$model					= NULL;
@@ -27,7 +27,10 @@ abstract class AbstractStore extends Base implements Observable, Sortable {
 	public 	$storeId				= NULL;
 	
 	public function __construct(){
-		parent::__construct();
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
 	}
 	
 	public function toArchitect(){

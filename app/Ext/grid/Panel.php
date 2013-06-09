@@ -12,10 +12,16 @@ class Panel extends Table {
 	public $viewType	=	NULL;
 	
 	public function __construct(){
-		parent::__construct();
+	
 		$this->title		= "My Grid Panel";
 		$this->height 		= 450;
 		$this->dockedItems	= array();
+		
+		call_user_func_array(array(
+			'parent', 
+			'__construct'
+		), func_get_args());
+		
 	}
 }
 
