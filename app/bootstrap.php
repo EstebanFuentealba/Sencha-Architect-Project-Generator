@@ -33,6 +33,8 @@ require_once(dirname(__FILE__).'/ext/data/reader/Json.php');
 require_once(dirname(__FILE__).'/ext/panel/Panel.php');
 require_once(dirname(__FILE__).'/ext/form/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/Panel.php');
+require_once(dirname(__FILE__).'/ext/grid/View.php');
+require_once(dirname(__FILE__).'/ext/grid/plugin/DragDrop.php');
 require_once(dirname(__FILE__).'/ext/tree/Panel.php');
 require_once(dirname(__FILE__).'/ext/grid/column/Number.php');
 require_once(dirname(__FILE__).'/ext/toolbar/Paging.php');
@@ -67,6 +69,8 @@ use Ext\app\Application as Application;
 use Ext\resource\LibraryResource as LibraryResource;
 use Ext\panel\Panel as Panel;
 use Ext\grid\Panel as GridPanel;
+use Ext\grid\View	as View;
+use Ext\grid\plugin\DragDrop	as DragDrop;
 use Ext\form\Panel as FormPanel;
 use Ext\grid\column\Column as Column;
 use Ext\grid\column\Number as NumberColumn;
@@ -328,6 +332,13 @@ foreach($tables as $tableName => $table){
 			),
 			'selModel'		=> new CheckboxModel(array(
 				'__userClassName'	=> 'MyCheckboxSelectionModel'
+			)),
+			'view'			=> new View(array(
+				'plugins'	=> array(
+					new DragDrop(array(
+					
+					))
+				)
 			))
 		));	
 		
@@ -557,7 +568,7 @@ $controllerUtils = new Controller(array(
 				"			form.getForm().reset();\r",
 				"		},\r",
 				"		failure: function(rec, op) {\r",
-				"			console.log('ERROR');\r",
+				"			Ext.Msg.alert('Error', 'Changes are not saved to database.');\r",
 				"			console.log(op);\r",
 				"		}\r",
 				"	});\r",
@@ -571,7 +582,7 @@ $controllerUtils = new Controller(array(
 			'implHandler' 		=> array(
 				"var records = this.getGridList().getView().getSelectionModel().getSelection();\r",
 				"if(records.length > 0) {\r",
-				"	Ext.MessageBox.confirm('Confirmar', 'Are you sure you want to delete the selected rows?', function(opt){\r",
+				"	Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete the selected rows?', function(opt){\r",
 				"		if(opt != 'no') {\r",
 				"			var store = Ext.data.StoreManager.lookup(target.storeName);\r",
 				"			store.remove(records);\r",

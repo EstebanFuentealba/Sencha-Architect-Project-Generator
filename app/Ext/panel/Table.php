@@ -49,6 +49,9 @@ class Table extends Panel implements DockingContainer {
 		if(!is_null($this->selModel)) {
 			$meta['cn'][] = $this->selModel->toMetaDataArray();
 		}
+		if(!is_null($this->view)) {
+			$meta['cn'][] = $this->view->toMetaDataArray();
+		}
 		return $meta;
 	}
 }

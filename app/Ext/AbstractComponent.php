@@ -51,7 +51,7 @@ abstract class AbstractComponent
 	public $minWidth= NULL;
 	public $overCls = NULL;
 	public $padding = NULL;
-	public $plugins = NULL;
+	public $plugins 		= array();
 	public $renderData= NULL;
 	public $renderSelectors= NULL;
 	public $renderTo= NULL;
@@ -70,6 +70,16 @@ abstract class AbstractComponent
 			'parent', 
 			'__construct'
 		), func_get_args());
+	}
+	
+	public function toMetaDataArray() {
+		$meta = parent::toMetaDataArray();
+		if(is_array($this->plugins)) {
+			foreach($this->plugins as $plugin) {
+				$meta['cn'][] = $plugin->toMetaDataArray();
+			}
+		}
+		return $meta;
 	}
 
 }
