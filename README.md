@@ -35,3 +35,4 @@ TODO List
 - Add UI configuration (layouts, order, theme, Initial View)
 - Generate Back-End .NET, Java, PHP (Optional)
 - Add Sencha Touch Option
+- Sencha Architect license to continue to test. 

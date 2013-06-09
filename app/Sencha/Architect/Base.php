@@ -111,6 +111,9 @@ class Base {
 		if(!is_null($this->__columnWidth)){
 			$meta["userConfig"]["layout|columnWidth"] = $this->__columnWidth;
 		}
+		if(!is_null($this->anchor)) {
+			$meta["userConfig"]["layout|anchor"] = $this->anchor;
+		}
 		foreach($this->__customProperties as $customProperty) {
 			$meta["customConfigs"][] = $customProperty->toArrayDefinition();
 			$meta["userConfig"][$customProperty->name] = $customProperty->value;
