@@ -336,7 +336,8 @@ foreach($tables as $tableName => $table){
 			'view'			=> new View(array(
 				'plugins'	=> array(
 					new DragDrop(array(
-					
+						'ddGroup' 		=> 'gridToForm',
+						'enableDrop'	=> false
 					))
 				)
 			))
@@ -369,7 +370,11 @@ foreach($tables as $tableName => $table){
 								new Property(array(
 									'name' 	=> 'modelName',
 									'value' => $app->name.'.model.'.$modelName
-								))
+								)),
+								new Property(array(
+									'name' 	=> 'action',
+									'value' => 'create'
+								)),
 							)
 						))
 					)
@@ -383,9 +388,18 @@ foreach($tables as $tableName => $table){
 		##	Fields of Model
 		##
 			$field = new Field(array(
-				'name'		=> $col["columnName"],
-				'useNull'	=> ($col['isPrimaryKey'] && $col['extra'] == 'auto_increment')
+				'name'		=> $col["columnName"]
 			));
+			
+			if($col['isPrimaryKey']) {
+				if($col['extra'] == 'auto_increment') {
+					$field->useNull 	= true;
+				}
+				/*
+					TODO: Set `idProperty´ multi columns primary keys
+				*/
+				$model->idProperty 	= $field->name;
+			}
 		$model->addField($field);
 		
 		##
@@ -555,12 +569,13 @@ $controllerUtils = new Controller(array(
 		)),
 		new Action(array(
 			'fn' 				=> 'addForm',
+			'__targetType'		=> 'Ext.button.Button',
 			'implHandler' 		=> array(
 				"var form = this.getCreateForm();\r",
 				"if(form.getForm().isValid()) {\r",
-				"	var record = Ext.create(target.modelName, form.getForm().getValues()),\r",
-				"		store = Ext.data.StoreManager.lookup(target.storeName),\r",
-				"		model = Ext.ModelManager.getModel(target.modelName);\r",
+				"	var record = Ext.create(button.modelName, form.getForm().getValues()),\r",
+				"		store = Ext.data.StoreManager.lookup(button.storeName),\r",
+				"		model = Ext.ModelManager.getModel(button.modelName);\r",
 				"	model.setProxy(store.getProxy());\r",
 				"	record.save({\r",
 				"		success: function(rec, op) {\r",
@@ -604,6 +619,32 @@ $controllerUtils = new Controller(array(
 			),
 			'name'				=> "selectionchange",
 			'__controlQuery'	=> "#gridListPanel"
+		)),
+		new Action(array(
+			'fn' 				=> 'onFormAfterRender',
+			'__targetType'		=> 'Ext.form.Panel',
+			'implHandler' 		=> array(
+				"component.drop = new Ext.dd.DropZone(component.getEl(), {\r",
+				"    ddGroup:'gridToForm',\r",
+				"    notifyOver : function(src,e,data) {\r",
+				"        return true;\r",
+				"    },\r",
+				"    notifyOut : function(src,e,data) {\r",
+				"        return true;\r",
+				"    },\r",
+				"    notifyEnter: function(ddSource, e, data) {\r",
+				"        component.body.stopAnimation();\r",
+				"        component.body.highlight();\r",
+				"    },\r",
+				"    notifyDrop : function(src,e,data) {\r",
+				"        var selectedRecord = src.dragData.records[0];\r",
+				"        component.getForm().loadRecord(selectedRecord);\r",
+				"        return true;\r",
+				"    }\r",
+				"});\r"
+			),
+			'name'				=> "afterrender",
+			'__controlQuery'	=> "form"
 		))
 	),
 	'refs'	=> array(
@@ -614,6 +655,14 @@ $controllerUtils = new Controller(array(
 		new Ref(array(
 			'ref' 		=> "gridList",
 			'selector' 	=> '#gridListPanel'
+		)),
+		new Ref(array(
+			'ref' 		=> "btnClear",
+			'selector' 	=> '#btnClear'
+		)),
+		new Ref(array(
+			'ref' 		=> "btnCreate",
+			'selector' 	=> '#btnCreate'
 		))
 	)
 ));

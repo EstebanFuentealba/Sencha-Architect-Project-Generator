@@ -17,6 +17,7 @@ class Base {
 	public $__object			= NULL;
 	public $__params			= NULL;
 	public $__controlQuery		= NULL;
+	public $__targetType		= NULL;
 	public $__customProperties	= array();
 	public $__initialView		= NULL;
 	
@@ -87,11 +88,16 @@ class Base {
 		if(!is_null($this->__className)) {
 			$meta["userConfig"]["designer|className"] = $this->__className;
 		}
-		if(!is_null($this->__params)) {
-			$meta["userConfig"]["designer|params"] = $this->__params;
-		}
+		
 		if(!is_null($this->__controlQuery)) {
 			$meta["userConfig"]["designer|controlQuery"] = $this->__controlQuery;
+		}
+		if(!is_null($this->__targetType)) {
+			$meta["userConfig"]["designer|targetType"] 	= $this->__targetType;
+		} else {
+			if(!is_null($this->__params)) {
+				$meta["userConfig"]["designer|params"] = $this->__params;
+			}
 		}
 		if(!is_null($this->__displayName)) {
 			$meta["userConfig"]["designer|displayName"] = $this->__displayName;
