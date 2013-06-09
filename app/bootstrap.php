@@ -370,11 +370,7 @@ foreach($tables as $tableName => $table){
 								new Property(array(
 									'name' 	=> 'modelName',
 									'value' => $app->name.'.model.'.$modelName
-								)),
-								new Property(array(
-									'name' 	=> 'action',
-									'value' => 'create'
-								)),
+								))
 							)
 						))
 					)
@@ -562,7 +558,9 @@ $controllerUtils = new Controller(array(
 		new Action(array(
 			'fn' 				=> 'clearForm',
 			'implHandler' 		=> array(
-				"this.getCreateForm().getForm().reset();\r"
+				"this.getCreateForm().getForm().reset();\r",
+				"this.getBtnCreate().setText(\"Create\");\r",
+				"this.getBtnCreate().setIconCls('icon-create');"
 			),
 			'name'				=> "click",
 			'__controlQuery'	=> "#btnClear"
@@ -571,23 +569,24 @@ $controllerUtils = new Controller(array(
 			'fn' 				=> 'addForm',
 			'__targetType'		=> 'Ext.button.Button',
 			'implHandler' 		=> array(
-				"var form = this.getCreateForm();\r",
+				"var me = this,\r",
+				"    form = this.getCreateForm();\r",
 				"if(form.getForm().isValid()) {\r",
-				"	var record = Ext.create(button.modelName, form.getForm().getValues()),\r",
-				"		store = Ext.data.StoreManager.lookup(button.storeName),\r",
-				"		model = Ext.ModelManager.getModel(button.modelName);\r",
-				"	model.setProxy(store.getProxy());\r",
-				"	record.save({\r",
-				"		success: function(rec, op) {\r",
-				"			store.add(rec);\r",
-				"			form.getForm().reset();\r",
-				"		},\r",
-				"		failure: function(rec, op) {\r",
-				"			Ext.Msg.alert('Error', 'Changes are not saved to database.');\r",
-				"			console.log(op);\r",
-				"		}\r",
-				"	});\r",
-				"};\r",
+				"    var record = Ext.create(button.modelName, form.getForm().getValues()),\r",
+				"        store = Ext.data.StoreManager.lookup(button.storeName),\r",
+				"        model = Ext.ModelManager.getModel(button.modelName);\r",
+				"    model.setProxy(store.getProxy());\r",
+				"    record.save({\r",
+				"        success: function(rec, op) {\r",
+				"            store.add(rec);\r",
+				"            me.clearForm();\r",
+				"        },\r",
+				"        failure: function(rec, op) {\r",
+				"            Ext.Msg.alert('Error', 'Changes are not saved to database.');\r",
+				"            console.log(op);\r",
+				"        }\r",
+				"    });\r",
+				"};\r"
 			),
 			'name'				=> "click",
 			'__controlQuery'	=> "#btnCreate"
@@ -624,6 +623,7 @@ $controllerUtils = new Controller(array(
 			'fn' 				=> 'onFormAfterRender',
 			'__targetType'		=> 'Ext.form.Panel',
 			'implHandler' 		=> array(
+				"var me = this;\r",
 				"component.drop = new Ext.dd.DropZone(component.getEl(), {\r",
 				"    ddGroup:'gridToForm',\r",
 				"    notifyOver : function(src,e,data) {\r",
@@ -635,10 +635,13 @@ $controllerUtils = new Controller(array(
 				"    notifyEnter: function(ddSource, e, data) {\r",
 				"        component.body.stopAnimation();\r",
 				"        component.body.highlight();\r",
+				"        return true;\r",
 				"    },\r",
 				"    notifyDrop : function(src,e,data) {\r",
 				"        var selectedRecord = src.dragData.records[0];\r",
 				"        component.getForm().loadRecord(selectedRecord);\r",
+				"        me.getBtnCreate().setText(\"Update\");\r",
+				"        me.getBtnCreate().setIconCls('icon-save');\r",
 				"        return true;\r",
 				"    }\r",
 				"});\r"
