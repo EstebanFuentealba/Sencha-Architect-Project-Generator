@@ -3,6 +3,19 @@ ExtJS-Code-Generator
 
 ExtJS 4.2.x ORM Code Generator , make complete projects for Sencha Architect 2.2.2 Only with a database model
 
+Before _(Physical Model Diagram)_
+--------------------------------------
+![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/image_physical_diagram.png)
+
+After _(Open Generated Project in Sencha Architect 2.2.2)_
+--------------------------------------
+![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs-generator-project.png)
+
+Preview Running _(Running Project in Chrome)_
+--------------------------------------
+![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs_code_creator_example.png)
+
+
 
 Require
 --------------------------------------
