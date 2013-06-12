@@ -25,6 +25,11 @@ Steps
 8. Smiles
  
  
+Example Instructions
+--------------------------------------
+[Example README](https://github.com/EstebanFuentealba/ExtJS-Code-Generator/blob/master/example/README.md)
+
+ 
 TODO List
 --------------------------------------
 
