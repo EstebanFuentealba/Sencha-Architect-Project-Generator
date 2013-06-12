@@ -20,4 +20,8 @@ Before
 
 After
 --------------------------------------
+![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs-generator-project.png)
+
+Preview Running
+--------------------------------------
 ![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs_code_creator_example.png)
