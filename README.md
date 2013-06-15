@@ -1,19 +1,19 @@
-ExtJS-Code-Generator
+Sencha-Architect-Code-Generator
 ====================
 
-ExtJS 4.2.x ORM Code Generator , make complete projects for Sencha Architect 2.2.2 Only with a database model
+Sencha Architect 2.x.x ORM Code Generator , make complete projects for Sencha Architect Only with a database model
 
 Before _(Physical Model Diagram)_
 --------------------------------------
-![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/image_physical_diagram.png)
+![](https://raw.github.com/EstebanFuentealba/Sencha-Architect-Code-Generator/master/example/images/image_physical_diagram.png)
 
 After _(Open Generated Project in Sencha Architect 2.2.2)_
 --------------------------------------
-![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs-generator-project.png)
+![](https://raw.github.com/EstebanFuentealba/Sencha-Architect-Code-Generator/master/example/images/extjs-generator-project.png)
 
 Preview Running _(Running Project in Chrome)_
 --------------------------------------
-![](https://raw.github.com/EstebanFuentealba/ExtJS-Code-Generator/master/example/images/extjs_code_creator_example.png)
+![](https://raw.github.com/EstebanFuentealba/Sencha-Architect-Code-Generator/master/example/images/extjs_code_creator_example.png)
 
 
 
@@ -31,7 +31,7 @@ Steps
 --------------------------------------
 1. Have a database (MySQL) with a physical model preferably with foreign keys (CONSTRAINTS)
 2. Configure database in **config.php** file
-3. Open in your browser http://localhost/ExtJS-Code-Generator/app/bootstrap.php
+3. Open in your browser http://localhost/Sencha-Architect-Code-Generator/app/bootstrap.php
 4. Go to **build** dir , open Sencha Architect Project
 5. In the Sencha Architect **press Build Button** 
 7. Run Project
@@ -40,7 +40,7 @@ Steps
  
 Example Instructions
 --------------------------------------
-[Example README](https://github.com/EstebanFuentealba/ExtJS-Code-Generator/blob/master/example/README.md)
+[Example README](https://github.com/EstebanFuentealba/Sencha-Architect-Code-Generator/blob/master/example/README.md)
 
  
 TODO List

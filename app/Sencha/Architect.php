@@ -55,9 +55,11 @@ class Architect extends Base {
 		$this->codeState		= new State();
 	}	
 	public function save($path){
-	
-		Debug::dump('[delete] clear dir project');
-		Utils::rrmdir($path.PROJECT_PATH);
+		
+		$zip = new \Zip();
+		$zip->setComment("Project URL: https://github.com/EstebanFuentealba/Sencha-Architect-Project-Generator \nCreated on " . date('l jS \of F Y h:i:s A'));
+		//Debug::dump('[delete] clear dir project');
+		//Utils::rrmdir($path.PROJECT_PATH);
 		sleep(1);
 		
 		##
@@ -66,9 +68,9 @@ class Architect extends Base {
 		$xds = new XDS();
 		$orderMap = new OrderMap();
 		/* Save all models */
-		Debug::dump('[save] Save all models');
+		//Debug::dump('[save] Save all models');
 		foreach($this->models as $model) {
-			@mkdir($path.PROJECT_PATH.'/metadata/model/', 0777, true);
+			//@mkdir($path.PROJECT_PATH.'/metadata/model/', 0777, true);
 			$parseArray = $model->toMetaDataArray();
 			
 			/* add to xds */
@@ -86,17 +88,19 @@ class Architect extends Base {
 			
 			$key = $model->__designerId;
 			$this->expandedState->$key = $model->toArchitect();
-			
+			/*
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/model/'.$model->__fileName, 
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
+			*/
+			$zip->addFile(json_encode($parseArray , JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/model/'.$model->__fileName);
 			
 		}
 		/* Save all stores */
-		Debug::dump('[save] Save all stores');
+		//Debug::dump('[save] Save all stores');
 		foreach($this->stores as $store) {
-			@mkdir($path.PROJECT_PATH.'/metadata/store/', 0777, true);
+			//@mkdir($path.PROJECT_PATH.'/metadata/store/', 0777, true);
 			$parseArray = $store->toMetaDataArray();
 			
 			/* add to xds */
@@ -114,15 +118,18 @@ class Architect extends Base {
 			$key = $store->__designerId;
 			$this->expandedState->$key = $store->toArchitect();
 			
+			/*
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/store/'.$store->__fileName,
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
+			*/
+			$zip->addFile(json_encode($parseArray , JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/store/'.$store->__fileName);
 		}
 		/* Save all resources */
-		Debug::dump('[save] Save all resources');
+		//Debug::dump('[save] Save all resources');
 		foreach($this->resources as $resource) {
-			@mkdir($path.PROJECT_PATH.'/metadata/resource/', 0777, true);
+			//@mkdir($path.PROJECT_PATH.'/metadata/resource/', 0777, true);
 			$parseArray = $resource->toMetaDataArray();
 			/* add to xds */
 			$fileMap = new FileMap();
@@ -136,16 +143,19 @@ class Architect extends Base {
 			$key = $resource->__designerId;
 			$this->expandedState->$key = $resource->toArchitect();
 			
-			
+			/*
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/resource/'.$resource->__fileName, 
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
+			*/
+			
+			$zip->addFile(json_encode($parseArray , JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/resource/'.$resource->__fileName);
 		}
 		/* Save all views */
-		Debug::dump('[save] Save all views');
+		//Debug::dump('[save] Save all views');
 		foreach($this->views as $view) {
-			@mkdir($path.PROJECT_PATH.'/metadata/view/', 0777, true);
+			//@mkdir($path.PROJECT_PATH.'/metadata/view/', 0777, true);
 			$parseArray = $view->toMetaDataArray();
 			/* add to xds */
 			$fileMap = new FileMap();
@@ -159,16 +169,18 @@ class Architect extends Base {
 			$key = $view->__designerId;
 			$this->expandedState->$key = $view->toArchitect();
 			
-			
+			/*
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/view/'.$view->__fileName, 
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
+			*/
+			$zip->addFile(json_encode($parseArray , JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/view/'.$view->__fileName);
 		}
 		/* TODO: save all controllers */
-		Debug::dump('[save] Save all controllers');
+		//Debug::dump('[save] Save all controllers');
 		foreach($this->controllers as $controller) {
-			@mkdir($path.PROJECT_PATH.'/metadata/controller/', 0777, true);
+			//@mkdir($path.PROJECT_PATH.'/metadata/controller/', 0777, true);
 			$parseArray = $controller->toMetaDataArray();
 			/* add to xds */
 			$fileMap = new FileMap();
@@ -184,11 +196,14 @@ class Architect extends Base {
 			$key = $controller->__designerId;
 			$this->expandedState->$key = $controller->toArchitect();
 			
-			
+			/*
 			file_put_contents(
 				$path.PROJECT_PATH.'/metadata/controller/'.$controller->__fileName, 
 				json_encode($parseArray , JSON_PRETTY_PRINT )
 			);
+			*/
+			
+			$zip->addFile(json_encode($parseArray , JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/controller/'.$controller->__fileName);
 		}
 		
 		
@@ -198,27 +213,34 @@ class Architect extends Base {
 		
 		
 		$parseArray = $this->application->toMetaDataArray();
-		Debug::dump('[save] Save Application');
+		//Debug::dump('[save] Save Application');
 		file_put_contents(
 			$path.PROJECT_PATH.'/metadata/'.$this->application->__fileName, 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
 				
 		/* TODO: edit Parser for this file */
-		Debug::dump('[save] Save XDS File');
+		//Debug::dump('[save] Save XDS File');
 
 		$parseArray = $xds->toMetaDataArray();
+		/*
 		file_put_contents(
 			$path.PROJECT_PATH.'/'.$xds->__fileName, 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
-		
+		*/
+		$zip->addFile(json_encode($parseArray, JSON_PRETTY_PRINT ), PROJECT_PATH.'/'.$xds->__fileName);
+			
 		$parseArray = $this->toArray();
-		Debug::dump('[save] Save Architect file ');
+		//Debug::dump('[save] Save Architect file ');
+		/*
 		file_put_contents(
 			$path.PROJECT_PATH.'/.architect', 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
+		*/
+		$zip->addFile(json_encode($parseArray, JSON_PRETTY_PRINT ), PROJECT_PATH.'/.architect');
+		return $zip;
 	}
 	
 	public function toArray() {

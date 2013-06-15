@@ -5,6 +5,7 @@ require_once(dirname(__FILE__).'/../libraries/Debug.php');
 require_once(dirname(__FILE__).'/../libraries/Database.class.php');
 require_once(dirname(__FILE__).'/../libraries/Koala.Mapping.php');
 require_once(dirname(__FILE__).'/../libraries/Utils.php');
+require_once(dirname(__FILE__).'/../libraries/PHPZip/Zip.php');
 
 
 /* Export Fles */
@@ -88,7 +89,7 @@ use Ext\button\Button as Button;
 /*
 	First: Mapping Tables of database
 */
-Debug::dump("[mapping] get all tables name");
+//Debug::dump("[mapping] get all tables name");
 $tables = KoalaMapping::getTables();
 
 
@@ -110,6 +111,7 @@ $app = new Application(array(
 	'name'					=>	'MyAppTest',
 	'autoCreateViewport' 	=> true
 ));
+
 
 /* PORTAL VIEW */
 
@@ -220,9 +222,9 @@ $tableConfig	= array(
 
 
 
-Debug::dump("[mapping] obtaining all tables name");
+//Debug::dump("[mapping] obtaining all tables name");
 foreach($tables as $tableName => $table){
-	Debug::dump("[mapping] obtaining info the {".$tableName."}");
+	//Debug::dump("[mapping] obtaining info the {".$tableName."}");
 	
 	$treeComponent = array(
 		'views'			=> array(),
@@ -494,7 +496,28 @@ foreach($tables as $tableName => $table){
 	}
 	
 	
-	
+	$buttonCreate = new Button(array(
+		'text'					=> 'Create',
+		'iconCls'				=> 'icon-create',
+		'itemId'				=> 'btnCreate',
+		'__customProperties'	=> array(
+			new Property(array(
+				'name' 	=> 'storeName',
+				'value' => $storeName
+			)),
+			new Property(array(
+				'name' 	=> 'modelName',
+				'value' => $app->name.'.model.'.$modelName
+			)),
+			new Property(array(
+				'name' 	=> 'actionType',
+				'value' => 'create'
+			))
+		)
+	));
+	if(!is_null($propertyPrimaryKey)){
+		$buttonCreate->__customProperties[] = $propertyPrimaryKey;
+	}
 	$toolbar = new Toolbar(array(
 		'dock' 	=> 'bottom',
 		'items'	=> array(
@@ -503,26 +526,7 @@ foreach($tables as $tableName => $table){
 				'iconCls'	=> 'icon-clear',
 				'itemId'	=> 'btnClear'
 			)),
-			new Button(array(
-				'text'					=> 'Create',
-				'iconCls'				=> 'icon-create',
-				'itemId'				=> 'btnCreate',
-				'__customProperties'	=> array(
-					new Property(array(
-						'name' 	=> 'storeName',
-						'value' => $storeName
-					)),
-					new Property(array(
-						'name' 	=> 'modelName',
-						'value' => $app->name.'.model.'.$modelName
-					)),
-					new Property(array(
-						'name' 	=> 'actionType',
-						'value' => 'create'
-					)),
-					$propertyPrimaryKey
-				)
-			))
+			$buttonCreate
 		)
 	));
 	
@@ -530,9 +534,9 @@ foreach($tables as $tableName => $table){
 	
 	/*
 	if(count($table['constraints'])>0){
-		Debug::dump($table);
+		//Debug::dump($table);
 		foreach($table['constraints'] as $constraint) {
-			Debug::dump($tables[$constraint['foreignTable']]["columns"][$constraint['foreignColumn']]);
+			//Debug::dump($tables[$constraint['foreignTable']]["columns"][$constraint['foreignColumn']]);
 		}
 		exit(0);
 	} else {
@@ -784,10 +788,13 @@ $app->controllers['Portal'] 		= $controllerPortal;
 
 # Create Project structure
 $architect->setApp($app);
-$architect->save(dirname(__FILE__).'/../');
+$zip = $architect->save(dirname(__FILE__).'/../');
 
 
 $treeFilePath = dirname(__FILE__).'/../'.PROJECT_PATH.'/mantenedor/__menu';
 @mkdir($treeFilePath, 0755, true);
-file_put_contents($treeFilePath.'/read.php', json_encode($treeFile));
+#	Add file to zip
+$zip->addFile(json_encode($treeFile), PROJECT_PATH.'/mantenedor/__menu/read.php');
+#	file_put_contents($treeFilePath.'/read.php', json_encode($treeFile));
+
 ?>

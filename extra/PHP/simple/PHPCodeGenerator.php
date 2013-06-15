@@ -4,20 +4,27 @@ class PHPCodeGenerator {
 	public $atttributes = array();
 	
 	public function __construct() {
+		
+	}
+	public function files(){
 		global $tables;
 		global $tableConfig;
 		
+		$filesReturn = array();
 		Mustache_Autoloader::register();
 		$m = new Mustache_Engine;
 		
-		@mkdir(dirname(__FILE__).'/../../../'.PROJECT_PATH.'/libraries/',0755, true);
-		@file_put_contents(
+		//@mkdir(dirname(__FILE__).'/../../../'.PROJECT_PATH.'/libraries/',0755, true);
+		/*@file_put_contents(
 			dirname(__FILE__).'/../../../'.PROJECT_PATH.'/libraries/Database.class.php', 
 			file_get_contents(dirname(__FILE__).'/../../../libraries/Database.class.php')
+		);*/
+		$filesReturn[] = array(
+			'fileName'		=> PROJECT_PATH.'/libraries/Database.class.php',
+			'fileContent'	=> file_get_contents(dirname(__FILE__).'/../../../libraries/Database.class.php')
 		);
-		
 		$readPHPConfig = file_get_contents(dirname(__FILE__).'/../templates/config.php.template');
-		
+		/*
 		file_put_contents(
 			dirname(__FILE__).'/../../../'.PROJECT_PATH.'/config.php', 
 			"<?PHP\r\n\r\n".$m->render($readPHPConfig,array(
@@ -26,8 +33,17 @@ class PHPCodeGenerator {
 				'databasePassword'	=> DB_PASS,
 				'databaseName'		=> DB_DATABASE
 			))."\r\n\r\n?>"
-		);
+		);*/
 		
+		$filesReturn[] = array(
+			'fileName'		=> PROJECT_PATH.'/config.php',
+			'fileContent'	=> "<?PHP\r\n\r\n".$m->render($readPHPConfig,array(
+				'databaseServer'	=> DB_SERVER,
+				'databaseUser'		=> DB_USER,
+				'databasePassword'	=> DB_PASS,
+				'databaseName'		=> DB_DATABASE
+			))."\r\n\r\n?>"
+		);
 		
 		foreach($tables as $tableName => $table){
 		
@@ -125,65 +141,34 @@ class PHPCodeGenerator {
 			
 			$PHPClassName = Utils::getUnionName($tableName, $tableConfig);
 			$fileName = dirname(__FILE__).'/../../../'.PROJECT_PATH.'/mantenedor/'.$PHPClassName;
-			@mkdir($fileName, 0755, true);
+			//@mkdir($fileName, 0755, true);
 			
-			
+			/*
 			@file_put_contents($fileName.'/read.php', "<?PHP\r\n\r\n".$m->render($readPHP,$arr)."\r\n\r\n?>");
 			@file_put_contents($fileName.'/add.php', "<?PHP\r\n\r\n".$m->render($addPHP,$arr)."\r\n\r\n?>");
 			@file_put_contents($fileName.'/update.php', "<?PHP\r\n\r\n".$m->render($updatePHP,$arr)."\r\n\r\n?>");
 			@file_put_contents($fileName.'/remove.php', "<?PHP\r\n\r\n".$m->render($removePHP,$arr)."\r\n\r\n?>");
+			*/
+			$filesReturn[] = array(
+				'fileName'		=> PROJECT_PATH.'/mantenedor/'.$PHPClassName.'/read.php',
+				'fileContent'	=> "<?PHP\r\n\r\n".$m->render($readPHP,$arr)."\r\n\r\n?>"
+			);
+			$filesReturn[] = array(
+				'fileName'		=> PROJECT_PATH.'/mantenedor/'.$PHPClassName.'/add.php',
+				'fileContent'	=> "<?PHP\r\n\r\n".$m->render($addPHP,$arr)."\r\n\r\n?>"
+			);
+			$filesReturn[] = array(
+				'fileName'		=> PROJECT_PATH.'/mantenedor/'.$PHPClassName.'/update.php',
+				'fileContent'	=> "<?PHP\r\n\r\n".$m->render($updatePHP,$arr)."\r\n\r\n?>"
+			);
+			$filesReturn[] = array(
+				'fileName'		=> PROJECT_PATH.'/mantenedor/'.$PHPClassName.'/remove.php',
+				'fileContent'	=> "<?PHP\r\n\r\n".$m->render($removePHP,$arr)."\r\n\r\n?>"
+			);
 		}
 		
 		
-	
-	}
-	public function save(){
-		$readPHP = file_get_contents(dirname(__FILE__).'/../templates/read.php.template');
-		
-		$m = new Mustache_Engine;
-		echo '<pre>';
-		echo $m->render($readPHP, array(
-			'table'	=> array(
-				'columns' => array(
-					array(
-						'columnName' => 'vid'
-					),
-					array(
-						'columnName' => 'title'
-					),
-					array(
-						'columnName' 	=> 'description',
-					),
-					array(
-						'columnName' 	=> 'created_at',
-						'isLast'		=> true
-					)
-				),
-				'tableName'	=> 'e3_video',
-				'order'		=> array(
-					array(
-						'by'			=> 'vid',
-						'isLast'		=> true
-					)
-				)
-			),
-			'references'	=> array(
-				'columns'				=> array(
-					array(
-						'columnName'	=> 'babeName',
-						'isLast'		=> true,
-						'tableName'		=> 'e3_babe'
-					)
-				),
-				'tables' => array(
-					'localColumnName' 		=> 'vid',
-					'tableName'				=> 'e3_babe',
-					'index'					=> 1,
-					'referenceColumnName' 	=> 'vid'
-				)
-			)
-		));
-		echo '</pre>';
+		return $filesReturn;
 	}
 	
 	public function add(){}

@@ -10,5 +10,5 @@ define('DB_PASS', "a");
 //database name
 define('DB_DATABASE', "example_db");
 
-define('PROJECT_PATH', "example/build");
+define('PROJECT_PATH', "build");
 ?>
