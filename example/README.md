@@ -8,7 +8,7 @@ Steps
 1. In MySQL create database `example_db´ an load **script.sql**
 2. Configure database in **config.php** file
 3. Open in your browser http://localhost/Sencha-Architect-Code-Generator/example/bootstrap.php
-4. Go to **build** dir , open Sencha Architect Project
+4. Extract zip file , go to **build** dir , open Sencha Architect Project
 5. In the Sencha Architect **press Build Button** 
 7. Run Project
 8. Smiles
