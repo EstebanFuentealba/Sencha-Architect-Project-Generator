@@ -1,0 +1,38 @@
+	require_once(dirname(__FILE__).'/../../libraries/Database.class.php');
+	require_once(dirname(__FILE__).'/../../config.php');
+	
+	$postParams 	= json_decode(file_get_contents("php://input"));
+	
+	$dataInsert = array(
+		{{#table.columns}}
+			{{#isPrimary}}
+				{{^isAutoIncrement}}
+					"{{columnName}}"			=> $postParams->{{columnName}},
+				{{/isAutoIncrement}}
+			{{/isPrimary}}
+			{{^isPrimary}}
+				"{{columnName}}"			=> $postParams->{{columnName}},
+			{{/isPrimary}}
+		{{/table.columns}}
+	);
+	
+	$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+	$db->connect();
+
+		$inserted = $db->query_insert("{{table.tableName}}", $dataInsert);
+		if($db->affected_rows > 0){
+			{{#table.primaryKeyIsAutoIncrement}}
+			$dataInsert["{{table.primaryKey}}"] = $inserted;
+			{{/table.primaryKeyIsAutoIncrement}}
+			
+			echo json_encode(array(
+				'success'	=> true,
+				'records' 	=> array($dataInsert)
+			));
+		} else{
+			echo json_encode(array(
+				'success'	=> false
+			));
+		}
+
+	$db->close();

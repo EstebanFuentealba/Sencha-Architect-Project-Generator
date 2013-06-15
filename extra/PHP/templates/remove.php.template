@@ -1,0 +1,30 @@
+	require_once(dirname(__FILE__).'/../../libraries/Database.class.php');
+	require_once(dirname(__FILE__).'/../../config.php');
+	
+	$postParams 	= json_decode(file_get_contents("php://input"));
+	
+	$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+	$db->connect();
+
+		if(is_object($postParams)){
+			$db->query("DELETE FROM {{table.tableName}} WHERE {{table.primaryKey}} ='".$postParams->{{table.primaryKey}}."'");			
+		} else if(is_array($postParams)) {
+			$ids = array();
+			foreach($postParams as $param ) {
+				$ids[] = $param->{{table.primaryKey}};
+			}
+			if(count($ids)>0){
+				$db->query("DELETE FROM {{table.tableName}} WHERE {{table.primaryKey}} IN(".join(",",$ids).")");
+			}
+		}
+		if($db->affected_rows > 0){
+			echo json_encode(array(
+				'success'	=> true
+			));
+		} else{
+			echo json_encode(array(
+				'success'	=> false
+			));
+		}
+
+	$db->close();

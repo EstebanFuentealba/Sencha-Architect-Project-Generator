@@ -1,0 +1,35 @@
+	require_once(dirname(__FILE__).'/../../libraries/Database.class.php');
+	require_once(dirname(__FILE__).'/../../config.php');
+	
+	
+	$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+	$db->connect();
+	
+	$sql ="
+		SELECT 	
+			{{#table.columns}}
+				{{table.tableName}}.{{columnName}} {{^isLast}},{{/isLast}}
+			{{/table.columns}}
+			{{#references}}
+				{{#columns}}
+				{{#isFirst}},{{/isFirst}}
+				{{tableName}}.{{columnName}} {{^isLast}},{{/isLast}}
+				{{/columns}}
+			{{/references}}
+		FROM {{table.tableName}}
+			{{#references.tables}}
+			INNER JOIN {{tableName}}
+				ON {{table.tableName}}.{{localColumnName}} = {{tableName}}.{{referenceColumnName}}
+			{{/references.tables}}
+		WHERE 1=1 
+		ORDER BY {{#table.order}}
+			{{table.tableName}}.{{by}}{{^isLast}},{{/isLast}}
+		{{/table.order}} DESC
+";
+	$rows = $db->fetch_all_array($sql);
+	$db->close();
+	
+	echo json_encode(array(
+		'success'	=> true,
+		'records' 	=> $rows
+	));

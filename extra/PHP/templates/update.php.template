@@ -1,0 +1,34 @@
+	require_once(dirname(__FILE__).'/../../libraries/Database.class.php');
+	require_once(dirname(__FILE__).'/../../config.php');
+	
+	$postParams 	= json_decode(file_get_contents("php://input"));
+	
+	$columns = array(
+	{{#table.columns}}
+		"{{columnName}}",
+	{{/table.columns}}
+	);
+	
+	$dataUpdate = array();
+	foreach($postParams as $param => $value) {
+		if(isset($param) && in_array($param, $columns)){
+			$dataUpdate[$param] = $value;
+		}
+	}
+	
+	$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
+	$db->connect();
+		$db->query_update("{{table.tableName}}", $dataUpdate, "{{table.primaryKey}}='".$dataUpdate["{{table.primaryKey}}"]."'");
+		if($db->affected_rows > 0){
+			
+			echo json_encode(array(
+				'success'	=> true,
+				'records' 	=> array($dataUpdate)
+			));
+		} else{
+			echo json_encode(array(
+				'success'	=> false
+			));
+		}
+
+	$db->close();

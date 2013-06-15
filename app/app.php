@@ -271,7 +271,7 @@ foreach($tables as $tableName => $table){
 				"    create: './mantenedor/".$PHPClassName."/add.php',\r",
 				"    read: './mantenedor/".$PHPClassName."/read.php',\r",
 				"    update: './mantenedor/".$PHPClassName."/update.php',\r",
-				"    destroy: './mantenedor/".$PHPClassName."/delete.php'\r",
+				"    destroy: './mantenedor/".$PHPClassName."/remove.php'\r",
 				"}"
 			),
 			'reader'	=> new Json(array(
@@ -348,34 +348,13 @@ foreach($tables as $tableName => $table){
 			'title'				=> 'Form ',
 			'__columnWidth'		=> 0.4,
 			'margin'			=> '0 0 0 5',
-			'dockedItems'		=> array(
-				new Toolbar(array(
-					'dock' 	=> 'bottom',
-					'items'	=> array(
-						new Button(array(
-							'text'		=> 'Clear',
-							'iconCls'	=> 'icon-clear',
-							'itemId'	=> 'btnClear'
-						)),
-						new Button(array(
-							'text'					=> 'Create',
-							'iconCls'				=> 'icon-create',
-							'itemId'				=> 'btnCreate',
-							'__customProperties'	=> array(
-								new Property(array(
-									'name' 	=> 'storeName',
-									'value' => $storeName
-								)),
-								new Property(array(
-									'name' 	=> 'modelName',
-									'value' => $app->name.'.model.'.$modelName
-								))
-							)
-						))
-					)
-				))
-			)
 		));
+	
+	
+	
+	
+	
+	$propertyPrimaryKey = NULL;
 	
 	foreach($table["columns"] as $columnName => $col){
 
@@ -389,6 +368,10 @@ foreach($tables as $tableName => $table){
 			if($col['isPrimaryKey']) {
 				if($col['extra'] == 'auto_increment') {
 					$field->useNull 	= true;
+					$propertyPrimaryKey = new Property(array(
+						'name' 	=> 'primaryKey',
+						'value' => 'create'
+					));
 				}
 				/*
 					TODO: Set `idProperty´ multi columns primary keys
@@ -423,8 +406,17 @@ foreach($tables as $tableName => $table){
 			$formField = new ComboBox(array(
 				'store'			=> 'store'.Utils::getUnionName($table['constraints'][$columnName]['foreignTable'], $tableConfig),
 				'pageSize'		=> 25,
-				'valueField'	=> $table['constraints'][$columnName]['foreignColumn']
+				'valueField'	=> $table['constraints'][$columnName]['foreignColumn'],
+				
 			));
+			foreach($tables[$table['constraints'][$columnName]['foreignTable']]['columns'] as $foreignColumn){
+				if($foreignColumn['type'] == 'varchar'){
+					$formField->displayField = $foreignColumn['columnName'];
+				}
+			}
+			if(!isset($formField->displayField)){
+				$formField->displayField = $table['constraints'][$columnName]['foreignColumn'];
+			}
 			
 			
 			$treeComponent['stores'][] 	= $formField->store;
@@ -500,6 +492,42 @@ foreach($tables as $tableName => $table){
 		
 		
 	}
+	
+	
+	
+	$toolbar = new Toolbar(array(
+		'dock' 	=> 'bottom',
+		'items'	=> array(
+			new Button(array(
+				'text'		=> 'Clear',
+				'iconCls'	=> 'icon-clear',
+				'itemId'	=> 'btnClear'
+			)),
+			new Button(array(
+				'text'					=> 'Create',
+				'iconCls'				=> 'icon-create',
+				'itemId'				=> 'btnCreate',
+				'__customProperties'	=> array(
+					new Property(array(
+						'name' 	=> 'storeName',
+						'value' => $storeName
+					)),
+					new Property(array(
+						'name' 	=> 'modelName',
+						'value' => $app->name.'.model.'.$modelName
+					)),
+					new Property(array(
+						'name' 	=> 'actionType',
+						'value' => 'create'
+					)),
+					$propertyPrimaryKey
+				)
+			))
+		)
+	));
+	
+	$form->dockedItems[] = $toolbar;
+	
 	/*
 	if(count($table['constraints'])>0){
 		Debug::dump($table);
@@ -559,7 +587,8 @@ $controllerUtils = new Controller(array(
 			'implHandler' 		=> array(
 				"this.getCreateForm().getForm().reset();\r",
 				"this.getBtnCreate().setText(\"Create\");\r",
-				"this.getBtnCreate().setIconCls('icon-create');"
+				"this.getBtnCreate().setIconCls('icon-create');\r",
+				"this.getBtnCreate().actionType = 'create';\r"
 			),
 			'name'				=> "click",
 			'__controlQuery'	=> "#btnClear"
@@ -571,21 +600,28 @@ $controllerUtils = new Controller(array(
 				"var me = this,\r",
 				"    form = this.getCreateForm();\r",
 				"if(form.getForm().isValid()) {\r",
-				"    var record = Ext.create(button.modelName, form.getForm().getValues()),\r",
-				"        store = Ext.data.StoreManager.lookup(button.storeName),\r",
-				"        model = Ext.ModelManager.getModel(button.modelName);\r",
+				"    var store = Ext.data.StoreManager.lookup(button.storeName),\r",
+				"        model = Ext.ModelManager.getModel(button.modelName),\r",
+				"        values = form.getForm().getValues(),\r",
+				"        record = ((button.actionType == 'create') ? Ext.create(button.modelName, values) : store.getById(values[button.primaryKey]));\r",
 				"    model.setProxy(store.getProxy());\r",
-				"    record.save({\r",
-				"        success: function(rec, op) {\r",
-				"            store.add(rec);\r",
-				"            me.clearForm();\r",
-				"        },\r",
-				"        failure: function(rec, op) {\r",
-				"            Ext.Msg.alert('Error', 'Changes are not saved to database.');\r",
-				"            console.log(op);\r",
-				"        }\r",
-				"    });\r",
-				"};\r"
+				"    if(button.actionType == 'update') {\r",
+				"        form.updateRecord(form.getRecord());\r",
+				"        me.clearForm();\r",
+				"    } else if(button.actionType == 'create') {\r",
+				"        record.save({\r",
+				"            success: function(rec, op) {\r",
+				"                store.add(rec);\r",
+				"                me.clearForm();\r",
+				"            },\r",
+				"            failure: function(rec, op) {\r",
+				"                Ext.Msg.alert('Error', 'Changes are not saved to database.');\r",
+				"                console.log(op);\r",
+				"            }\r",
+				"        });\r",
+				"    }\r",
+				"};\r",
+				""
 			),
 			'name'				=> "click",
 			'__controlQuery'	=> "#btnCreate"
@@ -641,6 +677,7 @@ $controllerUtils = new Controller(array(
 				"        component.getForm().loadRecord(selectedRecord);\r",
 				"        me.getBtnCreate().setText(\"Update\");\r",
 				"        me.getBtnCreate().setIconCls('icon-save');\r",
+				"		 me.getBtnCreate().actionType = 'update';\r",
 				"        return true;\r",
 				"    }\r",
 				"});\r"
@@ -689,7 +726,6 @@ $controllerPortal = new Controller(array(
 				'options'
 			),
 			'implHandler' 	=> array(
-				"console.log('select item');\r",
 				"var contentPanel = this.getContentPanel();\r",
 				"contentPanel.setLoading(true);\r",
 				"switch (record.get(\"node_type\")) {\r",

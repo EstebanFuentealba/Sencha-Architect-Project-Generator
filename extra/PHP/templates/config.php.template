@@ -1,0 +1,10 @@
+//database server
+define('DB_SERVER', "{{databaseServer}}");
+
+//database login name
+define('DB_USER', "{{databaseUser}}");
+//database login password
+define('DB_PASS', "{{databasePassword}}");
+
+//database name
+define('DB_DATABASE', "{{databaseName}}");
