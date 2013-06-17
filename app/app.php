@@ -2,7 +2,6 @@
 require_once(dirname(__FILE__).'/../libraries/Debug.php');
 
 /* DataBase Mapping */
-require_once(dirname(__FILE__).'/../libraries/Database.class.php');
 require_once(dirname(__FILE__).'/../libraries/Koala.Mapping.php');
 require_once(dirname(__FILE__).'/../libraries/Utils.php');
 require_once(dirname(__FILE__).'/../libraries/PHPZip/Zip.php');

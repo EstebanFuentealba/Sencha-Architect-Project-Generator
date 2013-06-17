@@ -18,10 +18,9 @@ class KoalaMapping extends KoalaMappingMySQL  {
 			"columnsTotal"	=> 0,
 			"constraints" => array()
 		);
-		$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
-		$db->connect(); 
-			$results = $db->fetch_all_array(sprintf(self::$queryDescribe,$tableName));
-		$db->close();
+		$db = Database::obtain();
+		
+			$results = $db->fetch_array(sprintf(self::$queryDescribe,$tableName));
 		$table["columnsTotal"] = count($results);
 		foreach($results as $row) {
 			$column = self::getColumn($row);
@@ -70,10 +69,9 @@ class KoalaMapping extends KoalaMappingMySQL  {
 	*/
 	public static function getConstraints($tableName){
 		$constraints = array();
-		$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
-		$db->connect(); 
-			$results = $db->fetch_all_array(sprintf(self::$queryConstraints,$tableName,DB_DATABASE));
-		$db->close();
+		$db = Database::obtain();
+			$results = $db->fetch_array(sprintf(self::$queryConstraints,$tableName,DB_DATABASE));
+		
 		if(count($results)>0){
 			$constraints = parent::getConstraints($results);
 		}
@@ -86,12 +84,10 @@ class KoalaMapping extends KoalaMappingMySQL  {
 		@return	array	$db_tables		arreglo con los nombres de las tablas que hay en la base de datos
 	*/
 	public static function getTables() {
-		$db = new Database(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE); 
-		$db->connect();
-		
-			$results = $db->fetch_all_array(self::$queryShowTables);
-		$db->close();
+		$db = Database::obtain();
+			$results = $db->fetch_array(self::$queryShowTables);
 		$tablesRet = array();
+		
 		$tables =  parent::getAllTables($results,DB_DATABASE);
 		foreach($tables as $tableName){
 			$tablesRet[$tableName] = self::getTable($tableName);
