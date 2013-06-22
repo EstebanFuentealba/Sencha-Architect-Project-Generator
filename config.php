@@ -8,7 +8,7 @@ define('DB_USER', "root");
 define('DB_PASS', "a");
 
 //database name
-define('DB_DATABASE', "bbcl_futbol_orm");
+define('DB_DATABASE', "bbcl_futbol_v2");
 
 define('PROJECT_PATH', "build");
 ?>

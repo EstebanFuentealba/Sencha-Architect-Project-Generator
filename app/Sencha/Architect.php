@@ -214,11 +214,13 @@ class Architect extends Base {
 		
 		$parseArray = $this->application->toMetaDataArray();
 		//Debug::dump('[save] Save Application');
+		/*
 		file_put_contents(
 			$path.PROJECT_PATH.'/metadata/'.$this->application->__fileName, 
 			json_encode($parseArray, JSON_PRETTY_PRINT )
 		);
-				
+		*/
+		$zip->addFile(json_encode($parseArray, JSON_PRETTY_PRINT ), PROJECT_PATH.'/metadata/'.$this->application->__fileName);
 		/* TODO: edit Parser for this file */
 		//Debug::dump('[save] Save XDS File');
 
